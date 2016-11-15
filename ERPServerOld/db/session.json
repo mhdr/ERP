@@ -1,0 +1,17 @@
+{
+  "_id": "ObjectId",
+  "sessionId": "String",
+  "user_id": "String",
+  "ip": "String",
+  "dateCreated": "String",
+  "deviceInfo": {
+    "cordova": "String",
+    "model": "String",
+    "platform": "String",
+    "uuid": "String",
+    "version": "String",
+    "manufacturer": "String",
+    "isVirtual": "Boolean",
+    "serial": "String"
+  }
+}

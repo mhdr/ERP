@@ -1,0 +1,16 @@
+{
+  "_id": "ObjectId",
+  "userName": "String",
+  "password": "String",
+  "firstName": "String",
+  "lastName": "String",
+  "permissions": [
+    {
+      "permissionNumber": "Int32"
+    },
+    {
+      "permissionNumber": "Int32"
+    }
+  ],
+  "dateCreated": "String"
+}

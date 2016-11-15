@@ -1,0 +1,26 @@
+$prefix: "nm";
+
+$submit-button: #{$prefix}-submit-button;
+
+.#{$submit-button} {
+  width: 100px;
+  height: 35px;
+}
+
+.#{$submit-button} {
+  span {
+    position: relative;
+  }
+
+  span span {
+    opacity: 1;
+  }
+
+  span i {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    right: 0px;
+    top: 3px;
+  }
+}

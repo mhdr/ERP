@@ -1,0 +1,26 @@
+.profile-cd-col1 {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 0px;
+  vertical-align: middle;
+  margin-top: 6px; }
+
+.profile-cd-col2 {
+  padding-left: 0px;
+  padding-right: 0px;
+  vertical-align: middle; }
+
+.profile-cd-row {
+  margin-bottom: 20px; }
+
+.profile-cd-first-row {
+  margin-top: 20px; }
+
+.profile-cd-alert2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  height: 35px;
+  display: inline-block;
+  vertical-align: middle; }
