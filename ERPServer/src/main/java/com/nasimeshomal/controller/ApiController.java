@@ -1,5 +1,6 @@
 package com.nasimeshomal.controller;
 
+import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
 import com.nasimeshomal.lib.Users;
 import org.springframework.http.MediaType;
@@ -17,12 +18,30 @@ import java.util.Map;
 @RestController
 public class ApiController {
 
-    @RequestMapping(value = "/api/getUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/GetUsers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getUsers(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
         Users users = new Users();
         Map result = users.getUsers();
+        return result;
+    }
+
+    @RequestMapping(value = "/api/User/GetUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getUser(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+        Map result = sessionManager.getCurrentUser2();
+        return result;
+    }
+
+    @RequestMapping(value = "/api/User/GetUserIP", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getUserIP(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+        IP ip=new IP(request,response);
+        Map result=ip.getIP2();
+
         return result;
     }
 

@@ -1,5 +1,7 @@
 package com.nasimeshomal.lib;
 
+import com.nasimeshomal.db.User;
+import com.nasimeshomal.db.UserCollection;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.groovy.util.StringUtil;
 import org.joda.time.DateTime;
@@ -10,10 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class SessionManager {
 
@@ -59,6 +59,46 @@ public class SessionManager {
         }
 
         return false;
+    }
+
+    public User getCurrentUser()
+    {
+        String userName= (String) this.httpSession.getAttribute("userName");
+
+        UserCollection userCollection=new UserCollection();
+        User user= userCollection.getUser(userName);
+        return user;
+    }
+
+    public Map<String,Object> getCurrentUser2()
+    {
+        Map<String,Object> result=new HashMap<>();
+
+
+        try {
+            User user=this.getCurrentUser();
+
+            Map<String,Object> userMap=new HashMap<>();
+            userMap.put("id",user._id);
+            userMap.put("userName",user.userName);
+            userMap.put("firstName",user.firstName);
+            userMap.put("lastName",user.lastName);
+            userMap.put("dateCreated",user.dateCreated);
+
+            result.put("error",0);
+            result.put("user",userMap);
+        }
+        catch (Exception ex)
+        {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+
+
+
+        return result;
     }
 
     public void login(String userName)

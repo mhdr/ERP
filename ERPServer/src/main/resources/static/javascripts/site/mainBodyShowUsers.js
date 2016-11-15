@@ -16,20 +16,24 @@ var MainBodyShowUsers;
                         url: "./api/User/GetUsers",
                         method: "POST",
                         success: function (data2, textStatus, jqXHR) {
-                            data2.forEach(function (value, index, array) {
-                                var context = {
-                                    userName: value.userName, firstName: value.firstName,
-                                    lastName: value.lastName, userId: value._id,
-                                    style: ""
-                                };
-                                var html = template(context);
-                                $("#tbodyMainBodyShowUsers").append(html);
-                                var el = $(format("tr[data-nm-userId={0}]", value._id));
-                                MainBodyShowUsers.UI.bindTableRow_click(el);
-                            });
-                            $("#divMainBodyShowUsers").velocity("fadeIn", { duration: 250 });
-                            MainBodyShowUsers.UI.applyTableStrip();
-                            complete();
+                            if (data2.error === 0) {
+                                var users = data2.users;
+                                for (var i = 0; i < users.length; i++) {
+                                    var value = users[i];
+                                    var context = {
+                                        userName: value.userName, firstName: value.firstName,
+                                        lastName: value.lastName, userId: value.id,
+                                        style: ""
+                                    };
+                                    var html = template(context);
+                                    $("#tbodyMainBodyShowUsers").append(html);
+                                    var el = $(format("tr[data-nm-userId={0}]", value.id));
+                                    MainBodyShowUsers.UI.bindTableRow_click(el);
+                                }
+                                $("#divMainBodyShowUsers").velocity("fadeIn", { duration: 250 });
+                                MainBodyShowUsers.UI.applyTableStrip();
+                                complete();
+                            }
                         }
                     });
                 }

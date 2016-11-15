@@ -30,7 +30,7 @@ public class DefaultController {
         return "login";
     }
 
-    @RequestMapping("logout")
+    @RequestMapping("/SignOut")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 

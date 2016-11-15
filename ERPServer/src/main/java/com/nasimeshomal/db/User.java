@@ -63,9 +63,24 @@ public class User {
         user.lastName=data.getString("lastName");
         user.password=data.getString("password");
         user.dateCreated=data.getString("dateCreated");
-        user.permissions= (ArrayList<Permission>) data.get("permissions");
+        user.permissions= user.extractPermissions(data);
 
         return user;
+    }
+
+    private ArrayList<Permission> extractPermissions(Document data)
+    {
+        ArrayList<Permission> result=new ArrayList<>();
+
+        ArrayList<Document> permissions= (ArrayList<Document>) data.get("permissions");
+
+        for (Document document:permissions)
+        {
+            int permissionNumber=document.getInteger("permissionNumber");
+            result.add(new Permission(permissionNumber));
+        }
+
+        return result;
     }
 
     @Override
@@ -75,6 +90,17 @@ public class User {
     }
 
     private class Permission{
+
         public int permissionNumber;
+
+        public Permission()
+        {
+
+        }
+
+        public Permission(int permissionNumber)
+        {
+            this.permissionNumber=permissionNumber;
+        }
     }
 }
