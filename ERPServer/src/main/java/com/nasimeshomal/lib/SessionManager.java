@@ -1,31 +1,41 @@
 package com.nasimeshomal.lib;
 
-import com.nasimeshomal.db.User;
-import com.nasimeshomal.db.UserCollection;
+import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
-import org.codehaus.groovy.util.StringUtil;
 import org.joda.time.DateTime;
-import org.springframework.session.FindByIndexNameSessionRepository;
-import sun.reflect.generics.tree.VoidDescriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SessionManager {
 
     HttpSession httpSession;
     HttpServletRequest request;
     HttpServletResponse response;
+    MongoOperations mongoOperations;
 
     public SessionManager(HttpServletRequest request, HttpServletResponse response)
     {
         this.httpSession=request.getSession(true);
         this.request=request;
         this.response=response;
+
+        ApplicationContext ctx =
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
     }
 
     public boolean isUserLoggedIn()
@@ -65,8 +75,9 @@ public class SessionManager {
     {
         String userName= (String) this.httpSession.getAttribute("userName");
 
-        UserCollection userCollection=new UserCollection();
-        User user= userCollection.getUser(userName);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userName").is(userName));
+        User user = mongoOperations.findOne(query, User.class);
         return user;
     }
 
@@ -79,7 +90,7 @@ public class SessionManager {
             User user=this.getCurrentUser();
 
             Map<String,Object> userMap=new HashMap<>();
-            userMap.put("id",user._id);
+            userMap.put("id",user.id);
             userMap.put("userName",user.userName);
             userMap.put("firstName",user.firstName);
             userMap.put("lastName",user.lastName);

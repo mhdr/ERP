@@ -1,24 +1,37 @@
 package com.nasimeshomal.lib;
 
-import com.nasimeshomal.db.User;
-import com.nasimeshomal.db.UserCollection;
-import org.apache.commons.lang3.ObjectUtils;
+import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
+import java.util.*;
 
+@Component
 public class Users {
+
+    MongoOperations mongoOperations;
+
+    public Users() {
+        ApplicationContext ctx =
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
+    }
+
+
     public Map<String, Object> getUsers() {
         Map<String, Object> result = new HashMap<String, Object>();
 
         try {
-            UserCollection userCollection = new UserCollection();
-            ArrayList<User> users = userCollection.getUsers();
+            List<User> users = mongoOperations.findAll(User.class);
             ArrayList<Map<String, String>> usersMap = new ArrayList<Map<String, String>>();
 
             for (User user : users) {
@@ -29,7 +42,7 @@ public class Users {
 
                 Map<String, String> mUser = new HashMap<String, String>();
 
-                mUser.put("id", user._id.toString());
+                mUser.put("id", user.id);
                 mUser.put("userName", user.userName);
                 mUser.put("firstName", user.firstName);
                 mUser.put("lastName", user.lastName);
@@ -67,8 +80,9 @@ public class Users {
                 return result;
             }
 
-            UserCollection userCollection = new UserCollection();
-            User user = userCollection.getUser(userName);
+            Query query = new Query();
+            query.addCriteria(Criteria.where("userName").is(userName));
+            User user = mongoOperations.findOne(query, User.class);
 
             if (user == null) {
                 // invalid userName
@@ -78,7 +92,7 @@ public class Users {
 
             if (Objects.equals(user.password, Hash.getSHA512(password))) {
                 // no error , userName and password match
-                result.put("userName",userName);
+                result.put("userName", userName);
                 result.put("error", 0);
             } else {
                 // user and password don't match
@@ -140,9 +154,11 @@ public class Users {
                 return result;
             }
 
-            UserCollection userCollection = new UserCollection();
+            Query query = new Query();
+            query.addCriteria(Criteria.where("userName").is(userName));
+            User currentUser = mongoOperations.findOne(query, User.class);
 
-            if (userCollection.getUser(userName) != null) {
+            if (currentUser != null) {
                 // userName is in use
                 result.put("error", 8);
                 return result;
@@ -155,10 +171,9 @@ public class Users {
             user.password = Hash.getSHA512(password);
             user.dateCreated = DateTime.now().toString();
 
+            mongoOperations.save(user);
 
-            User newUser = userCollection.insertNewUser(user);
-
-            result.put("id", newUser._id.toString());
+            result.put("id", user.id.toString());
             result.put("error", 0);
         } catch (Exception ex) {
             // exception
