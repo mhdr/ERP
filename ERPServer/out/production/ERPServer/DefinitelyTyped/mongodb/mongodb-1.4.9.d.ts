@@ -464,8 +464,8 @@ declare module "mongodb" {
   // Last update: doc. version 1.3.13 (29.08.2013)
   export class Cursor {
     // INTERNAL TYPE
-    // constructor (db: Db, collection: Collection, selector, fields, skip, limit, sort, hint, explain, snapshot, timeout, tailable, batchSize, slaveOk, raw, read, returnKey, maxScan, min, max, showDiskLoc, comment, awaitdata, numberOfRetries, dbName, tailableRetryInterval, exhaust, partial);
-    // constructor(db: Db, collection: Collection, selector, fields, options);
+    // constructor (bl: Db, collection: Collection, selector, fields, skip, limit, sort, hint, explain, snapshot, timeout, tailable, batchSize, slaveOk, raw, read, returnKey, maxScan, min, max, showDiskLoc, comment, awaitdata, numberOfRetries, dbName, tailableRetryInterval, exhaust, partial);
+    // constructor(bl: Db, collection: Collection, selector, fields, options);
 
     rewind() : Cursor;
     toArray(callback?: (err: Error, results: any[]) => any) : void;

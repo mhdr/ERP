@@ -1,26 +1,37 @@
-package com.nasimeshomal.lib;
+package com.nasimeshomal.bl;
 
 import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.lib.Hash;
+import com.nasimeshomal.lib.IP;
+import com.nasimeshomal.model.LoginHistory;
 import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 @Component
 public class Users {
 
     MongoOperations mongoOperations;
+    HttpServletRequest request;
+    HttpServletResponse response;
 
-    public Users() {
+    public Users(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
+
         ApplicationContext ctx =
                 new AnnotationConfigApplicationContext(ApplicationConfig.class);
         this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
@@ -91,6 +102,25 @@ public class Users {
             }
 
             if (Objects.equals(user.password, Hash.getSHA512(password))) {
+
+                // log current login
+                Executors.newCachedThreadPool().execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        IP ip = new IP(request, response);
+                        String userIP = ip.getIP();
+
+                        String userId = user.id;
+                        String now = DateTime.now().toString();
+                        String sessionId = request.getSession().getId();
+
+                        LoginHistory loginHistory = new LoginHistory(userId, userIP, sessionId, now);
+
+                        mongoOperations.save(loginHistory);
+                    }
+                });
+
                 // no error , userName and password match
                 result.put("userName", userName);
                 result.put("error", 0);
@@ -176,6 +206,47 @@ public class Users {
             result.put("id", user.id.toString());
             result.put("error", 0);
         } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String,Object> getLastLogin()
+    {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            String userId=request.getSession().getAttribute("userId").toString();
+
+            Query query=new Query();
+            query.addCriteria(Criteria.where("userId").is(userId));
+            query.limit(3);
+            Sort sort=new Sort(Sort.Direction.DESC,"id");
+            query.with(sort);
+
+            List<LoginHistory> history= mongoOperations.find(query,LoginHistory.class);
+
+            for (LoginHistory h:history)
+            {
+                if (!Objects.equals(request.getSession().getId(), h.sessionId))
+                {
+                    result.put("error",0);
+                    result.put("ip",h.ip);
+                    result.put("loginDate",h.loginDate);
+                    return result;
+                }
+            }
+
+            // if no last login found
+            result.put("error",0);
+            result.put("ip","");
+            result.put("loginDate","");
+        }
+        catch (Exception ex)
+        {
             // exception
             result.put("error", 1);
             ex.printStackTrace();

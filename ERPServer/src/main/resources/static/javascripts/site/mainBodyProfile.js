@@ -16,9 +16,10 @@ var MainBodyProfile;
                 method: "POST",
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
-                        $("#spanUserName").html(data.userName);
-                        $("#spanFirstName").html(data.firstName);
-                        $("#spanLastName").html(data.lastName);
+                        var d = data.user;
+                        $("#spanUserName").html(d.userName);
+                        $("#spanFirstName").html(d.firstName);
+                        $("#spanLastName").html(d.lastName);
                     }
                     parallel.done("fn1");
                 }

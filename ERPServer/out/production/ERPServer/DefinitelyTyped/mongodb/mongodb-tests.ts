@@ -18,7 +18,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err: mongodb.Mong
         // Locate all the entries using find
         collection.find({}).toArray(function(err: mongodb.MongoError, results: any) {
             console.dir(results);
-            // Let's close the db
+            // Let's close the bl
             db.close();
         });
 

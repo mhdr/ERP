@@ -2,16 +2,14 @@ package com.nasimeshomal.controller;
 
 import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
-import com.nasimeshomal.lib.Users;
+import com.nasimeshomal.bl.Users;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -22,7 +20,7 @@ public class ApiController {
     public Map getUsers(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
-        Users users = new Users();
+        Users users = new Users(request,response);
         Map result = users.getUsers();
         return result;
     }
@@ -32,6 +30,16 @@ public class ApiController {
         SessionManager sessionManager = new SessionManager(request,response);
 
         Map result = sessionManager.getCurrentUser2();
+        return result;
+    }
+
+
+    @RequestMapping(value = "api/User/GetLastLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getLastLogin(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+        Users users=new Users(request,response);
+        Map result =users.getLastLogin();
         return result;
     }
 
@@ -51,7 +59,7 @@ public class ApiController {
 
 
         //todo next
-        Users users = new Users();
+        Users users = new Users(request,response);
         Map result = users.getUsers();
         return result;
     }
@@ -61,7 +69,7 @@ public class ApiController {
         SessionManager sessionManager = new SessionManager(request,response);
 
         Map data = request.getParameterMap();
-        Users users = new Users();
+        Users users = new Users(request,response);
         Map result = users.login(data);
 
         int errorNumber= (int) result.get("error");

@@ -17,18 +17,20 @@ public class User {
     public String dateCreated;
     public ArrayList<com.nasimeshomal.model.User.Permission> permissions;
 
-    private class Permission{
+    public User()
+    {
+        this.permissions=new ArrayList<>();
+    }
+
+    private static class Permission{
 
         public int permissionNumber;
+    }
 
-        public Permission()
-        {
-
-        }
-
-        public Permission(int permissionNumber)
-        {
-            this.permissionNumber=permissionNumber;
-        }
+    public void addPermission(int permissionNumber)
+    {
+        Permission permission=new Permission();
+        permission.permissionNumber=permissionNumber;
+        this.permissions.add(permission);
     }
 }

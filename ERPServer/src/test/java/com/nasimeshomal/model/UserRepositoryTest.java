@@ -24,11 +24,31 @@ public class UserRepositoryTest {
     public void insert1() throws Exception {
 
         User user=new User();
-        user.userName="mhdr";
-        user.password="12345";
+        user.userName="mahmoodramzani";
+        user.password=Hash.getSHA512("12345");
         user.firstName="Mahmood";
         user.lastName="Ramzani";
         user.dateCreated= DateTime.now().toString();
+
+        // For Annotation
+        ApplicationContext ctx =
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+
+        mongoOperation.save(user);
+    }
+
+    @Test
+    public void insert2() throws Exception {
+
+        User user=new User();
+        user.userName="mahmood";
+        user.password=Hash.getSHA512("12345");
+        user.firstName="Mahmood";
+        user.lastName="Ramzani";
+        user.dateCreated= DateTime.now().toString();
+        user.addPermission(1);
+        user.addPermission(2);
 
         // For Annotation
         ApplicationContext ctx =

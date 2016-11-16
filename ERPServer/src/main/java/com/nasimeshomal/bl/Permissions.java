@@ -1,4 +1,4 @@
-package com.nasimeshomal.lib;
+package com.nasimeshomal.bl;
 
 public class Permissions {
 }

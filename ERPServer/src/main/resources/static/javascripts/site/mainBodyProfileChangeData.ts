@@ -20,8 +20,9 @@ namespace MainBodyProfileChangeData{
                 method: "POST",
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
-                        $("#inputProfileFirstName").val(data.firstName);
-                        $("#inputProfileLastName").val(data.lastName);
+                        var d=data.user;
+                        $("#inputProfileFirstName").val(d.firstName);
+                        $("#inputProfileLastName").val(d.lastName);
                     }
 
                     parallel.done("fn1");

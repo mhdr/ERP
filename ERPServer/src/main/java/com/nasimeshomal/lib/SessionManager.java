@@ -114,9 +114,14 @@ public class SessionManager {
 
     public void login(String userName)
     {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userName").is(userName));
+        User user = mongoOperations.findOne(query, User.class);
+
         this.httpSession.setAttribute("userName",userName);
         this.httpSession.setAttribute("loginDate",DateTime.now().toString());
         this.httpSession.setAttribute("loggedIn",true);
+        this.httpSession.setAttribute("userId",user.id);
     }
 
     public void logout()
