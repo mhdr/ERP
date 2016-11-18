@@ -1,19 +1,22 @@
 package com.nasimeshomal.bl;
 
+import com.mongodb.WriteResult;
 import com.nasimeshomal.config.ApplicationConfig;
 import com.nasimeshomal.lib.Hash;
 import com.nasimeshomal.lib.IP;
+import com.nasimeshomal.lib.SessionManager;
 import com.nasimeshomal.model.LoginHistory;
 import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.concurrent.Executors;
 
-@Component
 public class Users {
 
     MongoOperations mongoOperations;
@@ -36,7 +38,6 @@ public class Users {
                 new AnnotationConfigApplicationContext(ApplicationConfig.class);
         this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
     }
-
 
     public Map<String, Object> getUsers() {
         Map<String, Object> result = new HashMap<String, Object>();
@@ -72,10 +73,11 @@ public class Users {
         return result;
     }
 
-    public Map<String, Object> login(Map<String, String[]> data) {
+    public Map<String, Object> login() {
         Map<String, Object> result = new HashMap<String, Object>();
 
         try {
+            Map<String, String[]> data = request.getParameterMap();
             String userName = data.get("userName")[0];
             String password = data.get("password")[0];
 
@@ -125,7 +127,7 @@ public class Users {
                 result.put("userName", userName);
                 result.put("error", 0);
             } else {
-                // user and password don't match
+                // currentUser and password don't match
                 result.put("error", 5);
             }
 
@@ -138,15 +140,16 @@ public class Users {
         return result;
     }
 
-    public Map<String, Object> insertNewUser(Map<String, String> data) {
+    public Map<String, Object> insertNewUser() {
         Map<String, Object> result = new HashMap<String, Object>();
 
         try {
-            String userName = data.get("userName");
-            String firstName = data.get("firstName");
-            String lastName = data.get("lastName");
-            String password = data.get("password");
-            String repeatPassword = data.get("repeatPassword");
+            Map<String, String[]> data = this.request.getParameterMap();
+            String userName = data.get("userName")[0];
+            String firstName = data.get("firstName")[0];
+            String lastName = data.get("lastName")[0];
+            String password = data.get("password")[0];
+            String repeatPassword = data.get("repeatPassword")[0];
 
             if (StringUtils.isBlank(userName)) {
                 // empty userName
@@ -214,39 +217,127 @@ public class Users {
         return result;
     }
 
-    public Map<String,Object> getLastLogin()
-    {
+    public Map<String, Object> getCurrentUser() {
+        Map<String, Object> result = new HashMap<>();
+
+
+        try {
+            SessionManager sessionManager = new SessionManager(this.request, this.response);
+            User user = sessionManager.getCurrentUser();
+
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("id", user.id);
+            userMap.put("userName", user.userName);
+            userMap.put("firstName", user.firstName);
+            userMap.put("lastName", user.lastName);
+            userMap.put("dateCreated", user.dateCreated);
+
+            result.put("error", 0);
+            result.put("user", userMap);
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+
+        return result;
+    }
+
+    public Map<String, Object> getLastLogin() {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            String userId=request.getSession().getAttribute("userId").toString();
+            SessionManager sessionManager = new SessionManager(this.request, this.response);
+            String userId = sessionManager.getCurrentUser().id;
 
-            Query query=new Query();
+            Query query = new Query();
             query.addCriteria(Criteria.where("userId").is(userId));
             query.limit(3);
-            Sort sort=new Sort(Sort.Direction.DESC,"id");
+            Sort sort = new Sort(Sort.Direction.DESC, "id");
             query.with(sort);
 
-            List<LoginHistory> history= mongoOperations.find(query,LoginHistory.class);
+            List<LoginHistory> history = mongoOperations.find(query, LoginHistory.class);
 
-            for (LoginHistory h:history)
-            {
-                if (!Objects.equals(request.getSession().getId(), h.sessionId))
-                {
-                    result.put("error",0);
-                    result.put("ip",h.ip);
-                    result.put("loginDate",h.loginDate);
+            for (LoginHistory h : history) {
+                if (!Objects.equals(request.getSession().getId(), h.sessionId)) {
+                    result.put("error", 0);
+                    result.put("ip", h.ip);
+                    result.put("loginDate", h.loginDate);
                     return result;
                 }
             }
 
             // if no last login found
-            result.put("error",0);
-            result.put("ip","");
-            result.put("loginDate","");
+            result.put("error", 0);
+            result.put("ip", "");
+            result.put("loginDate", "");
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
         }
-        catch (Exception ex)
-        {
+
+        return result;
+    }
+
+    public Map<String, Object> editUser() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            SessionManager sessionManager = new SessionManager(this.request, this.response);
+            Map<String, String[]> data = this.request.getParameterMap();
+
+            // get current logged in user id
+            String userId = sessionManager.getCurrentUser().id;
+
+            if (StringUtils.isBlank(userId)) {
+                // if userId is not present in session get it from request
+                userId = data.get("userId")[0];
+            }
+
+
+            String firstName= data.get("firstName")[0];
+            String lastName= data.get("lastName")[0];
+
+            if (StringUtils.isBlank(userId))
+            {
+                result.put("error", 2);
+                return result;
+            }
+
+            if (StringUtils.isBlank(firstName))
+            {
+                result.put("error", 3);
+                return result;
+            }
+
+            if (StringUtils.isBlank(lastName))
+            {
+                result.put("error", 4);
+                return result;
+            }
+
+            Query query=new Query();
+            query.addCriteria(Criteria.where("id").is(userId));
+
+            Update update=new Update();
+            update.set("firstName",firstName);
+            update.set("lastName",lastName);
+            WriteResult writeResult= mongoOperations.updateFirst(query,update,User.class);
+
+            int numerOfRowAffected=writeResult.getN();
+
+            if (numerOfRowAffected>0)
+            {
+                result.put("error", 0);
+            }
+            else {
+                // no modification
+                result.put("error", 5);
+            }
+
+        } catch (Exception ex) {
             // exception
             result.put("error", 1);
             ex.printStackTrace();

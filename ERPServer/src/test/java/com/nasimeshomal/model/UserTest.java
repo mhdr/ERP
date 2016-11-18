@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ErpServerApplication.class})
-public class UserRepositoryTest {
+public class UserTest {
 
     @Test
     public void insert1() throws Exception {

@@ -81,37 +81,6 @@ public class SessionManager {
         return user;
     }
 
-    public Map<String,Object> getCurrentUser2()
-    {
-        Map<String,Object> result=new HashMap<>();
-
-
-        try {
-            User user=this.getCurrentUser();
-
-            Map<String,Object> userMap=new HashMap<>();
-            userMap.put("id",user.id);
-            userMap.put("userName",user.userName);
-            userMap.put("firstName",user.firstName);
-            userMap.put("lastName",user.lastName);
-            userMap.put("dateCreated",user.dateCreated);
-
-            result.put("error",0);
-            result.put("user",userMap);
-        }
-        catch (Exception ex)
-        {
-            // exception
-            result.put("error", 1);
-            ex.printStackTrace();
-        }
-
-
-
-
-        return result;
-    }
-
     public void login(String userName)
     {
         Query query = new Query();

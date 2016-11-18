@@ -48,7 +48,7 @@ var Login = (function () {
                         window.location.href = data.redirect;
                     }
                     else {
-                        if (data.error === 2) {
+                        if (data.error === 4 || data.error === 5) {
                             var msg = format("نام کاربری/کلمه عبور صحیح نمی باشد");
                             $(alert).html(msg);
                             $(alert).velocity("fadeIn", { duration: 800 });

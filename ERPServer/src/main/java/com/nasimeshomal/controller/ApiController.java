@@ -29,10 +29,21 @@ public class ApiController {
     public Map getUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
-        Map result = sessionManager.getCurrentUser2();
+        Users users=new Users(request,response);
+
+        Map result = users.getCurrentUser();
         return result;
     }
 
+    @RequestMapping(value = "/api/User/EditUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map editUser(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+        Users users=new Users(request,response);
+
+        Map result = users.editUser();
+        return result;
+    }
 
     @RequestMapping(value = "api/User/GetLastLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getLastLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -53,6 +64,17 @@ public class ApiController {
         return result;
     }
 
+    @RequestMapping(value = "api/Permissions/GetPermissionsList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getPermissionsList(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+
+        //todo next
+        Users users = new Users(request,response);
+        Map result = users.getUsers();
+        return result;
+    }
+
     @RequestMapping(value = "/api/User/GetPermissions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getPermissions(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
@@ -68,9 +90,8 @@ public class ApiController {
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
-        Map data = request.getParameterMap();
         Users users = new Users(request,response);
-        Map result = users.login(data);
+        Map result = users.login();
 
         int errorNumber= (int) result.get("error");
 
@@ -80,7 +101,7 @@ public class ApiController {
         if (errorNumber==0)
         {
             sessionManager.login(result.get("userName").toString());
-            sessionManager.checkRemeberMe(data);
+            sessionManager.checkRemeberMe(request.getParameterMap());
             result.put("redirect",host);
         }
 

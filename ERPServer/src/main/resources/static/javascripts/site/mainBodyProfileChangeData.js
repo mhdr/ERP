@@ -35,6 +35,7 @@ var MainBodyProfileChangeData;
             $("#inputProfileFirstName").parent().removeClass("has-error");
             $("#inputProfileLastName").parent().removeClass("has-error");
             $("#alertProfileSuccess").velocity("fadeOut", { duration: 0 });
+            $("#alertProfileFailed").velocity("fadeOut", { duration: 0 });
             var firstName = $("#inputProfileFirstName").val();
             var lastName = $("#inputProfileLastName").val();
             if (firstName.length == 0) {
@@ -67,6 +68,11 @@ var MainBodyProfileChangeData;
                             var msg = format("ویرایش بدون تغییر انجام شد");
                             $("#alertProfileSuccess").html(msg);
                             $("#alertProfileSuccess").velocity("fadeIn");
+                        }
+                        else {
+                            var msg = format("خطا در انجام ویرایش");
+                            $("#alertProfileFailed").html(msg);
+                            $("#alertProfileFailed").velocity("fadeIn");
                         }
                         Site.SubmitButton.afterCompelte("buttonProfileSubmit");
                     },
