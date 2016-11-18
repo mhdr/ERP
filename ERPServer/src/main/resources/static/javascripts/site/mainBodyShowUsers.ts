@@ -912,18 +912,20 @@ namespace ModalPermissions {
                                 data: parameters,
                                 success: function (data3, textStatus3, jqXHR3) {
 
+                                    var data3Result=data3.result;
+
                                     // save for later use in search
-                                    ModalPermissions.UI.setDataPermissionsList(data3);
+                                    ModalPermissions.UI.setDataPermissionsList(data3Result);
 
-                                    var length = data3.length;
-                                    $(data3).each(function (index, elem) {
+                                    var length = data3Result.length;
+                                    $(data3Result).each(function (index, elem) {
 
-                                        var checkBoxId = format("chkPermission{0}", data3[index].permissionNumber);
-                                        var permissionNumber = data3[index].permissionNumber;
+                                        var checkBoxId = format("chkPermission{0}", data3Result[index].permissionNumber);
+                                        var permissionNumber = data3Result[index].permissionNumber;
 
                                         var context = {
                                             permissionNumber: permissionNumber,
-                                            permissionName: data3[index].permissionFaName,
+                                            permissionName: data3Result[index].permissionFaName,
                                             id: checkBoxId,
                                         };
 

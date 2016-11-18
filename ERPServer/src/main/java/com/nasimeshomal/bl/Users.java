@@ -1,5 +1,7 @@
 package com.nasimeshomal.bl;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.mongodb.WriteResult;
 import com.nasimeshomal.config.ApplicationConfig;
 import com.nasimeshomal.lib.Hash;
@@ -273,6 +275,76 @@ public class Users {
             result.put("ip", "");
             result.put("loginDate", "");
         } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String,Object> getPermissions()
+    {
+        Map<String,Object> result=new HashMap<>();
+
+        try {
+            Map<String, String[]> data = this.request.getParameterMap();
+            String userId="";
+
+            if (data.containsKey("userId"))
+            {
+                userId = data.get("userId")[0];
+            }
+            else{
+                SessionManager sessionManager=new SessionManager(request,response);
+                userId=sessionManager.getCurrentUser().id;
+            }
+
+
+            User user=mongoOperations.findById(new ObjectId(userId),User.class);
+
+            result.put("error",0);
+            result.put("result",user.permissions);
+        }
+        catch (Exception ex)
+        {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String,Object> setPermissions()
+    {
+        Map<String,Object> result=new HashMap<>();
+
+        try {
+            Map<String, String[]> data = this.request.getParameterMap();
+            String userId = data.get("userId")[0];
+
+            String permissionStr=data.get("permissions")[0];
+
+            Gson gson=new Gson();
+            ArrayList<String> permissions=gson.fromJson(permissionStr,ArrayList.class);
+
+
+            User user=mongoOperations.findById(new ObjectId(userId),User.class);
+
+            user.clearPermission();
+
+            for (String num:permissions)
+            {
+                user.addPermission(Integer.parseInt(num));
+            }
+
+            mongoOperations.save(user);
+
+            result.put("error",0);
+        }
+        catch (Exception ex)
+        {
             // exception
             result.put("error", 1);
             ex.printStackTrace();

@@ -1,5 +1,6 @@
 package com.nasimeshomal.controller;
 
+import com.nasimeshomal.bl.Permissions;
 import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
 import com.nasimeshomal.bl.Users;
@@ -68,10 +69,8 @@ public class ApiController {
     public Map getPermissionsList(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
-
-        //todo next
-        Users users = new Users(request,response);
-        Map result = users.getUsers();
+        Permissions permissions=new Permissions(request,response);
+        Map result = permissions.getPermissionList();
         return result;
     }
 
@@ -79,10 +78,17 @@ public class ApiController {
     public Map getPermissions(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request,response);
 
-
-        //todo next
         Users users = new Users(request,response);
-        Map result = users.getUsers();
+        Map result = users.getPermissions();
+        return result;
+    }
+
+    @RequestMapping(value = "api/User/SetPermissions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map setPermissions(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request,response);
+
+        Users users = new Users(request,response);
+        Map result = users.setPermissions();
         return result;
     }
 
