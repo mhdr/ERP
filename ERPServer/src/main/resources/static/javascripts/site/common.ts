@@ -8,9 +8,8 @@ var format: any;
 
 namespace Site {
     export class UI {
-        static showLoaderForContent(element, top: number = 25, left: number = 50) {
-            var html = "<div id='nm-loader' style='display: none;'><i></i><i></i><i></i><i></i><i></i><i></i></div>";
-
+        static showLoaderForContent(element, top: number = 25, right: number = 50) {
+            var html="<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
             var nmLoader = $("#nm-loader");
 
             if (nmLoader.length === 0) {
@@ -18,7 +17,7 @@ namespace Site {
             }
 
             $("#nm-loader").css("top", top + "%");
-            $("#nm-loader").css("left", left + "%");
+            $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", {duration: 100, delay: 100});
         }
 
@@ -34,8 +33,8 @@ namespace Site {
             }
         }
 
-        static showLoaderForMainBody() {
-            var html = "<div id='nm-loader' style='display: none;'><i></i><i></i><i></i><i></i><i></i><i></i></div>";
+        static showLoaderForMainBody(top: number = 15, right: number = 40) {
+            var html="<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
 
             $("#mainBody div").addClass("loading-blur");
 
@@ -45,6 +44,8 @@ namespace Site {
                 $("#mainBody").append(html);
             }
 
+            $("#nm-loader").css("top", top + "%");
+            $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", {duration: 100, delay: 100});
         }
 

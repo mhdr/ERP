@@ -5,16 +5,16 @@ var Site;
     var UI = (function () {
         function UI() {
         }
-        UI.showLoaderForContent = function (element, top, left) {
+        UI.showLoaderForContent = function (element, top, right) {
             if (top === void 0) { top = 25; }
-            if (left === void 0) { left = 50; }
-            var html = "<div id='nm-loader' style='display: none;'><i></i><i></i><i></i><i></i><i></i><i></i></div>";
+            if (right === void 0) { right = 50; }
+            var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
             var nmLoader = $("#nm-loader");
             if (nmLoader.length === 0) {
                 $(element).append(html);
             }
             $("#nm-loader").css("top", top + "%");
-            $("#nm-loader").css("left", left + "%");
+            $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", { duration: 100, delay: 100 });
         };
         UI.hideLoaderForContent = function () {
@@ -28,13 +28,17 @@ var Site;
                 });
             }
         };
-        UI.showLoaderForMainBody = function () {
-            var html = "<div id='nm-loader' style='display: none;'><i></i><i></i><i></i><i></i><i></i><i></i></div>";
+        UI.showLoaderForMainBody = function (top, right) {
+            if (top === void 0) { top = 15; }
+            if (right === void 0) { right = 40; }
+            var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
             $("#mainBody div").addClass("loading-blur");
             var nmLoader = $("#nm-loader");
             if (nmLoader.length === 0) {
                 $("#mainBody").append(html);
             }
+            $("#nm-loader").css("top", top + "%");
+            $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", { duration: 100, delay: 100 });
         };
         UI.hideLoaderForMainBody = function () {

@@ -5,9 +5,9 @@
 declare var format: any;
 declare namespace Site {
     class UI {
-        static showLoaderForContent(element: any, top?: number, left?: number): void;
+        static showLoaderForContent(element: any, top?: number, right?: number): void;
         static hideLoaderForContent(): void;
-        static showLoaderForMainBody(): void;
+        static showLoaderForMainBody(top?: number, right?: number): void;
         static hideLoaderForMainBody(): void;
     }
     class Popover {
