@@ -1,7 +1,0 @@
-{
-  "_id" : "ObjectId",
-  "permissionNumber" : "Int32",
-  "permissionName" : "String",
-  "permissionFaName" : "String",
-  "order" : "Int32"
-}
