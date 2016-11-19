@@ -42,10 +42,14 @@ public class Users {
     }
 
     public Map<String, Object> getUsers() {
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<>();
 
         try {
-            List<User> users = mongoOperations.findAll(User.class);
+
+            Query query = new Query();
+            query.with(new Sort(Sort.Direction.DESC, "id"));
+            List<User> users = mongoOperations.find(query, User.class);
+
             ArrayList<Map<String, String>> usersMap = new ArrayList<Map<String, String>>();
 
             for (User user : users) {
@@ -151,7 +155,6 @@ public class Users {
             String firstName = data.get("firstName")[0];
             String lastName = data.get("lastName")[0];
             String password = data.get("password")[0];
-            String repeatPassword = data.get("repeatPassword")[0];
 
             if (StringUtils.isBlank(userName)) {
                 // empty userName
@@ -177,25 +180,13 @@ public class Users {
                 return result;
             }
 
-            if (StringUtils.isBlank(repeatPassword)) {
-                // empty lastName
-                result.put("error", 6);
-                return result;
-            }
-
-            if (!Objects.equals(password, repeatPassword)) {
-                // psswords mismatch
-                result.put("error", 7);
-                return result;
-            }
-
             Query query = new Query();
             query.addCriteria(Criteria.where("userName").is(userName));
             User currentUser = mongoOperations.findOne(query, User.class);
 
             if (currentUser != null) {
                 // userName is in use
-                result.put("error", 8);
+                result.put("error", 6);
                 return result;
             }
 
@@ -283,31 +274,26 @@ public class Users {
         return result;
     }
 
-    public Map<String,Object> getPermissions()
-    {
-        Map<String,Object> result=new HashMap<>();
+    public Map<String, Object> getPermissions() {
+        Map<String, Object> result = new HashMap<>();
 
         try {
             Map<String, String[]> data = this.request.getParameterMap();
-            String userId="";
+            String userId = "";
 
-            if (data.containsKey("userId"))
-            {
+            if (data.containsKey("userId")) {
                 userId = data.get("userId")[0];
+            } else {
+                SessionManager sessionManager = new SessionManager(request, response);
+                userId = sessionManager.getCurrentUser().id;
             }
-            else{
-                SessionManager sessionManager=new SessionManager(request,response);
-                userId=sessionManager.getCurrentUser().id;
-            }
 
 
-            User user=mongoOperations.findById(new ObjectId(userId),User.class);
+            User user = mongoOperations.findById(new ObjectId(userId), User.class);
 
-            result.put("error",0);
-            result.put("result",user.permissions);
-        }
-        catch (Exception ex)
-        {
+            result.put("error", 0);
+            result.put("result", user.permissions);
+        } catch (Exception ex) {
             // exception
             result.put("error", 1);
             ex.printStackTrace();
@@ -316,35 +302,31 @@ public class Users {
         return result;
     }
 
-    public Map<String,Object> setPermissions()
-    {
-        Map<String,Object> result=new HashMap<>();
+    public Map<String, Object> setPermissions() {
+        Map<String, Object> result = new HashMap<>();
 
         try {
             Map<String, String[]> data = this.request.getParameterMap();
             String userId = data.get("userId")[0];
 
-            String permissionStr=data.get("permissions")[0];
+            String permissionStr = data.get("permissions")[0];
 
-            Gson gson=new Gson();
-            ArrayList<String> permissions=gson.fromJson(permissionStr,ArrayList.class);
+            Gson gson = new Gson();
+            ArrayList<String> permissions = gson.fromJson(permissionStr, ArrayList.class);
 
 
-            User user=mongoOperations.findById(new ObjectId(userId),User.class);
+            User user = mongoOperations.findById(new ObjectId(userId), User.class);
 
             user.clearPermission();
 
-            for (String num:permissions)
-            {
+            for (String num : permissions) {
                 user.addPermission(Integer.parseInt(num));
             }
 
             mongoOperations.save(user);
 
-            result.put("error",0);
-        }
-        catch (Exception ex)
-        {
+            result.put("error", 0);
+        } catch (Exception ex) {
             // exception
             result.put("error", 1);
             ex.printStackTrace();
@@ -360,55 +342,127 @@ public class Users {
             SessionManager sessionManager = new SessionManager(this.request, this.response);
             Map<String, String[]> data = this.request.getParameterMap();
 
-            // get current logged in user id
-            String userId = sessionManager.getCurrentUser().id;
+            String userId = "";
 
-            if (StringUtils.isBlank(userId)) {
+            if (data.containsKey("userId")) {
                 // if userId is not present in session get it from request
                 userId = data.get("userId")[0];
+            } else {
+                // get current logged in user id
+                userId = sessionManager.getCurrentUser().id;
             }
 
+            String firstName = data.get("firstName")[0];
+            String lastName = data.get("lastName")[0];
 
-            String firstName= data.get("firstName")[0];
-            String lastName= data.get("lastName")[0];
-
-            if (StringUtils.isBlank(userId))
-            {
+            if (StringUtils.isBlank(userId)) {
                 result.put("error", 2);
                 return result;
             }
 
-            if (StringUtils.isBlank(firstName))
-            {
+            if (StringUtils.isBlank(firstName)) {
                 result.put("error", 3);
                 return result;
             }
 
-            if (StringUtils.isBlank(lastName))
-            {
+            if (StringUtils.isBlank(lastName)) {
                 result.put("error", 4);
                 return result;
             }
 
-            Query query=new Query();
+            Query query = new Query();
             query.addCriteria(Criteria.where("id").is(userId));
 
-            Update update=new Update();
-            update.set("firstName",firstName);
-            update.set("lastName",lastName);
-            WriteResult writeResult= mongoOperations.updateFirst(query,update,User.class);
+            Update update = new Update();
+            update.set("firstName", firstName);
+            update.set("lastName", lastName);
+            WriteResult writeResult = mongoOperations.updateFirst(query, update, User.class);
 
-            int numerOfRowAffected=writeResult.getN();
+            int numerOfRowAffected = writeResult.getN();
 
-            if (numerOfRowAffected>0)
-            {
+            if (numerOfRowAffected > 0) {
                 result.put("error", 0);
-            }
-            else {
+            } else {
                 // no modification
                 result.put("error", 5);
             }
 
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> changePassowrd() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = this.request.getParameterMap();
+            SessionManager sessionManager = new SessionManager(request, response);
+
+            String userId = "";
+
+            if (data.containsKey("userId")) {
+                // if userId is not present in session get it from request
+                userId = data.get("userId")[0];
+            } else {
+                // get current logged in user id
+                userId = sessionManager.getCurrentUser().id;
+            }
+
+            if (StringUtils.isBlank(userId)) {
+                result.put("error", 2);
+                return result;
+            }
+
+            String password = data.get("password")[0];
+
+            if (StringUtils.isBlank(password)) {
+                result.put("error", 3);
+                return result;
+            }
+
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(userId));
+
+            Update update = new Update();
+            update.set("password", Hash.getSHA512(password));
+
+            WriteResult writeResult = mongoOperations.updateFirst(query, update, User.class);
+
+            if (writeResult.getN() > 0) {
+                result.put("error", 0);
+            } else {
+                // no modification
+                result.put("error", 4);
+            }
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> deleteUser() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = this.request.getParameterMap();
+            String userId = data.get("userId")[0];
+            User user = mongoOperations.findById(new ObjectId(userId), User.class);
+            WriteResult writeResult = mongoOperations.remove(user);
+
+            if (writeResult.getN() > 0) {
+                result.put("error", 0);
+            } else {
+                // error on delete
+                result.put("error", 2);
+            }
         } catch (Exception ex) {
             // exception
             result.put("error", 1);

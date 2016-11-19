@@ -57,4 +57,24 @@ public class UserTest {
 
         mongoOperation.save(user);
     }
+
+    @Test
+    public void insert3() throws Exception {
+
+        User user=new User();
+        user.userName="admin";
+        user.password=Hash.getSHA512("admin");
+        user.firstName="admin";
+        user.lastName="admin";
+        user.dateCreated= DateTime.now().toString();
+        user.addPermission(1);
+        user.addPermission(2);
+
+        // For Annotation
+        ApplicationContext ctx =
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+
+        mongoOperation.save(user);
+    }
 }

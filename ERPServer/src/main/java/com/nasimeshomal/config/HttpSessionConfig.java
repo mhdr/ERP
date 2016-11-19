@@ -23,7 +23,7 @@ public class HttpSessionConfig {
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookieName("ERPSession");
-        //serializer.setCookiePath("/");
+        serializer.setCookiePath("/");
         //serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$"); // <3>
         return serializer;
     }

@@ -11,7 +11,7 @@ var format: any;
 namespace MainBodyShowUsers {
     export class UI {
 
-        static load(complete:Function) {
+        static load(complete: Function) {
             MainBodyShowUsers.UI.emptyTable();
 
             $.ajax({
@@ -25,13 +25,11 @@ namespace MainBodyShowUsers {
                         method: "POST",
                         success: function (data2, textStatus, jqXHR) {
 
-                            if (data2.error===0)
-                            {
-                                var users= data2.users;
+                            if (data2.error === 0) {
+                                var users = data2.users;
 
-                                for (var i=0;i<users.length;i++)
-                                {
-                                    var value=users[i];
+                                for (var i = 0; i < users.length; i++) {
+                                    var value = users[i];
                                     var context = {
                                         userName: value.userName, firstName: value.firstName,
                                         lastName: value.lastName, userId: value.id,
@@ -44,7 +42,7 @@ namespace MainBodyShowUsers {
                                     MainBodyShowUsers.UI.bindTableRow_click(el);
                                 }
 
-                                $("#divMainBodyShowUsers").velocity("fadeIn",{duration:250});
+                                $("#divMainBodyShowUsers").velocity("fadeIn", {duration: 250});
                                 MainBodyShowUsers.UI.applyTableStrip();
                                 complete();
                             }
@@ -74,41 +72,45 @@ namespace MainBodyShowUsers {
                         method: "POST",
                         success: function (data2, textStatus, jqXHR) {
 
-                            var trBeforeLoadNewData = $("#tbodyMainBodyShowUsers tr");
+                            if (data2.error === 0) {
+                                var trBeforeLoadNewData = $("#tbodyMainBodyShowUsers tr");
 
-                            data2.forEach(function (value, index, array) {
+                                var data2Result = data2.users;
 
-                                var count = 0;
+                                for (var i = 0; i < data2Result.length; i++) {
+                                    var count = 0;
+                                    var value = data2Result[i];
 
-                                $(trBeforeLoadNewData).each(function (index3, elem3) {
-                                    var userId = $(elem3).attr("data-nm-userId");
+                                    $(trBeforeLoadNewData).each(function (index3, elem3) {
+                                        var userId = $(elem3).attr("data-nm-userId");
 
-                                    if (userId === value._id) {
-                                        count++;
-                                        // do not continue if already in the table
-                                        return false;
-                                    }
-                                });
-
-                                // if item is new
-                                if (count === 0) {
-                                    var context = {
-                                        userName: value.userName, firstName: value.firstName,
-                                        lastName: value.lastName, userId: value._id,
-                                        style: format("background-color:#dfecdf;display:none;")
-                                    };
-                                    var html = template(context);
-                                    $("#tbodyMainBodyShowUsers").prepend(html);
-                                    var el = $(format("tr[data-nm-userId={0}]", value._id));
-                                    $(el).velocity("fadeIn", {duration: 1000}).velocity({backgroundColor: "#ffffff"}, {
-                                        duration: 1000, complete: function () {
-                                            MainBodyShowUsers.UI.applyTableStrip();
-
-                                            MainBodyShowUsers.UI.bindTableRow_click(el);
+                                        if (userId === value.id) {
+                                            count++;
+                                            // do not continue if already in the table
+                                            return false;
                                         }
                                     });
+
+                                    // if item is new
+                                    if (count === 0) {
+                                        var context = {
+                                            userName: value.userName, firstName: value.firstName,
+                                            lastName: value.lastName, userId: value.id,
+                                            style: format("background-color:#dfecdf;display:none;")
+                                        };
+                                        var html = template(context);
+                                        $("#tbodyMainBodyShowUsers").prepend(html);
+                                        var el = $(format("tr[data-nm-userId={0}]", value.id));
+                                        $(el).velocity("fadeIn", {duration: 1000}).velocity({backgroundColor: "#ffffff"}, {
+                                            duration: 1000, complete: function () {
+                                                MainBodyShowUsers.UI.applyTableStrip();
+
+                                                MainBodyShowUsers.UI.bindTableRow_click(el);
+                                            }
+                                        });
+                                    }
                                 }
-                            });
+                            }
                         }
                     });
                 }
@@ -504,7 +506,7 @@ namespace ModalNewUser {
             var lastName = $("#inputLastName").val();
 
             if (userName.length == 0) {
-                Site.Popover.create("divAlerUserName1","aAlertUserName","spanAlertUserName");
+                Site.Popover.create("divAlerUserName1", "aAlertUserName", "spanAlertUserName");
                 $("#inputUserName").parent().addClass("has-error");
                 clientSideError += 1;
             }
@@ -513,46 +515,46 @@ namespace ModalNewUser {
                 var resultRegex1 = regex1.test(userName.trim().toLowerCase());
 
                 if (!resultRegex1) {
-                    Site.Popover.create("divAlerUserName2","aAlertUserName","spanAlertUserName");
+                    Site.Popover.create("divAlerUserName2", "aAlertUserName", "spanAlertUserName");
                     $("#inputPassword").parent().addClass("has-error");
                     clientSideError += 1;
                 }
             }
 
             if (password.length == 0) {
-                Site.Popover.create("divAlerPassword1","aAlertPassword","spanAlertPassword");
+                Site.Popover.create("divAlerPassword1", "aAlertPassword", "spanAlertPassword");
                 $("#inputPassword").parent().addClass("has-error");
                 clientSideError += 1;
             }
             else {
                 if (password.length < 8) {
-                    Site.Popover.create("divAlerPassword2","aAlertPassword","spanAlertPassword");
+                    Site.Popover.create("divAlerPassword2", "aAlertPassword", "spanAlertPassword");
                     $("#inputPassword").parent().addClass("has-error");
                     clientSideError += 1;
                 }
             }
 
             if (repeatPassword.length === 0) {
-                Site.Popover.create("divAlertRepeatPassword1","aAlertRepeatPassword","spanAlertRepeatPassword");
+                Site.Popover.create("divAlertRepeatPassword1", "aAlertRepeatPassword", "spanAlertRepeatPassword");
                 $("#inputRepeatPassword").parent().addClass("has-error");
                 clientSideError += 1;
             }
             else {
                 if (password !== repeatPassword) {
-                    Site.Popover.create("divAlertRepeatPassword2","aAlertRepeatPassword","spanAlertRepeatPassword");
+                    Site.Popover.create("divAlertRepeatPassword2", "aAlertRepeatPassword", "spanAlertRepeatPassword");
                     $("#inputRepeatPassword").parent().addClass("has-error");
                     clientSideError += 1;
                 }
             }
 
             if (firstName.length == 0) {
-                Site.Popover.create("divAlertFirstName1","aAlertFirstName","spanAlertFirstName");
+                Site.Popover.create("divAlertFirstName1", "aAlertFirstName", "spanAlertFirstName");
                 $("#inputFirstName").parent().addClass("has-error");
                 clientSideError += 1;
             }
 
             if (lastName.length == 0) {
-                Site.Popover.create("divAlertLastName1","aAlertLastName","spanAlertLastName");
+                Site.Popover.create("divAlertLastName1", "aAlertLastName", "spanAlertLastName");
                 $("#inputLastName").parent().addClass("has-error");
                 clientSideError += 1;
             }
@@ -576,8 +578,8 @@ namespace ModalNewUser {
                     method: "POST",
                     data: parameters,
                     success: function (data, textStatus, jqXHR) {
-                        if (data.error == 5) {
-                            Site.Popover.create("divAlerUserName3","aAlertUserName","spanAlertUserName");
+                        if (data.error == 6) {
+                            Site.Popover.create("divAlerUserName3", "aAlertUserName", "spanAlertUserName");
                             $("#inputUserName").parent().addClass("has-error");
                         }
                         else if (data.error == 0) {
@@ -670,13 +672,13 @@ namespace ModalEditUser {
 
 
             if (firstName.length == 0) {
-                Site.Popover.create("divEditAlertFirstName1","aEditAlertFirstName","spanEditAlertFirstName");
+                Site.Popover.create("divEditAlertFirstName1", "aEditAlertFirstName", "spanEditAlertFirstName");
                 $("#inputEditFirstName").parent().addClass("has-error");
                 clientSideError += 1;
             }
 
             if (lastName.length == 0) {
-                Site.Popover.create("divEditAlertLastName1","aEditAlertLastName","spanEditAlertLastName");
+                Site.Popover.create("divEditAlertLastName1", "aEditAlertLastName", "spanEditAlertLastName");
                 $("#inputEditLastName").parent().addClass("has-error");
                 clientSideError += 1;
             }
@@ -797,26 +799,26 @@ namespace ModalChangePassword {
             var repeatPassword = $("#inputCPRepeatPassword").val();
 
             if (password.length === 0) {
-                Site.Popover.create("divCPAlerPassword1","aCPAlertPassword","spanCPAlertPassword");
+                Site.Popover.create("divCPAlerPassword1", "aCPAlertPassword", "spanCPAlertPassword");
                 $("#inputCPPassword").parent().addClass("has-error");
                 clientSideError += 1;
             }
             else {
                 if (password.length < 8) {
-                    Site.Popover.create("divCPAlerPassword2","aCPAlertPassword","spanCPAlertPassword");
+                    Site.Popover.create("divCPAlerPassword2", "aCPAlertPassword", "spanCPAlertPassword");
                     $("#inputCPPassword").parent().addClass("has-error");
                     clientSideError += 1;
                 }
             }
 
             if (repeatPassword.length === 0) {
-                Site.Popover.create("divCPAlertRepeatPassword1","aCPAlertRepeatPassword","spanCPAlertRepeatPassword");
+                Site.Popover.create("divCPAlertRepeatPassword1", "aCPAlertRepeatPassword", "spanCPAlertRepeatPassword");
                 $("#inputCPRepeatPassword").parent().addClass("has-error");
                 clientSideError += 1;
             }
             else {
                 if (password !== repeatPassword) {
-                    Site.Popover.create("divCPAlertRepeatPassword2","aCPAlertRepeatPassword","spanCPAlertRepeatPassword");
+                    Site.Popover.create("divCPAlertRepeatPassword2", "aCPAlertRepeatPassword", "spanCPAlertRepeatPassword");
                     $("#inputCPRepeatPassword").parent().addClass("has-error");
                     clientSideError += 1;
                 }
@@ -876,15 +878,14 @@ namespace ModalPermissions {
             ModalPermissions.UI.clearUlListPermissions();
         }
 
-        static clearUlListPermissions()
-        {
+        static clearUlListPermissions() {
             $("#ulListPermissions").empty();
         }
 
         static fetchData(filter = null) {
             // show loader
-            var element=$("#ulListPermissions").parent();
-            Site.UI.showLoaderForContent(element,25,42);
+            var element = $("#ulListPermissions").parent();
+            Site.UI.showLoaderForContent(element, 25, 42);
             //
 
             var parameters = {query: filter};
@@ -912,7 +913,7 @@ namespace ModalPermissions {
                                 data: parameters,
                                 success: function (data3, textStatus3, jqXHR3) {
 
-                                    var data3Result=data3.result;
+                                    var data3Result = data3.result;
 
                                     // save for later use in search
                                     ModalPermissions.UI.setDataPermissionsList(data3Result);

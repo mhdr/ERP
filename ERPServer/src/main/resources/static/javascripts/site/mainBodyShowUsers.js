@@ -55,33 +55,37 @@ var MainBodyShowUsers;
                         url: "./api/User/GetUsers",
                         method: "POST",
                         success: function (data2, textStatus, jqXHR) {
-                            var trBeforeLoadNewData = $("#tbodyMainBodyShowUsers tr");
-                            data2.forEach(function (value, index, array) {
-                                var count = 0;
-                                $(trBeforeLoadNewData).each(function (index3, elem3) {
-                                    var userId = $(elem3).attr("data-nm-userId");
-                                    if (userId === value._id) {
-                                        count++;
-                                        return false;
-                                    }
-                                });
-                                if (count === 0) {
-                                    var context = {
-                                        userName: value.userName, firstName: value.firstName,
-                                        lastName: value.lastName, userId: value._id,
-                                        style: format("background-color:#dfecdf;display:none;")
-                                    };
-                                    var html = template(context);
-                                    $("#tbodyMainBodyShowUsers").prepend(html);
-                                    var el = $(format("tr[data-nm-userId={0}]", value._id));
-                                    $(el).velocity("fadeIn", { duration: 1000 }).velocity({ backgroundColor: "#ffffff" }, {
-                                        duration: 1000, complete: function () {
-                                            MainBodyShowUsers.UI.applyTableStrip();
-                                            MainBodyShowUsers.UI.bindTableRow_click(el);
+                            if (data2.error === 0) {
+                                var trBeforeLoadNewData = $("#tbodyMainBodyShowUsers tr");
+                                var data2Result = data2.users;
+                                for (var i = 0; i < data2Result.length; i++) {
+                                    var count = 0;
+                                    var value = data2Result[i];
+                                    $(trBeforeLoadNewData).each(function (index3, elem3) {
+                                        var userId = $(elem3).attr("data-nm-userId");
+                                        if (userId === value.id) {
+                                            count++;
+                                            return false;
                                         }
                                     });
+                                    if (count === 0) {
+                                        var context = {
+                                            userName: value.userName, firstName: value.firstName,
+                                            lastName: value.lastName, userId: value.id,
+                                            style: format("background-color:#dfecdf;display:none;")
+                                        };
+                                        var html = template(context);
+                                        $("#tbodyMainBodyShowUsers").prepend(html);
+                                        var el = $(format("tr[data-nm-userId={0}]", value.id));
+                                        $(el).velocity("fadeIn", { duration: 1000 }).velocity({ backgroundColor: "#ffffff" }, {
+                                            duration: 1000, complete: function () {
+                                                MainBodyShowUsers.UI.applyTableStrip();
+                                                MainBodyShowUsers.UI.bindTableRow_click(el);
+                                            }
+                                        });
+                                    }
                                 }
-                            });
+                            }
                         }
                     });
                 }
@@ -463,7 +467,7 @@ var ModalNewUser;
                     method: "POST",
                     data: parameters,
                     success: function (data, textStatus, jqXHR) {
-                        if (data.error == 5) {
+                        if (data.error == 6) {
                             Site.Popover.create("divAlerUserName3", "aAlertUserName", "spanAlertUserName");
                             $("#inputUserName").parent().addClass("has-error");
                         }
