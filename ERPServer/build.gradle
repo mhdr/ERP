@@ -36,7 +36,7 @@ dependencies {
 
 	//compile('org.springframework.boot:spring-boot-starter-actuator')
 	//compile('org.springframework.boot:spring-boot-actuator-docs')
-	//compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-aop')
 	//compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	//compile('org.springframework.boot:spring-boot-starter-data-rest')
@@ -54,8 +54,8 @@ dependencies {
 	//compile('org.springframework.boot:spring-boot-starter-websocket')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
-	//testCompile('org.springframework.boot:spring-boot-starter-test')
-	//testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure
 	compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure'
@@ -85,7 +85,7 @@ dependencies {
 	compile group: 'org.springframework.session', name: 'spring-session-data-mongo', version: '1.2.2.RELEASE'
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
-	//compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+	compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jetty
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
