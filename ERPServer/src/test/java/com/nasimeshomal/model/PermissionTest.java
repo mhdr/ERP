@@ -2,9 +2,7 @@ package com.nasimeshomal.model;
 
 
 import com.nasimeshomal.ErpServerApplication;
-import com.nasimeshomal.config.ApplicationConfig;
-import com.nasimeshomal.lib.Hash;
-import org.joda.time.DateTime;
+import com.nasimeshomal.config.MongoConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
@@ -42,7 +40,7 @@ public class PermissionTest {
 
         // For Annotation
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         mongoOperation.save(permission1);

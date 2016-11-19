@@ -8,7 +8,7 @@ var MainBodyShowUsers;
         UI.load = function (complete) {
             MainBodyShowUsers.UI.emptyTable();
             $.ajax({
-                url: "./hbs/mainBodyShowUsersTable.hbs",
+                url: "./hbs/mainBody/users/showUsersTable.hbs",
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -47,7 +47,7 @@ var MainBodyShowUsers;
         };
         UI.loadNewData = function () {
             $.ajax({
-                url: "./hbs/mainBodyShowUsersTable.hbs",
+                url: "./hbs/mainBody/users/showUsersTable.hbs",
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -182,7 +182,7 @@ var MainBodyShowUsers;
                 if ($("#divModalNewUser").length == 0) {
                     $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                     $.ajax({
-                        url: "./hbs/modalNewUser.hbs",
+                        url: "./hbs/mainBody/users/modalNewUser.hbs",
                         method: "GET",
                         success: function (data, textStatus, jqXHR) {
                             $("#divMainBodyShowUsers").append(data);
@@ -213,7 +213,7 @@ var MainBodyShowUsers;
                     if ($("#divModalEditUser").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/modalEditUser.hbs",
+                            url: "./hbs/mainBody/users/modalEditUser.hbs",
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -242,7 +242,7 @@ var MainBodyShowUsers;
                     if ($("#divModalPermissions").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/modalPermissions.hbs",
+                            url: "./hbs/mainBody/users/modalPermissions.hbs",
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -274,7 +274,7 @@ var MainBodyShowUsers;
                     if ($("#divModalChangePassword").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/modalChangePassword.hbs",
+                            url: "./hbs/mainBody/users/modalChangePassword.hbs",
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -724,7 +724,7 @@ var ModalPermissions;
             Site.UI.showLoaderForContent(element, 25, 42);
             var parameters = { query: filter };
             $.ajax({
-                url: "./hbs/modalPermissionsList.hbs",
+                url: "./hbs/mainBody/users/modalPermissionsList.hbs",
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);

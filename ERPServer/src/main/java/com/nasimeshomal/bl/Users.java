@@ -1,9 +1,8 @@
 package com.nasimeshomal.bl;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.mongodb.WriteResult;
-import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.config.MongoConfig;
 import com.nasimeshomal.lib.Hash;
 import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
@@ -19,7 +18,6 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +35,7 @@ public class Users {
         this.response = response;
 
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
     }
 

@@ -1,11 +1,10 @@
 package com.nasimeshomal.bl;
 
-import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.config.MongoConfig;
 import com.nasimeshomal.model.Permission;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ public class Permissions {
         this.response = response;
 
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
     }
 

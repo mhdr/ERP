@@ -315,7 +315,7 @@ class StaticData {
     static sideBarShowUsersHTML: SideBarData = {
         divSideBar: "divSidebarUsers",
         cache: "sideBarUsersHTML",
-        url: "./hbs/sideBarUsers.hbs",
+        url: "./hbs/sidebar/users.hbs",
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
     };
@@ -329,7 +329,7 @@ class StaticData {
     static mainBodyShowUsersHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowUsers",
         cache: "mainBodyShowUsersHTML",
-        url: "./hbs/mainBodyShowUsers.hbs"
+        url: "./hbs/mainBody/users/showUsers.hbs"
     };
 
     static mainBodyShowUsersJS: MainBodyJSData = {
@@ -352,7 +352,7 @@ class StaticData {
     static sideBarProfileHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sideBarProfile.hbs",
+        url: "./hbs/sidebar/profile.hbs",
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
@@ -366,7 +366,7 @@ class StaticData {
     static mainBodyProfileHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfile",
         cache: "mainBodyProfileHTML",
-        url: "./hbs/mainBodyProfile.hbs"
+        url: "./hbs/mainBody/profile/profile.hbs"
     };
 
     static mainBodyProfileJS: MainBodyJSData = {
@@ -389,7 +389,7 @@ class StaticData {
     static sideBarProfileCDHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sideBarProfile.hbs",
+        url: "./hbs/sidebar/profile.hbs",
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
@@ -403,7 +403,7 @@ class StaticData {
     static mainBodyProfileCDHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBodyProfileChangeData.hbs"
+        url: "./hbs/mainBody/profile/changeData.hbs"
     };
 
     static mainBodyProfileCDJS: MainBodyJSData = {

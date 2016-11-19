@@ -243,7 +243,7 @@ var StaticData = (function () {
     StaticData.sideBarShowUsersHTML = {
         divSideBar: "divSidebarUsers",
         cache: "sideBarUsersHTML",
-        url: "./hbs/sideBarUsers.hbs",
+        url: "./hbs/sidebar/users.hbs",
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
     };
@@ -255,7 +255,7 @@ var StaticData = (function () {
     StaticData.mainBodyShowUsersHTML = {
         divId: "divMainBodyShowUsers",
         cache: "mainBodyShowUsersHTML",
-        url: "./hbs/mainBodyShowUsers.hbs"
+        url: "./hbs/mainBody/users/showUsers.hbs"
     };
     StaticData.mainBodyShowUsersJS = {
         namespace: "MainBodyShowUsers",
@@ -272,7 +272,7 @@ var StaticData = (function () {
     StaticData.sideBarProfileHTML = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sideBarProfile.hbs",
+        url: "./hbs/sidebar/profile.hbs",
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
@@ -284,7 +284,7 @@ var StaticData = (function () {
     StaticData.mainBodyProfileHTML = {
         divId: "divMainBodyProfile",
         cache: "mainBodyProfileHTML",
-        url: "./hbs/mainBodyProfile.hbs"
+        url: "./hbs/mainBody/profile/profile.hbs"
     };
     StaticData.mainBodyProfileJS = {
         namespace: "MainBodyProfile",
@@ -301,7 +301,7 @@ var StaticData = (function () {
     StaticData.sideBarProfileCDHTML = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sideBarProfile.hbs",
+        url: "./hbs/sidebar/profile.hbs",
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
@@ -313,7 +313,7 @@ var StaticData = (function () {
     StaticData.mainBodyProfileCDHTML = {
         divId: "divMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBodyProfileChangeData.hbs"
+        url: "./hbs/mainBody/profile/changeData.hbs"
     };
     StaticData.mainBodyProfileCDJS = {
         namespace: "MainBodyProfileChangeData",

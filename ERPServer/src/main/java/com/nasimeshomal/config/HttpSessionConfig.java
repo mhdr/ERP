@@ -11,7 +11,7 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
 @EnableMongoHttpSession
-public class HttpSessionConfig {
+public class HttpSessionConfig{
 
     @Bean
     public JacksonMongoSessionConverter jacksonMongoSessionConverter() {

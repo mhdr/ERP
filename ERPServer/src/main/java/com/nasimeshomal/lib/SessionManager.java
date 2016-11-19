@@ -1,10 +1,9 @@
 package com.nasimeshomal.lib;
 
-import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.config.MongoConfig;
 import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -34,7 +32,7 @@ public class SessionManager {
         this.response=response;
 
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         this.mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
     }
 

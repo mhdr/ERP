@@ -1,12 +1,11 @@
 package com.nasimeshomal.model;
 
 import com.nasimeshomal.ErpServerApplication;
-import com.nasimeshomal.config.ApplicationConfig;
+import com.nasimeshomal.config.MongoConfig;
 import com.nasimeshomal.lib.Hash;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -32,7 +31,7 @@ public class UserTest {
 
         // For Annotation
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         mongoOperation.save(user);
@@ -52,7 +51,7 @@ public class UserTest {
 
         // For Annotation
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         mongoOperation.save(user);
@@ -72,7 +71,7 @@ public class UserTest {
 
         // For Annotation
         ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(ApplicationConfig.class);
+                new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         mongoOperation.save(user);
