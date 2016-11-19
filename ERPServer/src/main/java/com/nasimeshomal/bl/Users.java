@@ -251,9 +251,10 @@ public class Users {
             query.with(sort);
 
             List<LoginHistory> history = mongoOperations.find(query, LoginHistory.class);
+            String sessionId=request.getSession().getId();
 
             for (LoginHistory h : history) {
-                if (!Objects.equals(request.getSession().getId(), h.sessionId)) {
+                if (!Objects.equals(sessionId, h.sessionId)) {
                     result.put("error", 0);
                     result.put("ip", h.ip);
                     result.put("loginDate", h.loginDate);
