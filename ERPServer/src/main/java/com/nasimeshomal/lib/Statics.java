@@ -8,4 +8,9 @@ public class Statics {
         MongoClient mongo = new MongoClient("localhost",27017);
         return mongo;
     }
+
+    public static String getVersion()
+    {
+        return "1000";
+    }
 }
