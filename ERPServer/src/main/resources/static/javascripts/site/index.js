@@ -1,6 +1,7 @@
 window['format'];
 var format;
 $(document).ready(function () {
+    ko.applyBindings(Site.viewModelNavbar, document.getElementById("topMenu"));
     UI.investigatePermissions();
     UI.initializeSize();
     UI.bindAll();
@@ -21,14 +22,12 @@ var UI = (function () {
             success: function (data, textStatus, jqXHR) {
                 if (data.error === 0) {
                     var permissions = data.result;
-                    sessionStorage.setItem("permissions", JSON.stringify(permissions));
-                    var items = $(".require-permission");
-                    $(items).each(function (index, elem) {
-                        var requiredPermission = $(elem).attr("data-nm-permission");
-                        if ($.inArray(requiredPermission, permissions)) {
-                            $(elem).removeClass("require-permission");
+                    for (var i = 0; i < permissions.length; i++) {
+                        var current = permissions[i];
+                        if (current.permissionNumber === 1) {
+                            Site.viewModelNavbar.userPermission(true);
                         }
-                    });
+                    }
                 }
             }
         });
@@ -75,6 +74,8 @@ var UI = (function () {
                 break;
             case "#Profile/ChangeData":
                 BrowserLocation.aChangeProfile();
+                break;
+            case "#Profile/ChangePassword":
                 break;
         }
     };
@@ -250,7 +251,7 @@ var StaticData = (function () {
     StaticData.mainBodyShowUsersCSS = {
         styleId: "styleMainBodyShowUsers",
         cache: "mainBodyShowUsersCSS",
-        url: "./stylesheets/site/mainBodyShowUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsersHTML = {
         divId: "divMainBodyShowUsers",
@@ -261,7 +262,7 @@ var StaticData = (function () {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
         cache: "mainBodyShowUsersJS",
-        url: "./javascripts/site/mainBodyShowUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsers = {
         SideBar: StaticData.sideBarShowUsersHTML,
@@ -279,7 +280,7 @@ var StaticData = (function () {
     StaticData.mainBodyProfileCSS = {
         styleId: "styleMainBodyProfile",
         cache: "mainBodyProfileCSS",
-        url: "./stylesheets/site/mainBodyProfile.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileHTML = {
         divId: "divMainBodyProfile",
@@ -290,7 +291,7 @@ var StaticData = (function () {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
         cache: "mainBodyProfileJS",
-        url: "./javascripts/site/mainBodyProfile.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfile = {
         SideBar: StaticData.sideBarProfileHTML,
@@ -308,7 +309,7 @@ var StaticData = (function () {
     StaticData.mainBodyProfileCDCSS = {
         styleId: "styleMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/mainBodyProfileChangeData.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCDHTML = {
         divId: "divMainBodyProfileChangeData",
@@ -319,13 +320,42 @@ var StaticData = (function () {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/mainBodyProfileChangeData.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCD = {
         SideBar: StaticData.sideBarProfileCDHTML,
         HTML: StaticData.mainBodyProfileCDHTML,
         CSS: StaticData.mainBodyProfileCDCSS,
         JS: StaticData.mainBodyProfileCDJS
+    };
+    StaticData.sideBarProfileCPHTML = {
+        divSideBar: "divSidebarProfile",
+        cache: "sideBarProfileHTML",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aChangeProfile",
+        liNavBar: "liProfile"
+    };
+    StaticData.mainBodyProfileCPCSS = {
+        styleId: "styleMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataCSS",
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyProfileCPHTML = {
+        divId: "divMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataHTML",
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyProfileCPJS = {
+        namespace: "MainBodyProfileChangeData",
+        scriptId: "scriptMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataJS",
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyProfileCP = {
+        SideBar: StaticData.sideBarProfileCPHTML,
+        HTML: StaticData.mainBodyProfileCPHTML,
+        CSS: StaticData.mainBodyProfileCPCSS,
+        JS: StaticData.mainBodyProfileCPJS
     };
     return StaticData;
 }());
@@ -374,6 +404,8 @@ var BrowserLocation = (function () {
                 Site.UI.hideLoaderForMainBody();
             });
         });
+    };
+    BrowserLocation.aProfileChangePassword = function () {
     };
     BrowserLocation.aHome = function () {
         $("#sideBar").empty();

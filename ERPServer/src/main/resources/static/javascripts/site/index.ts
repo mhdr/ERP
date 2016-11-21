@@ -1,9 +1,9 @@
 ///<reference path="../../../DefinitelyTyped/jquery/jquery.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
-///<reference path="mainBodyShowUsers.d.ts"/>
-///<reference path="mainBodyProfile.d.ts"/>
-///<reference path="mainBodyProfileChangeData.d.ts"/>
+///<reference path="users/showUsers.d.ts"/>
+///<reference path="profile/profile.d.ts"/>
+///<reference path="profile/changeData.d.ts"/>
 ///<reference path="nm.d.ts"/>
 ///<reference path="common.d.ts"/>
 
@@ -11,6 +11,9 @@ window['format'];
 var format: any;
 
 $(document).ready(function () {
+
+    ko.applyBindings(Site.viewModelNavbar,document.getElementById("topMenu"));
+
     UI.investigatePermissions();
     UI.initializeSize();
     UI.bindAll();
@@ -38,16 +41,16 @@ class UI {
             success: function (data, textStatus, jqXHR) {
                 if (data.error === 0) {
                     var permissions = data.result;
-                    sessionStorage.setItem("permissions", JSON.stringify(permissions));
 
-                    var items = $(".require-permission");
-                    $(items).each((index, elem)=> {
-                        var requiredPermission = $(elem).attr("data-nm-permission");
+                    for (var i=0;i<permissions.length;i++)
+                    {
+                        var current=permissions[i];
 
-                        if ($.inArray(requiredPermission, permissions)) {
-                            $(elem).removeClass("require-permission");
+                        if (current.permissionNumber===1)
+                        {
+                            Site.viewModelNavbar.userPermission(true);
                         }
-                    });
+                    }
                 }
             }
         });
@@ -101,6 +104,8 @@ class UI {
                 break;
             case "#Profile/ChangeData":
                 BrowserLocation.aChangeProfile();
+                break;
+            case "#Profile/ChangePassword":
                 break;
         }
     }
@@ -324,7 +329,7 @@ class StaticData {
     static mainBodyShowUsersCSS: MainBodyCSSData = {
         styleId: "styleMainBodyShowUsers",
         cache: "mainBodyShowUsersCSS",
-        url: "./stylesheets/site/mainBodyShowUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsersHTML: MainBodyHTMLData = {
@@ -337,7 +342,7 @@ class StaticData {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
         cache: "mainBodyShowUsersJS",
-        url: "./javascripts/site/mainBodyShowUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsers: MainBodyData = {
@@ -361,7 +366,7 @@ class StaticData {
     static mainBodyProfileCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfile",
         cache: "mainBodyProfileCSS",
-        url: "./stylesheets/site/mainBodyProfile.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileHTML: MainBodyHTMLData = {
@@ -374,7 +379,7 @@ class StaticData {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
         cache: "mainBodyProfileJS",
-        url: "./javascripts/site/mainBodyProfile.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyProfile: MainBodyData = {
@@ -398,7 +403,7 @@ class StaticData {
     static mainBodyProfileCDCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/mainBodyProfileChangeData.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCDHTML: MainBodyHTMLData = {
@@ -411,7 +416,7 @@ class StaticData {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/mainBodyProfileChangeData.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCD: MainBodyData = {
@@ -419,6 +424,44 @@ class StaticData {
         HTML: StaticData.mainBodyProfileCDHTML,
         CSS: StaticData.mainBodyProfileCDCSS,
         JS: StaticData.mainBodyProfileCDJS
+    };
+
+    //
+
+    // Profile/ChangePassword
+
+    static sideBarProfileCPHTML: SideBarData = {
+        divSideBar: "divSidebarProfile",
+        cache: "sideBarProfileHTML",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aChangeProfile",
+        liNavBar: "liProfile"
+    };
+
+    static mainBodyProfileCPCSS: MainBodyCSSData = {
+        styleId: "styleMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataCSS",
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+    };
+
+    static mainBodyProfileCPHTML: MainBodyHTMLData = {
+        divId: "divMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataHTML",
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+    };
+
+    static mainBodyProfileCPJS: MainBodyJSData = {
+        namespace: "MainBodyProfileChangeData",
+        scriptId: "scriptMainBodyProfileChangeData",
+        cache: "mainBodyProfileChangeDataJS",
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+    };
+
+    static mainBodyProfileCP: MainBodyData = {
+        SideBar: StaticData.sideBarProfileCPHTML,
+        HTML: StaticData.mainBodyProfileCPHTML,
+        CSS: StaticData.mainBodyProfileCPCSS,
+        JS: StaticData.mainBodyProfileCPJS
     };
 
     //
@@ -516,6 +559,11 @@ class BrowserLocation {
                 Site.UI.hideLoaderForMainBody();
             });
         });
+    }
+
+    static aProfileChangePassword()
+    {
+
     }
 
     static aHome() {

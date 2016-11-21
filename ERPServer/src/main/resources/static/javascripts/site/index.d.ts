@@ -1,9 +1,9 @@
 /// <reference path="../../../DefinitelyTyped/jquery/jquery.d.ts" />
 /// <reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts" />
 /// <reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts" />
-/// <reference path="mainBodyShowUsers.d.ts" />
-/// <reference path="mainBodyProfile.d.ts" />
-/// <reference path="mainBodyProfileChangeData.d.ts" />
+/// <reference path="users/showUsers.d.ts" />
+/// <reference path="profile/profile.d.ts" />
+/// <reference path="profile/changeData.d.ts" />
 /// <reference path="nm.d.ts" />
 /// <reference path="common.d.ts" />
 declare var format: any;
@@ -43,6 +43,11 @@ declare class StaticData {
     static mainBodyProfileCDHTML: MainBodyHTMLData;
     static mainBodyProfileCDJS: MainBodyJSData;
     static mainBodyProfileCD: MainBodyData;
+    static sideBarProfileCPHTML: SideBarData;
+    static mainBodyProfileCPCSS: MainBodyCSSData;
+    static mainBodyProfileCPHTML: MainBodyHTMLData;
+    static mainBodyProfileCPJS: MainBodyJSData;
+    static mainBodyProfileCP: MainBodyData;
 }
 interface SideBarData {
     divSideBar: string;
@@ -79,6 +84,7 @@ declare class BrowserLocation {
     static aShowForms(): void;
     static aProfile(): void;
     static aChangeProfile(): void;
+    static aProfileChangePassword(): void;
     static aHome(): void;
     static aNewForms(): void;
 }

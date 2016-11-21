@@ -2,6 +2,7 @@
 ///<reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts"/>
+///<reference path="../../../DefinitelyTyped/knockout/knockout.d.ts"/>
 
 window['format'];
 var format: any;
@@ -11,6 +12,10 @@ $(document).ready(function () {
 });
 
 namespace Site {
+
+    export var viewModelNavbar={
+        userPermission:ko.observable(false),
+    };
 
     export var Statics = {
         version: localStorage.getItem("version"),

@@ -2,8 +2,12 @@
 /// <reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts" />
 /// <reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts" />
 /// <reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts" />
+/// <reference path="../../../DefinitelyTyped/knockout/knockout.d.ts" />
 declare var format: any;
 declare namespace Site {
+    var viewModelNavbar: {
+        userPermission: KnockoutObservable<boolean>;
+    };
     var Statics: {
         version: any;
     };

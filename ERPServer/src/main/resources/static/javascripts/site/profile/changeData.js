@@ -85,4 +85,4 @@ var MainBodyProfileChangeData;
     }());
     MainBodyProfileChangeData.UI = UI;
 })(MainBodyProfileChangeData || (MainBodyProfileChangeData = {}));
-//# sourceMappingURL=mainBodyProfileChangeData.js.map
+//# sourceMappingURL=changeData.js.map

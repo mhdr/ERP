@@ -5,6 +5,9 @@ $(document).ready(function () {
 });
 var Site;
 (function (Site) {
+    Site.viewModelNavbar = {
+        userPermission: ko.observable(false)
+    };
     Site.Statics = {
         version: localStorage.getItem("version")
     };

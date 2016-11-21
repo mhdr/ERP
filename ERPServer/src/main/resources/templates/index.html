@@ -11,6 +11,7 @@
     <link rel='stylesheet' th:href="'stylesheets/site/index.min.css?' + ${version}"/>
 
     <script th:src="'javascripts/jquery.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/knockout.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/bootstrap.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/handlebars.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/velocity.min.js?' + ${version}" type="text/javascript"></script>
@@ -38,7 +39,7 @@
                     <ul class="nav navbar-nav" id="ulNavbarItems">
 
                         <li id="liForms"><a href="#Forms/Show" id="aForms" class="index-a-navbar hvr-shutter-out-horizontal">فرم ها</a></li>
-                        <li data-nm-permission="1" class="require-permission" id="liUsers">
+                        <li id="liUsers" data-bind="if:userPermission">
                             <a href="#Users/Show" id="aUsers" class="index-a-navbar hvr-shutter-out-horizontal"><span>کاربران</span></a></li>
                     </ul>
 
