@@ -4,7 +4,11 @@
 /// <reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts" />
 declare var format: any;
 declare namespace Site {
+    var Statics: {
+        version: any;
+    };
     class UI {
+        static getVersion(): void;
         static showLoaderForContent(element: any, top?: number, right?: number): void;
         static hideLoaderForContent(): void;
         static showLoaderForMainBody(top?: number, right?: number): void;

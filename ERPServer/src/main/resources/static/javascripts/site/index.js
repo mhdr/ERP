@@ -243,25 +243,25 @@ var StaticData = (function () {
     StaticData.sideBarShowUsersHTML = {
         divSideBar: "divSidebarUsers",
         cache: "sideBarUsersHTML",
-        url: "./hbs/sidebar/users.hbs",
+        url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
     };
     StaticData.mainBodyShowUsersCSS = {
         styleId: "styleMainBodyShowUsers",
         cache: "mainBodyShowUsersCSS",
-        url: "./stylesheets/site/mainBodyShowUsers.min.css"
+        url: "./stylesheets/site/mainBodyShowUsers.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsersHTML = {
         divId: "divMainBodyShowUsers",
         cache: "mainBodyShowUsersHTML",
-        url: "./hbs/mainBody/users/showUsers.hbs"
+        url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsersJS = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
         cache: "mainBodyShowUsersJS",
-        url: "./javascripts/site/mainBodyShowUsers.min.js"
+        url: "./javascripts/site/mainBodyShowUsers.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsers = {
         SideBar: StaticData.sideBarShowUsersHTML,
@@ -272,25 +272,25 @@ var StaticData = (function () {
     StaticData.sideBarProfileHTML = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sidebar/profile.hbs",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCSS = {
         styleId: "styleMainBodyProfile",
         cache: "mainBodyProfileCSS",
-        url: "./stylesheets/site/mainBodyProfile.min.css"
+        url: "./stylesheets/site/mainBodyProfile.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileHTML = {
         divId: "divMainBodyProfile",
         cache: "mainBodyProfileHTML",
-        url: "./hbs/mainBody/profile/profile.hbs"
+        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileJS = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
         cache: "mainBodyProfileJS",
-        url: "./javascripts/site/mainBodyProfile.min.js"
+        url: "./javascripts/site/mainBodyProfile.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfile = {
         SideBar: StaticData.sideBarProfileHTML,
@@ -301,25 +301,25 @@ var StaticData = (function () {
     StaticData.sideBarProfileCDHTML = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sidebar/profile.hbs",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCDCSS = {
         styleId: "styleMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/mainBodyProfileChangeData.min.css"
+        url: "./stylesheets/site/mainBodyProfileChangeData.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCDHTML = {
         divId: "divMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBody/profile/changeData.hbs"
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCDJS = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/mainBodyProfileChangeData.min.js"
+        url: "./javascripts/site/mainBodyProfileChangeData.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCD = {
         SideBar: StaticData.sideBarProfileCDHTML,

@@ -1,6 +1,7 @@
 package com.nasimeshomal.controller;
 
 import com.nasimeshomal.bl.Permissions;
+import com.nasimeshomal.bl.Statics;
 import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
 import com.nasimeshomal.bl.Users;
@@ -137,6 +138,16 @@ public class ApiController {
 
         Users users = new Users(request, response);
         Map result = users.insertNewUser();
+        return result;
+    }
+
+    @RequestMapping(value = "api/GetVersion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getVersion(HttpServletRequest request, HttpServletResponse response)
+    {
+        SessionManager sessionManager = new SessionManager(request, response);
+
+        Statics statics=new Statics();
+        Map result= statics.getVersion();
         return result;
     }
 }

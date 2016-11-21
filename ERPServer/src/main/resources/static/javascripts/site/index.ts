@@ -31,6 +31,7 @@ class UI {
     static investigatePermissions() {
         sessionStorage.setItem("permissions", "");
 
+
         $.ajax({
             url: "./api/User/GetPermissions",
             method: "POST",
@@ -109,12 +110,12 @@ class Template {
 
     static renderMainBody(data: MainBodyData, onComplete) {
 
-        var parallel1=new NM.Parallel(2);
+        var parallel1 = new NM.Parallel(2);
 
         parallel1.setOnComplete(function (result) {
             Site.UI.showLoaderForMainBody();
 
-            var parallel2=new NM.Parallel(2);
+            var parallel2 = new NM.Parallel(2);
 
             parallel2.setOnComplete(function (result) {
                 onComplete();
@@ -315,7 +316,7 @@ class StaticData {
     static sideBarShowUsersHTML: SideBarData = {
         divSideBar: "divSidebarUsers",
         cache: "sideBarUsersHTML",
-        url: "./hbs/sidebar/users.hbs",
+        url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
     };
@@ -323,20 +324,20 @@ class StaticData {
     static mainBodyShowUsersCSS: MainBodyCSSData = {
         styleId: "styleMainBodyShowUsers",
         cache: "mainBodyShowUsersCSS",
-        url: "./stylesheets/site/mainBodyShowUsers.min.css"
+        url: "./stylesheets/site/mainBodyShowUsers.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsersHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowUsers",
         cache: "mainBodyShowUsersHTML",
-        url: "./hbs/mainBody/users/showUsers.hbs"
+        url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsersJS: MainBodyJSData = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
         cache: "mainBodyShowUsersJS",
-        url: "./javascripts/site/mainBodyShowUsers.min.js"
+        url: "./javascripts/site/mainBodyShowUsers.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsers: MainBodyData = {
@@ -352,7 +353,7 @@ class StaticData {
     static sideBarProfileHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sidebar/profile.hbs",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
@@ -360,20 +361,20 @@ class StaticData {
     static mainBodyProfileCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfile",
         cache: "mainBodyProfileCSS",
-        url: "./stylesheets/site/mainBodyProfile.min.css"
+        url: "./stylesheets/site/mainBodyProfile.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfile",
         cache: "mainBodyProfileHTML",
-        url: "./hbs/mainBody/profile/profile.hbs"
+        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileJS: MainBodyJSData = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
         cache: "mainBodyProfileJS",
-        url: "./javascripts/site/mainBodyProfile.min.js"
+        url: "./javascripts/site/mainBodyProfile.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyProfile: MainBodyData = {
@@ -389,7 +390,7 @@ class StaticData {
     static sideBarProfileCDHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
-        url: "./hbs/sidebar/profile.hbs",
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
@@ -397,20 +398,20 @@ class StaticData {
     static mainBodyProfileCDCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/mainBodyProfileChangeData.min.css"
+        url: "./stylesheets/site/mainBodyProfileChangeData.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCDHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBody/profile/changeData.hbs"
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCDJS: MainBodyJSData = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
         cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/mainBodyProfileChangeData.min.js"
+        url: "./javascripts/site/mainBodyProfileChangeData.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCD: MainBodyData = {

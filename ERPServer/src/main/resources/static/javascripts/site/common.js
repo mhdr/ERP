@@ -1,10 +1,27 @@
 window['format'];
 var format;
+$(document).ready(function () {
+    Site.UI.getVersion();
+});
 var Site;
 (function (Site) {
+    Site.Statics = {
+        version: localStorage.getItem("version")
+    };
     var UI = (function () {
         function UI() {
         }
+        UI.getVersion = function () {
+            $.ajax({
+                url: "./api/GetVersion",
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        localStorage.setItem("version", data.result);
+                    }
+                }
+            });
+        };
         UI.showLoaderForContent = function (element, top, right) {
             if (top === void 0) { top = 25; }
             if (right === void 0) { right = 50; }

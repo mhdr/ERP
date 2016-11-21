@@ -2,6 +2,7 @@
 ///<reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
 ///<reference path="../../javascripts/site/nm.d.ts"/>
+///<reference path="common.d.ts"/>
 
 window['format'];
 var format: any;

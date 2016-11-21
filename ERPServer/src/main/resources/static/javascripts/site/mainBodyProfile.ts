@@ -3,6 +3,7 @@
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts"/>
 ///<reference path="./nm.d.ts"/>
+///<reference path="common.d.ts"/>
 
 window['format'];
 var format: any;

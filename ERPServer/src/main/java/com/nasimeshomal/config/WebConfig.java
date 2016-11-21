@@ -17,18 +17,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/hbs/**")
                 .addResourceLocations("classpath:/static/hbs/")
-                .setCachePeriod(3600*24);
+                .setCachePeriod(3600*24*7);
 
         registry.addResourceHandler("/javascripts/**")
                 .addResourceLocations("classpath:/static/javascripts/")
-                .setCachePeriod(3600*24);
+                .setCachePeriod(3600*24*7);
 
         registry.addResourceHandler("/stylesheets/**")
                 .addResourceLocations("classpath:/static/stylesheets/")
-                .setCachePeriod(3600*24);
+                .setCachePeriod(3600*24*7);
 
         registry.addResourceHandler("/fonts/**")
                 .addResourceLocations("classpath:/static/fonts/")
-                .setCachePeriod(3600*24);
+                .setCachePeriod(3600*24*7);
     }
 }

@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>سامانه برنامه‌ریزی منابع سازمانی</title>
-    <link rel='stylesheet' href='stylesheets/font-awesome.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/bootstrap.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/bootstrap-rtl.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/animate.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/awesome-bootstrap-checkbox-rtl.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/site/common.min.css?${version}'/>
-    <link rel='stylesheet' href='stylesheets/site/index.min.css?${version}'/>
+    <link rel='stylesheet' th:href="'stylesheets/font-awesome.min.css?' + ${version}"/>
+    <link rel='stylesheet' th:href="'stylesheets/bootstrap.min.css?' + ${version}"/>
+    <link rel='stylesheet' th:href="'stylesheets/bootstrap-rtl.min.css?' + ${version}"/>
+    <link rel='stylesheet' th:href="'stylesheets/awesome-bootstrap-checkbox-rtl.min.css?' + ${version}"/>
+    <link rel='stylesheet' th:href="'stylesheets/site/common.min.css?' + ${version}"/>
+    <link rel='stylesheet' th:href="'stylesheets/site/index.min.css?' + ${version}"/>
 
-    <script src="javascripts/jquery.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/bootstrap.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/handlebars.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/velocity.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/velocity.ui.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/string-format.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/knockout.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/site/nm.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/site/common.min.js?${version}" type="text/javascript"></script>
-    <script src="javascripts/site/index.min.js?${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/jquery.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/bootstrap.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/handlebars.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/velocity.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/velocity.ui.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/string-format.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/site/nm.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/site/common.min.js?' + ${version}" type="text/javascript"></script>
+    <script th:src="'javascripts/site/index.min.js?' + ${version}" type="text/javascript"></script>
 </head>
 <body>
 <div id="container" class="container-fluid">
@@ -60,11 +58,11 @@
             </nav>
         </div>
     </div>
-
     <div id="container2" class="row">
         <div id="sideBar" class="col-lg-2 col-md-2 col-sm-2"></div>
         <div id="mainBody" class="col-lg-10 col-md-10 col-sm-10"></div>
     </div>
+    <input type="hidden" th:value="${version}" id="inputVersion"/>
 </div>
 </body>
 </html>
