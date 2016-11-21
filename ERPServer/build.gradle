@@ -29,6 +29,9 @@ repositories {
 	mavenCentral()
 }
 
+springBoot {
+	executable = true
+}
 
 dependencies {
 
