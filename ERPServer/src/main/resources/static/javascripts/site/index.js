@@ -6,6 +6,7 @@ $(document).ready(function () {
     UI.initializeSize();
     UI.bindAll();
     UI.renderLocationHash();
+    StaticData.loadIterator();
 });
 var UI = (function () {
     function UI() {
@@ -15,7 +16,6 @@ var UI = (function () {
         UI.window_resize();
     };
     UI.investigatePermissions = function () {
-        sessionStorage.setItem("permissions", "");
         $.ajax({
             url: "./api/User/GetPermissions",
             method: "POST",
@@ -52,32 +52,11 @@ var UI = (function () {
         });
     };
     UI.renderLocationHash = function () {
-        var hash = window.location.hash;
-        switch (hash) {
-            case "#":
-                BrowserLocation.aHome();
-                break;
-            case "#Home":
-                BrowserLocation.aHome();
-                break;
-            case "#Forms/Show":
-                BrowserLocation.aShowForms();
-                break;
-            case "#Forms/New":
-                BrowserLocation.aNewForms();
-                break;
-            case "#Users/Show":
-                BrowserLocation.aShowUsers();
-                break;
-            case "#Profile":
-                BrowserLocation.aProfile();
-                break;
-            case "#Profile/ChangeData":
-                BrowserLocation.aChangeProfile();
-                break;
-            case "#Profile/ChangePassword":
-                break;
-        }
+        var data = StaticData.getStaticData();
+        Template.renderMainBody(data, function () {
+            var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+            eval(cmd1);
+        });
     };
     return UI;
 }());
@@ -105,8 +84,6 @@ var Template = (function () {
         Template.renderMainBodyHTML(data.HTML, function () {
             parallel1.done("fn2");
         });
-    };
-    Template.renderModal = function () {
     };
     Template.renderSideBarHTML = function (value, onComplete) {
         var activeNavBar = $("#ulNavbarItems").find("li.active");
@@ -211,36 +188,49 @@ var Template = (function () {
         onComplete();
     };
     Template.emptyMainBodyCSS = function () {
-        if ($("#" + StaticData.mainBodyShowUsersCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyShowUsersCSS.styleId).remove();
-        }
-        if ($("#" + StaticData.mainBodyProfileCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyProfileCSS.styleId).remove();
-        }
-        if ($("#" + StaticData.mainBodyProfileCDCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyProfileCDCSS.styleId).remove();
+        for (var i = 0; i < staticDataIterator.length; i++) {
+            var data = staticDataIterator[i];
+            if ($("#" + data.CSS.styleId).length > 0) {
+                $("#" + data.CSS.styleId).remove();
+            }
         }
     };
     Template.emptyMainBodyJS = function (onComplete) {
-        if ($("#" + StaticData.mainBodyShowUsersJS.scriptId).length > 0) {
-            MainBodyShowUsers.UI.unBindAll();
-            $("#" + StaticData.mainBodyShowUsersJS.scriptId).remove();
-        }
-        if ($("#" + StaticData.mainBodyProfileJS.scriptId).length > 0) {
-            MainBodyProfile.UI.unBindAll();
-            $("#" + StaticData.mainBodyProfileJS.scriptId).remove();
-        }
-        if ($("#" + StaticData.mainBodyProfileCDJS.scriptId).length > 0) {
-            MainBodyProfileChangeData.UI.unBindAll();
-            $("#" + StaticData.mainBodyProfileCDJS.scriptId).remove();
+        for (var i = 0; i < staticDataIterator.length; i++) {
+            var data = staticDataIterator[i];
+            if ($("#" + data.JS.scriptId).length > 0) {
+                var cmd1 = format("{0}.UI.unBindAll();", data.JS.namespace);
+                eval(cmd1);
+                $("#" + data.JS.scriptId).remove();
+            }
         }
         onComplete();
     };
     return Template;
 }());
+var staticDataIterator = [];
 var StaticData = (function () {
     function StaticData() {
     }
+    StaticData.loadIterator = function () {
+        staticDataIterator.push(StaticData.mainBodyShowUsers);
+        staticDataIterator.push(StaticData.mainBodyProfile);
+        staticDataIterator.push(StaticData.mainBodyProfileCD);
+        staticDataIterator.push(StaticData.mainBodyProfileCP);
+    };
+    StaticData.getStaticData = function () {
+        var hash = window.location.hash;
+        switch (hash) {
+            case "#Users/Show":
+                return StaticData.mainBodyShowUsers;
+            case "#Profile":
+                return StaticData.mainBodyProfile;
+            case "#Profile/ChangeData":
+                return StaticData.mainBodyProfileCD;
+            case "#Profile/ChangePassword":
+                return StaticData.mainBodyProfileCP;
+        }
+    };
     StaticData.sideBarShowUsersHTML = {
         divSideBar: "divSidebarUsers",
         cache: "sideBarUsersHTML",
@@ -332,24 +322,24 @@ var StaticData = (function () {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aChangeProfile",
+        aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCPCSS = {
-        styleId: "styleMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+        styleId: "styleMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordCSS",
+        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCPHTML = {
-        divId: "divMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+        divId: "divMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordHTML",
+        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCPJS = {
-        namespace: "MainBodyProfileChangeData",
-        scriptId: "scriptMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+        namespace: "MainBodyProfileChangePassword",
+        scriptId: "scriptMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordJS",
+        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCP = {
         SideBar: StaticData.sideBarProfileCPHTML,
@@ -358,61 +348,5 @@ var StaticData = (function () {
         JS: StaticData.mainBodyProfileCPJS
     };
     return StaticData;
-}());
-var BrowserLocation = (function () {
-    function BrowserLocation() {
-    }
-    BrowserLocation.hasPermission = function (permissionRequired, callback) {
-        var permissions = sessionStorage.getItem("permissions");
-        if (permissions === null) {
-            setTimeout(BrowserLocation.hasPermission(permissionRequired, callback), 1000);
-            return;
-        }
-        var p = { permissionNumber: permissionRequired };
-        if ($.inArray(p, permissions)) {
-            var result = true;
-            callback(result);
-        }
-        else {
-            var result = false;
-            callback(result);
-        }
-    };
-    BrowserLocation.aShowUsers = function () {
-        BrowserLocation.hasPermission(1, function (result) {
-            if (result) {
-                Template.renderMainBody(StaticData.mainBodyShowUsers, function () {
-                    MainBodyShowUsers.UI.load(function () {
-                        Site.UI.hideLoaderForMainBody();
-                    });
-                });
-            }
-        });
-    };
-    BrowserLocation.aShowForms = function () {
-    };
-    BrowserLocation.aProfile = function () {
-        Template.renderMainBody(StaticData.mainBodyProfile, function () {
-            MainBodyProfile.UI.load(function () {
-                Site.UI.hideLoaderForMainBody();
-            });
-        });
-    };
-    BrowserLocation.aChangeProfile = function () {
-        Template.renderMainBody(StaticData.mainBodyProfileCD, function () {
-            MainBodyProfileChangeData.UI.load(function () {
-                Site.UI.hideLoaderForMainBody();
-            });
-        });
-    };
-    BrowserLocation.aProfileChangePassword = function () {
-    };
-    BrowserLocation.aHome = function () {
-        $("#sideBar").empty();
-        $("#mainBody").empty();
-    };
-    BrowserLocation.aNewForms = function () {
-    };
-    return BrowserLocation;
 }());
 //# sourceMappingURL=index.js.map

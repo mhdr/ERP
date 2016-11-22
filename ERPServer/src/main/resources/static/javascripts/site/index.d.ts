@@ -1,9 +1,6 @@
 /// <reference path="../../../DefinitelyTyped/jquery/jquery.d.ts" />
 /// <reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts" />
 /// <reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts" />
-/// <reference path="users/showUsers.d.ts" />
-/// <reference path="profile/profile.d.ts" />
-/// <reference path="profile/changeData.d.ts" />
 /// <reference path="nm.d.ts" />
 /// <reference path="common.d.ts" />
 declare var format: any;
@@ -18,7 +15,6 @@ declare class UI {
 }
 declare class Template {
     static renderMainBody(data: MainBodyData, onComplete: any): void;
-    static renderModal(): void;
     static renderSideBarHTML(value: SideBarData, onComplete: any): void;
     static renderMainBodyCSS(value: MainBodyCSSData, onComplete: any): void;
     static renderMainBodyJS(value: MainBodyJSData, onComplete: any): void;
@@ -27,7 +23,10 @@ declare class Template {
     static emptyMainBodyCSS(): void;
     static emptyMainBodyJS(onComplete: any): void;
 }
+declare var staticDataIterator: any[];
 declare class StaticData {
+    static loadIterator(): void;
+    static getStaticData(): MainBodyData;
     static sideBarShowUsersHTML: SideBarData;
     static mainBodyShowUsersCSS: MainBodyCSSData;
     static mainBodyShowUsersHTML: MainBodyHTMLData;
@@ -77,14 +76,4 @@ interface MainBodyJSData {
     scriptId: string;
     cache: string;
     url: string;
-}
-declare class BrowserLocation {
-    static hasPermission(permissionRequired: number, callback: Function): void;
-    static aShowUsers(): void;
-    static aShowForms(): void;
-    static aProfile(): void;
-    static aChangeProfile(): void;
-    static aProfileChangePassword(): void;
-    static aHome(): void;
-    static aNewForms(): void;
 }

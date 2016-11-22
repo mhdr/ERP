@@ -1,9 +1,6 @@
 ///<reference path="../../../DefinitelyTyped/jquery/jquery.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
-///<reference path="users/showUsers.d.ts"/>
-///<reference path="profile/profile.d.ts"/>
-///<reference path="profile/changeData.d.ts"/>
 ///<reference path="nm.d.ts"/>
 ///<reference path="common.d.ts"/>
 
@@ -12,13 +9,15 @@ var format: any;
 
 $(document).ready(function () {
 
-    ko.applyBindings(Site.viewModelNavbar,document.getElementById("topMenu"));
+    ko.applyBindings(Site.viewModelNavbar, document.getElementById("topMenu"));
 
     UI.investigatePermissions();
     UI.initializeSize();
     UI.bindAll();
 
     UI.renderLocationHash();
+
+    StaticData.loadIterator();
 });
 
 class UI {
@@ -32,9 +31,6 @@ class UI {
      * then investigate them for current user
      */
     static investigatePermissions() {
-        sessionStorage.setItem("permissions", "");
-
-
         $.ajax({
             url: "./api/User/GetPermissions",
             method: "POST",
@@ -42,12 +38,10 @@ class UI {
                 if (data.error === 0) {
                     var permissions = data.result;
 
-                    for (var i=0;i<permissions.length;i++)
-                    {
-                        var current=permissions[i];
+                    for (var i = 0; i < permissions.length; i++) {
+                        var current = permissions[i];
 
-                        if (current.permissionNumber===1)
-                        {
+                        if (current.permissionNumber === 1) {
                             Site.viewModelNavbar.userPermission(true);
                         }
                     }
@@ -81,38 +75,22 @@ class UI {
     }
 
     static renderLocationHash() {
-        var hash = window.location.hash;
-
-        switch (hash) {
-            case "#":
-                BrowserLocation.aHome();
-                break;
-            case "#Home":
-                BrowserLocation.aHome();
-                break;
-            case "#Forms/Show":
-                BrowserLocation.aShowForms();
-                break;
-            case "#Forms/New":
-                BrowserLocation.aNewForms();
-                break;
-            case "#Users/Show":
-                BrowserLocation.aShowUsers();
-                break;
-            case "#Profile":
-                BrowserLocation.aProfile();
-                break;
-            case "#Profile/ChangeData":
-                BrowserLocation.aChangeProfile();
-                break;
-            case "#Profile/ChangePassword":
-                break;
-        }
+        var data=StaticData.getStaticData();
+        Template.renderMainBody(data,function () {
+            // load data
+            var cmd1=data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+            eval(cmd1);
+        });
     }
 }
 
 class Template {
 
+    /**
+     *
+     * @param data
+     * @param onComplete if this is null data must be loaded with document.ready in it's own js file
+     */
     static renderMainBody(data: MainBodyData, onComplete) {
 
         var parallel1 = new NM.Parallel(2);
@@ -143,10 +121,6 @@ class Template {
         Template.renderMainBodyHTML(data.HTML, function () {
             parallel1.done("fn2");
         })
-    }
-
-    static renderModal() {
-
     }
 
     static renderSideBarHTML(value: SideBarData, onComplete) {
@@ -284,39 +258,61 @@ class Template {
 
     static emptyMainBodyCSS() {
 
-        if ($("#" + StaticData.mainBodyShowUsersCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyShowUsersCSS.styleId).remove();
-        }
+        for (var i=0;i<staticDataIterator.length;i++)
+        {
+            var data:MainBodyData=staticDataIterator[i];
 
-        if ($("#" + StaticData.mainBodyProfileCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyProfileCSS.styleId).remove();
-        }
-
-        if ($("#" + StaticData.mainBodyProfileCDCSS.styleId).length > 0) {
-            $("#" + StaticData.mainBodyProfileCDCSS.styleId).remove();
+            if ($("#" + data.CSS.styleId).length > 0) {
+                $("#" + data.CSS.styleId).remove();
+            }
         }
     }
 
     static emptyMainBodyJS(onComplete) {
-        if ($("#" + StaticData.mainBodyShowUsersJS.scriptId).length > 0) {
-            MainBodyShowUsers.UI.unBindAll();
-            $("#" + StaticData.mainBodyShowUsersJS.scriptId).remove();
+
+        for (var i=0;i<staticDataIterator.length;i++)
+        {
+            var data:MainBodyData=staticDataIterator[i];
+
+            if ($("#" + data.JS.scriptId).length > 0) {
+                var cmd1=format("{0}.UI.unBindAll();",data.JS.namespace);
+                eval(cmd1);
+                $("#" + data.JS.scriptId).remove();
+            }
         }
 
-        if ($("#" + StaticData.mainBodyProfileJS.scriptId).length > 0) {
-            MainBodyProfile.UI.unBindAll();
-            $("#" + StaticData.mainBodyProfileJS.scriptId).remove();
-        }
-
-        if ($("#" + StaticData.mainBodyProfileCDJS.scriptId).length > 0) {
-            MainBodyProfileChangeData.UI.unBindAll();
-            $("#" + StaticData.mainBodyProfileCDJS.scriptId).remove();
-        }
         onComplete();
     }
 }
 
+var staticDataIterator=[];
+
 class StaticData {
+
+    static loadIterator()
+    {
+        staticDataIterator.push(StaticData.mainBodyShowUsers);
+        staticDataIterator.push(StaticData.mainBodyProfile);
+        staticDataIterator.push(StaticData.mainBodyProfileCD);
+        staticDataIterator.push(StaticData.mainBodyProfileCP);
+    }
+
+    static getStaticData():MainBodyData
+    {
+        var hash = window.location.hash;
+
+        switch (hash) {
+            case "#Users/Show":
+                return StaticData.mainBodyShowUsers;
+            case "#Profile":
+                return StaticData.mainBodyProfile;
+            case "#Profile/ChangeData":
+                return StaticData.mainBodyProfileCD;
+            case "#Profile/ChangePassword":
+                return StaticData.mainBodyProfileCP;
+        }
+    }
+
     // Show Users
     static sideBarShowUsersHTML: SideBarData = {
         divSideBar: "divSidebarUsers",
@@ -434,27 +430,27 @@ class StaticData {
         divSideBar: "divSidebarProfile",
         cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aChangeProfile",
+        aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
     };
 
     static mainBodyProfileCPCSS: MainBodyCSSData = {
-        styleId: "styleMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataCSS",
-        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+        styleId: "styleMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordCSS",
+        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCPHTML: MainBodyHTMLData = {
-        divId: "divMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataHTML",
-        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+        divId: "divMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordHTML",
+        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCPJS: MainBodyJSData = {
-        namespace: "MainBodyProfileChangeData",
-        scriptId: "scriptMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataJS",
-        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+        namespace: "MainBodyProfileChangePassword",
+        scriptId: "scriptMainBodyProfileChangePassword",
+        cache: "mainBodyProfileChangePasswordJS",
+        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCP: MainBodyData = {
@@ -499,79 +495,4 @@ interface MainBodyJSData {
     scriptId: string,
     cache: string,
     url: string
-}
-
-class BrowserLocation {
-
-    static hasPermission(permissionRequired: number, callback: Function) {
-        var permissions = sessionStorage.getItem("permissions");
-
-        if (permissions === null) {
-            setTimeout(BrowserLocation.hasPermission(permissionRequired, callback), 1000);
-            return;
-        }
-
-        var p = {permissionNumber: permissionRequired};
-
-        if ($.inArray(p, permissions)) {
-            // there is no require-permission class
-            // so this user has the permission
-            var result = true;
-            callback(result);
-        }
-        else {
-            var result = false;
-            callback(result);
-        }
-    }
-
-    static aShowUsers() {
-        // required permission : 1
-        BrowserLocation.hasPermission(1, (result)=> {
-            if (result) {
-                Template.renderMainBody(StaticData.mainBodyShowUsers, function () {
-                    // load data
-                    MainBodyShowUsers.UI.load(function () {
-                        Site.UI.hideLoaderForMainBody();
-                    });
-                });
-            }
-        })
-    }
-
-    static aShowForms() {
-
-    }
-
-    static aProfile() {
-        Template.renderMainBody(StaticData.mainBodyProfile, function () {
-            // load data
-            MainBodyProfile.UI.load(function () {
-                Site.UI.hideLoaderForMainBody();
-            });
-        });
-    }
-
-    static aChangeProfile() {
-        Template.renderMainBody(StaticData.mainBodyProfileCD, function () {
-            // load data
-            MainBodyProfileChangeData.UI.load(function () {
-                Site.UI.hideLoaderForMainBody();
-            });
-        });
-    }
-
-    static aProfileChangePassword()
-    {
-
-    }
-
-    static aHome() {
-        $("#sideBar").empty();
-        $("#mainBody").empty();
-    }
-
-    static aNewForms() {
-
-    }
 }
