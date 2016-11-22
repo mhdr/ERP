@@ -14,6 +14,7 @@ namespace MainBodyProfileChangePassword {
 
         static load(complete:Function)
         {
+            $("#divMainBodyChangePassword").velocity("fadeIn",{duration:250});
             complete();
         }
 

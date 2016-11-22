@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -22,8 +23,14 @@ public class ApiController {
     public Map getUsers(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
         Users users = new Users(request, response);
-        Map result = users.getUsers();
+        result = users.getUsers();
         return result;
     }
 
@@ -31,9 +38,16 @@ public class ApiController {
     public Map getUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
 
-        Map result = users.getCurrentUser();
+        result = users.getCurrentUser();
         return result;
     }
 
@@ -41,9 +55,15 @@ public class ApiController {
     public Map editUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
         Users users = new Users(request, response);
 
-        Map result = users.editUser();
+        result = users.editUser();
         return result;
     }
 
@@ -51,8 +71,15 @@ public class ApiController {
     public Map getLastLogin(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.getLastLogin();
+        result = users.getLastLogin();
         return result;
     }
 
@@ -60,8 +87,15 @@ public class ApiController {
     public Map getUserIP(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         IP ip = new IP(request, response);
-        Map result = ip.getIP2();
+        result = ip.getIP2();
 
         return result;
     }
@@ -70,8 +104,15 @@ public class ApiController {
     public Map getPermissionsList(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Permissions permissions = new Permissions(request, response);
-        Map result = permissions.getPermissionList();
+        result = permissions.getPermissionList();
         return result;
     }
 
@@ -79,8 +120,25 @@ public class ApiController {
     public Map getPermissions(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.getPermissions();
+        result = users.getPermissions();
+        return result;
+    }
+
+    private Map authenticationError(HttpServletRequest request, HttpServletResponse response) {
+        String host = String.format("%s://%s", request.getScheme(), request.getHeader("host"));
+        Map<String, Object> result = new HashMap();
+
+        result.put("error", -1);
+        result.put("redirect", host);
+
         return result;
     }
 
@@ -94,7 +152,6 @@ public class ApiController {
         int errorNumber = (int) result.get("error");
 
         String host = String.format("%s://%s", request.getScheme(), request.getHeader("host"));
-        Enumeration<String> headers = request.getHeaderNames();
 
         if (errorNumber == 0) {
             sessionManager.login(result.get("userName").toString());
@@ -109,8 +166,15 @@ public class ApiController {
     public Map setPermissions(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.setPermissions();
+        result = users.setPermissions();
         return result;
     }
 
@@ -118,8 +182,15 @@ public class ApiController {
     public Map deleteUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.deleteUser();
+        result = users.deleteUser();
         return result;
     }
 
@@ -127,8 +198,15 @@ public class ApiController {
     public Map changePassword(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.changePassowrd();
+        result = users.changePassowrd();
         return result;
     }
 
@@ -136,18 +214,31 @@ public class ApiController {
     public Map insertUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         Users users = new Users(request, response);
-        Map result = users.insertNewUser();
+        result = users.insertNewUser();
         return result;
     }
 
     @RequestMapping(value = "api/GetVersion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Map getVersion(HttpServletRequest request, HttpServletResponse response)
-    {
+    public Map getVersion(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
-        Statics statics=new Statics();
-        Map result= statics.getVersion();
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
+        Statics statics = new Statics();
+        result = statics.getVersion();
         return result;
     }
 }

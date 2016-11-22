@@ -5,6 +5,7 @@ var MainBodyProfileChangePassword;
         function UI() {
         }
         UI.load = function (complete) {
+            $("#divMainBodyChangePassword").velocity("fadeIn", { duration: 250 });
             complete();
         };
         UI.bindAll = function () {
