@@ -14,6 +14,8 @@ $(document).ready(()=> {
     Login.bindButtonLogin();
     Login.bindKeyPress();
     Login.bindWindowOnResize();
+
+    document.getElementById("inputUserName").focus();
 });
 
 class Login {

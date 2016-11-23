@@ -5,6 +5,7 @@ $(document).ready(function () {
     Login.bindButtonLogin();
     Login.bindKeyPress();
     Login.bindWindowOnResize();
+    document.getElementById("inputUserName").focus();
 });
 var Login = (function () {
     function Login() {

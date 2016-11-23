@@ -11,7 +11,7 @@ $(document).ready(function () {
 
     ko.applyBindings(Site.viewModelNavbar, document.getElementById("topMenu"));
 
-    UI.investigatePermissions();
+    UI.fetchPermissions(UI.investigatePermissions);
     UI.initializeSize();
     UI.bindAll();
 
@@ -26,28 +26,45 @@ class UI {
         UI.window_resize();
     }
 
-    /**
-     * fetch permissions
-     * then investigate them for current user
-     */
-    static investigatePermissions() {
+
+    static fetchPermissions(success: Function, error: Function=null) {
         $.ajax({
             url: "./api/User/GetPermissions",
             method: "POST",
             success: function (data, textStatus, jqXHR) {
                 if (data.error === 0) {
                     var permissions = data.result;
-
-                    for (var i = 0; i < permissions.length; i++) {
-                        var current = permissions[i];
-
-                        if (current.permissionNumber === 1) {
-                            Site.viewModelNavbar.userPermission(true);
-                        }
+                    // save for latter use
+                    success(permissions);
+                }
+                else {
+                    if (error!==null)
+                    {
+                        error();
                     }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (error!==null)
+                {
+                    error();
                 }
             }
         });
+    }
+
+    /**
+     * fetch permissions
+     * then investigate them for current user
+     */
+    static investigatePermissions(permissions) {
+        for (var i = 0; i < permissions.length; i++) {
+            var current = permissions[i];
+
+            if (current.permissionNumber === 1) {
+                Site.viewModelNavbar.userPermission(true);
+            }
+        }
     }
 
     static setMainBodyHeight() {
@@ -75,10 +92,10 @@ class UI {
     }
 
     static renderLocationHash() {
-        var data=StaticData.getStaticData();
-        Template.renderMainBody(data,function () {
+        var data = StaticData.getStaticData();
+        Template.renderMainBody(data, function () {
             // load data
-            var cmd1=data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+            var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
             eval(cmd1);
         });
     }
@@ -258,9 +275,8 @@ class Template {
 
     static emptyMainBodyCSS() {
 
-        for (var i=0;i<staticDataIterator.length;i++)
-        {
-            var data:MainBodyData=staticDataIterator[i];
+        for (var i = 0; i < staticDataIterator.length; i++) {
+            var data: MainBodyData = staticDataIterator[i];
 
             if ($("#" + data.CSS.styleId).length > 0) {
                 $("#" + data.CSS.styleId).remove();
@@ -270,12 +286,11 @@ class Template {
 
     static emptyMainBodyJS(onComplete) {
 
-        for (var i=0;i<staticDataIterator.length;i++)
-        {
-            var data:MainBodyData=staticDataIterator[i];
+        for (var i = 0; i < staticDataIterator.length; i++) {
+            var data: MainBodyData = staticDataIterator[i];
 
             if ($("#" + data.JS.scriptId).length > 0) {
-                var cmd1=format("{0}.UI.unBindAll();",data.JS.namespace);
+                var cmd1 = format("{0}.UI.unBindAll();", data.JS.namespace);
                 eval(cmd1);
                 $("#" + data.JS.scriptId).remove();
             }
@@ -285,20 +300,18 @@ class Template {
     }
 }
 
-var staticDataIterator=[];
+var staticDataIterator = [];
 
 class StaticData {
 
-    static loadIterator()
-    {
+    static loadIterator() {
         staticDataIterator.push(StaticData.mainBodyShowUsers);
         staticDataIterator.push(StaticData.mainBodyProfile);
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
     }
 
-    static getStaticData():MainBodyData
-    {
+    static getStaticData(): MainBodyData {
         var hash = window.location.hash;
 
         switch (hash) {

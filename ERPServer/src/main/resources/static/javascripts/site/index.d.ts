@@ -6,7 +6,8 @@
 declare var format: any;
 declare class UI {
     static bindAll(): void;
-    static investigatePermissions(): void;
+    static fetchPermissions(success: Function, error?: Function): void;
+    static investigatePermissions(permissions: any): void;
     static setMainBodyHeight(): void;
     static initializeSize(): void;
     static window_resize(): void;

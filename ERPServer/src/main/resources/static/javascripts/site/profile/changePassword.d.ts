@@ -9,5 +9,6 @@ declare namespace MainBodyProfileChangePassword {
         static load(complete: Function): void;
         static bindAll(): void;
         static unBindAll(): void;
+        static buttonSubmit_clicked(): void;
     }
 }
