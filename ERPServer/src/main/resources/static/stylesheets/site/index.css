@@ -263,7 +263,8 @@ body {
 #nm-loader {
   position: absolute;
   top: 15%;
-  right: 40%; }
+  right: 40%;
+  left: 10px; }
 
 /* end loader */
 .loading-blur {
