@@ -5,11 +5,8 @@
 /// <reference path="../../../DefinitelyTyped/knockout/knockout.d.ts" />
 declare var format: any;
 declare namespace Site {
-    var viewModelNavbar: {
-        userPermission: KnockoutObservable<boolean>;
-    };
     var Statics: {
-        version: any;
+        version: string;
     };
     class UI {
         static getVersion(): void;

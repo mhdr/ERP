@@ -1,8 +1,6 @@
 window['format'];
 var format;
 $(document).ready(function () {
-    ko.applyBindings(Site.viewModelNavbar, document.getElementById("topMenu"));
-    UI.fetchPermissions(UI.investigatePermissions);
     UI.initializeSize();
     UI.bindAll();
     UI.renderLocationHash();
@@ -14,37 +12,6 @@ var UI = (function () {
     UI.bindAll = function () {
         UI.location_change();
         UI.window_resize();
-    };
-    UI.fetchPermissions = function (success, error) {
-        if (error === void 0) { error = null; }
-        $.ajax({
-            url: "./api/User/GetPermissions",
-            method: "POST",
-            success: function (data, textStatus, jqXHR) {
-                if (data.error === 0) {
-                    var permissions = data.result;
-                    success(permissions);
-                }
-                else {
-                    if (error !== null) {
-                        error();
-                    }
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (error !== null) {
-                    error();
-                }
-            }
-        });
-    };
-    UI.investigatePermissions = function (permissions) {
-        for (var i = 0; i < permissions.length; i++) {
-            var current = permissions[i];
-            if (current.permissionNumber === 1) {
-                Site.viewModelNavbar.userPermission(true);
-            }
-        }
     };
     UI.setMainBodyHeight = function () {
         var screenHeight = $(window).height();

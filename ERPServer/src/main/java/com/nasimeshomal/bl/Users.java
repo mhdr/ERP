@@ -470,4 +470,21 @@ public class Users {
 
         return result;
     }
+
+    public ArrayList<Integer> getPermissionsList()
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        try {
+            SessionManager sessionManager = new SessionManager(request, response);
+            User user = sessionManager.getCurrentUser();
+
+            result=user.getPermissions();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 }

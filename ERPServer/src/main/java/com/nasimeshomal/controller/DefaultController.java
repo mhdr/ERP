@@ -1,12 +1,15 @@
 package com.nasimeshomal.controller;
 
+import com.nasimeshomal.bl.Users;
 import com.nasimeshomal.lib.GenerateData;
 import com.nasimeshomal.lib.SessionManager;
 import com.nasimeshomal.lib.Statics;
+import com.nasimeshomal.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.ui.Model;
@@ -26,8 +29,13 @@ public class DefaultController {
             return modelAndView;
         }
 
+
+        Users users=new Users(request,response);
+        ArrayList<Integer> permissions=users.getPermissionsList();
+
         ModelAndView modelAndView=new ModelAndView("index");
         modelAndView.addObject("version",Statics.getVersion());
+        modelAndView.addObject("permissions",permissions);
         return modelAndView;
     }
 

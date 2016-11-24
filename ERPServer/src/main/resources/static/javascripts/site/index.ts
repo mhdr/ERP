@@ -8,10 +8,6 @@ window['format'];
 var format: any;
 
 $(document).ready(function () {
-
-    ko.applyBindings(Site.viewModelNavbar, document.getElementById("topMenu"));
-
-    UI.fetchPermissions(UI.investigatePermissions);
     UI.initializeSize();
     UI.bindAll();
 
@@ -24,47 +20,6 @@ class UI {
     static bindAll() {
         UI.location_change();
         UI.window_resize();
-    }
-
-
-    static fetchPermissions(success: Function, error: Function=null) {
-        $.ajax({
-            url: "./api/User/GetPermissions",
-            method: "POST",
-            success: function (data, textStatus, jqXHR) {
-                if (data.error === 0) {
-                    var permissions = data.result;
-                    // save for latter use
-                    success(permissions);
-                }
-                else {
-                    if (error!==null)
-                    {
-                        error();
-                    }
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (error!==null)
-                {
-                    error();
-                }
-            }
-        });
-    }
-
-    /**
-     * fetch permissions
-     * then investigate them for current user
-     */
-    static investigatePermissions(permissions) {
-        for (var i = 0; i < permissions.length; i++) {
-            var current = permissions[i];
-
-            if (current.permissionNumber === 1) {
-                Site.viewModelNavbar.userPermission(true);
-            }
-        }
     }
 
     static setMainBodyHeight() {

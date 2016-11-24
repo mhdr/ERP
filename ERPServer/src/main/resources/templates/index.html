@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>سامانه برنامه‌ریزی منابع سازمانی</title>
     <link rel='stylesheet' th:href="'stylesheets/font-awesome.min.css?' + ${version}"/>
-    <link rel='stylesheet' th:href="'stylesheets/animate.min.css?' + ${version}"/>
     <link rel='stylesheet' th:href="'stylesheets/bootstrap.min.css?' + ${version}"/>
     <link rel='stylesheet' th:href="'stylesheets/bootstrap-rtl.min.css?' + ${version}"/>
     <link rel='stylesheet' th:href="'stylesheets/awesome-bootstrap-checkbox-rtl.min.css?' + ${version}"/>
@@ -12,7 +11,6 @@
     <link rel='stylesheet' th:href="'stylesheets/site/index.min.css?' + ${version}"/>
 
     <script th:src="'javascripts/jquery.min.js?' + ${version}" type="text/javascript"></script>
-    <script th:src="'javascripts/knockout.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/bootstrap.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/handlebars.min.js?' + ${version}" type="text/javascript"></script>
     <script th:src="'javascripts/velocity.min.js?' + ${version}" type="text/javascript"></script>
@@ -40,7 +38,7 @@
                     <ul class="nav navbar-nav" id="ulNavbarItems">
 
                         <li id="liForms"><a href="#Forms/Show" id="aForms" class="index-a-navbar hvr-shutter-out-horizontal">فرم ها</a></li>
-                        <li id="liUsers" data-bind="if:userPermission">
+                        <li id="liUsers" th:if="${permissions.contains(1)}">
                             <a href="#Users/Show" id="aUsers" class="index-a-navbar hvr-shutter-out-horizontal"><span>کاربران</span></a></li>
                     </ul>
 

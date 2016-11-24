@@ -25,6 +25,11 @@ public class SessionManager {
     HttpServletResponse response;
     MongoOperations mongoOperations;
 
+    /**
+     *
+     * @param request Http Request
+     * @param response Http Response
+     */
     public SessionManager(HttpServletRequest request, HttpServletResponse response)
     {
         this.httpSession=request.getSession(true);

@@ -13,10 +13,6 @@ $(document).ready(function () {
 
 namespace Site {
 
-    export var viewModelNavbar={
-        userPermission:ko.observable(false),
-    };
-
     export var Statics = {
         version: localStorage.getItem("version"),
     };

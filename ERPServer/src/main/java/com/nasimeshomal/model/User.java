@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Document(collection = "user")
 public class User {
@@ -37,5 +39,17 @@ public class User {
         Permission permission=new Permission();
         permission.permissionNumber=permissionNumber;
         this.permissions.add(permission);
+    }
+
+    public ArrayList<Integer> getPermissions()
+    {
+        ArrayList<Integer> result=new ArrayList<>();
+
+        for (Permission permission:permissions)
+        {
+            result.add(permission.permissionNumber);
+        }
+
+        return result;
     }
 }
