@@ -235,3 +235,20 @@ task uglify {
         }
     }
 }
+
+sass.mustRunAfter cleanCSS
+csso.mustRunAfter sass
+uglify.mustRunAfter cleanJS
+
+task minify{
+    group = 'minify'
+    doFirst{
+        tasks.cleanCSS.execute()
+        tasks.cleanJS.execute()
+    }
+    doLast{
+        tasks.sass.execute()
+        tasks.csso.execute()
+        tasks.uglify.execute()
+    }
+}
