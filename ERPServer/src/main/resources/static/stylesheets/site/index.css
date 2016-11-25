@@ -17,6 +17,7 @@
   font-style: normal; }
 
 body {
+  text-align: center;
   direction: rtl;
   text-align: right;
   font-family: "sans";
