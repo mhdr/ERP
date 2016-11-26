@@ -166,13 +166,9 @@ task sass {
                     newFilePath = filePath.substring(0, pos) + ".css";
                 }
 
-                if (project.file(newFilePath).exists()) {
-                    project.file(newFilePath).delete();
-                }
-
-
                 String cmd = String.format("node-sass $filePath $newFilePath");
-                java.lang.Runtime.getRuntime().exec(cmd);
+                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
+                processBuilder.start();
             }
         }
     }
@@ -200,7 +196,8 @@ task csso {
                 }
 
                 String cmd = String.format("csso -i $filePath -o $newFilePath");
-                java.lang.Runtime.getRuntime().exec(cmd);
+                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
+                processBuilder.start();
             }
         }
     }
@@ -230,7 +227,8 @@ task uglify {
                 }
 
                 String cmd = String.format("uglifyjs $filePath -o $newFilePath");
-                java.lang.Runtime.getRuntime().exec(cmd);
+                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
+                processBuilder.start();
             }
         }
     }
