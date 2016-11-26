@@ -238,11 +238,14 @@ uglify.mustRunAfter cleanJS
 task minify{
     group = 'minify'
     doFirst{
-        tasks.cleanCSS.execute()
-        tasks.cleanJS.execute()
+
     }
     doLast{
+        tasks.cleanCSS.execute()
+        tasks.cleanJS.execute()
+        sleep(3000)
         tasks.sass.execute()
+        sleep(5000)
         tasks.csso.execute()
         tasks.uglify.execute()
     }

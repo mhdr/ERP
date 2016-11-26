@@ -4,7 +4,9 @@
 /// <reference path="../nm.d.ts" />
 /// <reference path="../common.d.ts" />
 declare namespace MainBodyFormManagement {
-    var viewModel: {};
+    let viewModel: {
+        temp: KnockoutObservable<boolean>;
+    };
     class UI {
         static load(complete: Function): void;
         static bindAll(): void;

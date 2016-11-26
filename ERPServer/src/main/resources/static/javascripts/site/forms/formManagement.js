@@ -1,6 +1,8 @@
 var MainBodyFormManagement;
 (function (MainBodyFormManagement) {
-    MainBodyFormManagement.viewModel = {};
+    MainBodyFormManagement.viewModel = {
+        temp: ko.observable(false)
+    };
     var UI = (function () {
         function UI() {
         }
@@ -8,8 +10,10 @@ var MainBodyFormManagement;
             complete();
         };
         UI.bindAll = function () {
+            ko.applyBindings(MainBodyFormManagement.viewModel, document.getElementById("divMainBodyShowFormManagement"));
         };
         UI.unBindAll = function () {
+            ko.cleanNode(document.getElementById("divMainBodyShowFormManagement"));
         };
         return UI;
     }());

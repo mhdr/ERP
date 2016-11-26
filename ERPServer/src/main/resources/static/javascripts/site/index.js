@@ -34,12 +34,12 @@ var UI = (function () {
     };
     UI.renderLocationHash = function () {
         var data = StaticData.getStaticData();
-        Template.renderMainBody(data, function () {
-            if (data !== null) {
+        if (data !== null) {
+            Template.renderMainBody(data, function () {
                 var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
                 eval(cmd1);
-            }
-        });
+            });
+        }
     };
     return UI;
 }());

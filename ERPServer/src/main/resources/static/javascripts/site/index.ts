@@ -48,15 +48,16 @@ class UI {
 
     static renderLocationHash() {
         var data = StaticData.getStaticData();
-        Template.renderMainBody(data, function () {
-            // load data
 
-            if (data!==null)
-            {
+        if (data!==null)
+        {
+            Template.renderMainBody(data, function () {
+                // load data
                 var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
                 eval(cmd1);
-            }
-        });
+
+            });
+        }
     }
 }
 
