@@ -35,8 +35,10 @@ var UI = (function () {
     UI.renderLocationHash = function () {
         var data = StaticData.getStaticData();
         Template.renderMainBody(data, function () {
-            var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
-            eval(cmd1);
+            if (data !== null) {
+                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+                eval(cmd1);
+            }
         });
     };
     return UI;
@@ -45,12 +47,6 @@ var Template = (function () {
     function Template() {
     }
     Template.renderMainBody = function (data, onComplete) {
-        if (data === null) {
-            return;
-        }
-        if (data.HTML === null || data.CSS === null || data.JS === null || data.SideBar === null) {
-            return;
-        }
         var parallel1 = new NM.Parallel(2);
         parallel1.setOnComplete(function (result) {
             Site.UI.showLoaderForMainBody();
@@ -222,6 +218,8 @@ var StaticData = (function () {
                 return StaticData.mainBodyForms;
             case "#Forms/Management":
                 return StaticData.mainBodyFormManagement;
+            default:
+                return null;
         }
     };
     StaticData.sideBarShowUsersHTML = {

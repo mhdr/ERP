@@ -50,8 +50,12 @@ class UI {
         var data = StaticData.getStaticData();
         Template.renderMainBody(data, function () {
             // load data
-            var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
-            eval(cmd1);
+
+            if (data!==null)
+            {
+                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+                eval(cmd1);
+            }
         });
     }
 }
@@ -64,17 +68,6 @@ class Template {
      * @param onComplete if this is null data must be loaded with document.ready in it's own js file
      */
     static renderMainBody(data: MainBodyData, onComplete) {
-
-        if (data===null)
-        {
-            return;
-        }
-
-        if (data.HTML===null || data.CSS===null || data.JS===null || data.SideBar===null)
-        {
-            return;
-        }
-
         var parallel1 = new NM.Parallel(2);
 
         parallel1.setOnComplete(function (result) {
@@ -293,6 +286,8 @@ class StaticData {
                 return StaticData.mainBodyForms;
             case "#Forms/Management":
                 return StaticData.mainBodyFormManagement;
+            default:
+                return null;
         }
     }
 

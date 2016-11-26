@@ -157,18 +157,17 @@ task sass {
 
         tree.visit { FileVisitDetails element ->
             if (!element.isDirectory()) {
-                String filePath = basePath + "/" + element.getPath();
+                String filePath = basePath + "/" + element.getPath()
 
-                int pos = filePath.lastIndexOf(".");
-                String newFilePath = "";
+                int pos = filePath.lastIndexOf(".")
+                String newFilePath = ""
 
                 if (pos > 0) {
-                    newFilePath = filePath.substring(0, pos) + ".css";
+                    newFilePath = filePath.substring(0, pos) + ".css"
                 }
 
-                String cmd = String.format("node-sass $filePath $newFilePath");
-                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
-                processBuilder.start();
+                String cmd = String.format("node-sass $filePath $newFilePath")
+                java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
     }
@@ -196,8 +195,7 @@ task csso {
                 }
 
                 String cmd = String.format("csso -i $filePath -o $newFilePath");
-                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
-                processBuilder.start();
+                java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
     }
@@ -227,8 +225,7 @@ task uglify {
                 }
 
                 String cmd = String.format("uglifyjs $filePath -o $newFilePath");
-                ProcessBuilder processBuilder=new ProcessBuilder(cmd);
-                processBuilder.start();
+                java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
     }
