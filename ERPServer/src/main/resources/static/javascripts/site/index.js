@@ -198,6 +198,8 @@ var StaticData = (function () {
         staticDataIterator.push(StaticData.mainBodyProfile);
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
+        staticDataIterator.push(StaticData.mainBodyForms);
+        staticDataIterator.push(StaticData.mainBodyFormManagement);
     };
     StaticData.getStaticData = function () {
         var hash = window.location.hash;
@@ -210,29 +212,29 @@ var StaticData = (function () {
                 return StaticData.mainBodyProfileCD;
             case "#Profile/ChangePassword":
                 return StaticData.mainBodyProfileCP;
+            case "#Forms/Show":
+                return StaticData.mainBodyForms;
+            case "#Forms/Management":
+                return StaticData.mainBodyFormManagement;
         }
     };
     StaticData.sideBarShowUsersHTML = {
         divSideBar: "divSidebarUsers",
-        cache: "sideBarUsersHTML",
         url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
     };
     StaticData.mainBodyShowUsersCSS = {
         styleId: "styleMainBodyShowUsers",
-        cache: "mainBodyShowUsersCSS",
         url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsersHTML = {
         divId: "divMainBodyShowUsers",
-        cache: "mainBodyShowUsersHTML",
         url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsersJS = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        cache: "mainBodyShowUsersJS",
         url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyShowUsers = {
@@ -243,25 +245,21 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileHTML = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCSS = {
         styleId: "styleMainBodyProfile",
-        cache: "mainBodyProfileCSS",
         url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileHTML = {
         divId: "divMainBodyProfile",
-        cache: "mainBodyProfileHTML",
         url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileJS = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
-        cache: "mainBodyProfileJS",
         url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfile = {
@@ -272,25 +270,21 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileCDHTML = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCDCSS = {
         styleId: "styleMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataCSS",
         url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCDHTML = {
         divId: "divMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataHTML",
         url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCDJS = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataJS",
         url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCD = {
@@ -301,25 +295,21 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileCPHTML = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCPCSS = {
         styleId: "styleMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordCSS",
         url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCPHTML = {
         divId: "divMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordHTML",
         url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCPJS = {
         namespace: "MainBodyProfileChangePassword",
         scriptId: "scriptMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordJS",
         url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyProfileCP = {
@@ -327,6 +317,56 @@ var StaticData = (function () {
         HTML: StaticData.mainBodyProfileCPHTML,
         CSS: StaticData.mainBodyProfileCPCSS,
         JS: StaticData.mainBodyProfileCPJS
+    };
+    StaticData.sideBarFormsHTML = {
+        divSideBar: "divSidebarForms",
+        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aShowForms",
+        liNavBar: "liForms"
+    };
+    StaticData.mainBodyFormsCSS = {
+        styleId: "styleMainBodyForms",
+        url: "./stylesheets/site/forms/forms.min.css" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyFormsHTML = {
+        divId: "divMainBodyShowForms",
+        url: "./hbs/mainBody/forms/forms.hbs" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyFormsJS = {
+        namespace: "MainBodyForms",
+        scriptId: "scriptMainBodyForms",
+        url: "./javascripts/site/forms/forms.min.js" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyForms = {
+        SideBar: StaticData.sideBarFormsHTML,
+        HTML: StaticData.mainBodyFormsHTML,
+        CSS: StaticData.mainBodyFormsCSS,
+        JS: StaticData.mainBodyFormsJS
+    };
+    StaticData.sideBarFormManagementHTML = {
+        divSideBar: "divSidebarForms",
+        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aFormManagement",
+        liNavBar: "liForms"
+    };
+    StaticData.mainBodyFormManagementCSS = {
+        styleId: "styleMainBodyFormManagement",
+        url: "./stylesheets/site/forms/formManagement.min.css" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyFormManagementHTML = {
+        divId: "divMainBodyShowFormManagement",
+        url: "./hbs/mainBody/forms/formManagement.hbs" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyFormManagementJS = {
+        namespace: "MainBodyFormManagement",
+        scriptId: "scriptMainBodyFormManagement",
+        url: "./javascripts/site/forms/formManagement.min.js" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyFormManagement = {
+        SideBar: StaticData.sideBarFormManagementHTML,
+        HTML: StaticData.mainBodyFormManagementHTML,
+        CSS: StaticData.mainBodyFormManagementCSS,
+        JS: StaticData.mainBodyFormManagementJS
     };
     return StaticData;
 }());

@@ -1,6 +1,5 @@
 var MainBodyProfileChangePassword;
 (function (MainBodyProfileChangePassword) {
-    MainBodyProfileChangePassword.viewModel = {};
     var UI = (function () {
         function UI() {
         }

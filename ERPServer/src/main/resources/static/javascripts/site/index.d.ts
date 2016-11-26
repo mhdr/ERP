@@ -46,17 +46,25 @@ declare class StaticData {
     static mainBodyProfileCPHTML: MainBodyHTMLData;
     static mainBodyProfileCPJS: MainBodyJSData;
     static mainBodyProfileCP: MainBodyData;
+    static sideBarFormsHTML: SideBarData;
+    static mainBodyFormsCSS: MainBodyCSSData;
+    static mainBodyFormsHTML: MainBodyHTMLData;
+    static mainBodyFormsJS: MainBodyJSData;
+    static mainBodyForms: MainBodyData;
+    static sideBarFormManagementHTML: SideBarData;
+    static mainBodyFormManagementCSS: MainBodyCSSData;
+    static mainBodyFormManagementHTML: MainBodyHTMLData;
+    static mainBodyFormManagementJS: MainBodyJSData;
+    static mainBodyFormManagement: MainBodyData;
 }
 interface SideBarData {
     divSideBar: string;
-    cache: string;
     url: string;
     aSideBar: string;
     liNavBar: string;
 }
 interface MainBodyCSSData {
     styleId: string;
-    cache: string;
     url: string;
 }
 interface MainBodyData {
@@ -67,12 +75,10 @@ interface MainBodyData {
 }
 interface MainBodyHTMLData {
     divId: string;
-    cache: string;
     url: string;
 }
 interface MainBodyJSData {
     namespace: string;
     scriptId: string;
-    cache: string;
     url: string;
 }

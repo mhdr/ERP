@@ -264,6 +264,8 @@ class StaticData {
         staticDataIterator.push(StaticData.mainBodyProfile);
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
+        staticDataIterator.push(StaticData.mainBodyForms);
+        staticDataIterator.push(StaticData.mainBodyFormManagement);
     }
 
     static getStaticData(): MainBodyData {
@@ -278,13 +280,16 @@ class StaticData {
                 return StaticData.mainBodyProfileCD;
             case "#Profile/ChangePassword":
                 return StaticData.mainBodyProfileCP;
+            case "#Forms/Show":
+                return StaticData.mainBodyForms;
+            case "#Forms/Management":
+                return StaticData.mainBodyFormManagement;
         }
     }
 
     // Show Users
     static sideBarShowUsersHTML: SideBarData = {
         divSideBar: "divSidebarUsers",
-        cache: "sideBarUsersHTML",
         url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowUsers",
         liNavBar: "liUsers"
@@ -292,20 +297,17 @@ class StaticData {
 
     static mainBodyShowUsersCSS: MainBodyCSSData = {
         styleId: "styleMainBodyShowUsers",
-        cache: "mainBodyShowUsersCSS",
         url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsersHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowUsers",
-        cache: "mainBodyShowUsersHTML",
         url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyShowUsersJS: MainBodyJSData = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        cache: "mainBodyShowUsersJS",
         url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
     };
 
@@ -321,7 +323,6 @@ class StaticData {
     // Profile
     static sideBarProfileHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
@@ -329,20 +330,17 @@ class StaticData {
 
     static mainBodyProfileCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfile",
-        cache: "mainBodyProfileCSS",
         url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfile",
-        cache: "mainBodyProfileHTML",
         url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileJS: MainBodyJSData = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
-        cache: "mainBodyProfileJS",
         url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
     };
 
@@ -358,7 +356,6 @@ class StaticData {
     // Profile/ChangeData
     static sideBarProfileCDHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
@@ -366,20 +363,17 @@ class StaticData {
 
     static mainBodyProfileCDCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataCSS",
         url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCDHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataHTML",
         url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCDJS: MainBodyJSData = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
-        cache: "mainBodyProfileChangeDataJS",
         url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
     };
 
@@ -396,7 +390,6 @@ class StaticData {
 
     static sideBarProfileCPHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        cache: "sideBarProfileHTML",
         url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
         aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
@@ -404,20 +397,17 @@ class StaticData {
 
     static mainBodyProfileCPCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordCSS",
         url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCPHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordHTML",
         url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyProfileCPJS: MainBodyJSData = {
         namespace: "MainBodyProfileChangePassword",
         scriptId: "scriptMainBodyProfileChangePassword",
-        cache: "mainBodyProfileChangePasswordJS",
         url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
     };
 
@@ -429,11 +419,78 @@ class StaticData {
     };
 
     //
+
+    // Forms
+
+    static sideBarFormsHTML: SideBarData = {
+        divSideBar: "divSidebarForms",
+        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aShowForms",
+        liNavBar: "liForms"
+    };
+
+    static mainBodyFormsCSS: MainBodyCSSData = {
+        styleId: "styleMainBodyForms",
+        url: "./stylesheets/site/forms/forms.min.css" + "?" + Site.Statics.version
+    };
+
+    static mainBodyFormsHTML: MainBodyHTMLData = {
+        divId: "divMainBodyShowForms",
+        url: "./hbs/mainBody/forms/forms.hbs" + "?" + Site.Statics.version
+    };
+
+    static mainBodyFormsJS: MainBodyJSData = {
+        namespace: "MainBodyForms",
+        scriptId: "scriptMainBodyForms",
+        url: "./javascripts/site/forms/forms.min.js" + "?" + Site.Statics.version
+    };
+
+    static mainBodyForms: MainBodyData = {
+        SideBar: StaticData.sideBarFormsHTML,
+        HTML: StaticData.mainBodyFormsHTML,
+        CSS: StaticData.mainBodyFormsCSS,
+        JS: StaticData.mainBodyFormsJS
+    };
+
+    //
+
+    // Form Management
+
+    static sideBarFormManagementHTML: SideBarData = {
+        divSideBar: "divSidebarForms",
+        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aFormManagement",
+        liNavBar: "liForms"
+    };
+
+    static mainBodyFormManagementCSS: MainBodyCSSData = {
+        styleId: "styleMainBodyFormManagement",
+        url: "./stylesheets/site/forms/formManagement.min.css" + "?" + Site.Statics.version
+    };
+
+    static mainBodyFormManagementHTML: MainBodyHTMLData = {
+        divId: "divMainBodyShowFormManagement",
+        url: "./hbs/mainBody/forms/formManagement.hbs" + "?" + Site.Statics.version
+    };
+
+    static mainBodyFormManagementJS: MainBodyJSData = {
+        namespace: "MainBodyFormManagement",
+        scriptId: "scriptMainBodyFormManagement",
+        url: "./javascripts/site/forms/formManagement.min.js" + "?" + Site.Statics.version
+    };
+
+    static mainBodyFormManagement: MainBodyData = {
+        SideBar: StaticData.sideBarFormManagementHTML,
+        HTML: StaticData.mainBodyFormManagementHTML,
+        CSS: StaticData.mainBodyFormManagementCSS,
+        JS: StaticData.mainBodyFormManagementJS
+    };
+
+    //
 }
 
 interface SideBarData {
     divSideBar: string;
-    cache: string;
     url: string;
     aSideBar: string;
     liNavBar: string;
@@ -441,7 +498,6 @@ interface SideBarData {
 
 interface MainBodyCSSData {
     styleId: string,
-    cache: string,
     url: string
 }
 
@@ -454,13 +510,11 @@ interface MainBodyData {
 
 interface MainBodyHTMLData {
     divId: string,
-    cache: string,
     url: string
 }
 
 interface MainBodyJSData {
     namespace: string,
     scriptId: string,
-    cache: string,
     url: string
 }

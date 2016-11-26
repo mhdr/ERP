@@ -6,10 +6,6 @@
 ///<reference path="../common.d.ts"/>
 
 namespace MainBodyProfileChangePassword {
-    export var viewModel = {
-
-    };
-
     export class UI{
 
         static load(complete:Function)

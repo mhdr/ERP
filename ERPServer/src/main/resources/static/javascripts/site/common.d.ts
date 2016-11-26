@@ -6,7 +6,7 @@
 declare var format: any;
 declare namespace Site {
     var Statics: {
-        version: string;
+        version: any;
     };
     class UI {
         static getVersion(): void;

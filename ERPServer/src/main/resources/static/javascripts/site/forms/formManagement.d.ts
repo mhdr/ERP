@@ -3,11 +3,11 @@
 /// <reference path="../../../../DefinitelyTyped/knockout/knockout.d.ts" />
 /// <reference path="../nm.d.ts" />
 /// <reference path="../common.d.ts" />
-declare namespace MainBodyProfileChangePassword {
+declare namespace MainBodyFormManagement {
+    var viewModel: {};
     class UI {
         static load(complete: Function): void;
         static bindAll(): void;
         static unBindAll(): void;
-        static buttonSubmit_clicked(): void;
     }
 }
