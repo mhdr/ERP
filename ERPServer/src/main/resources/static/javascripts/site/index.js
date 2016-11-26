@@ -45,6 +45,12 @@ var Template = (function () {
     function Template() {
     }
     Template.renderMainBody = function (data, onComplete) {
+        if (data === null) {
+            return;
+        }
+        if (data.HTML === null || data.CSS === null || data.JS === null || data.SideBar === null) {
+            return;
+        }
         var parallel1 = new NM.Parallel(2);
         parallel1.setOnComplete(function (result) {
             Site.UI.showLoaderForMainBody();

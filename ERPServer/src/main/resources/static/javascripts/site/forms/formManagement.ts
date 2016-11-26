@@ -18,12 +18,12 @@ namespace MainBodyFormManagement{
 
         static bindAll()
         {
-            ko.applyBindings(MainBodyFormManagement.viewModel,document.getElementById("divMainBodyShowFormManagement"))
+            //ko.applyBindings(MainBodyFormManagement.viewModel,document.getElementById("divMainBodyShowFormManagement"))
         }
 
         static unBindAll()
         {
-            ko.cleanNode(document.getElementById("divMainBodyShowFormManagement"));
+            //ko.cleanNode(document.getElementById("divMainBodyShowFormManagement"));
         }
     }
 }

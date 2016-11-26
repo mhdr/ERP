@@ -8,10 +8,8 @@ var MainBodyFormManagement;
             complete();
         };
         UI.bindAll = function () {
-            ko.applyBindings(MainBodyFormManagement.viewModel, document.getElementById("divMainBodyShowFormManagement"));
         };
         UI.unBindAll = function () {
-            ko.cleanNode(document.getElementById("divMainBodyShowFormManagement"));
         };
         return UI;
     }());

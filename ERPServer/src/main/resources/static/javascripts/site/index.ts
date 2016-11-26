@@ -65,6 +65,16 @@ class Template {
      */
     static renderMainBody(data: MainBodyData, onComplete) {
 
+        if (data===null)
+        {
+            return;
+        }
+
+        if (data.HTML===null || data.CSS===null || data.JS===null || data.SideBar===null)
+        {
+            return;
+        }
+
         var parallel1 = new NM.Parallel(2);
 
         parallel1.setOnComplete(function (result) {
@@ -84,7 +94,6 @@ class Template {
                 parallel2.done("fn2");
             });
         });
-
 
         Template.renderSideBarHTML(data.SideBar, function () {
             parallel1.done("fn1");
