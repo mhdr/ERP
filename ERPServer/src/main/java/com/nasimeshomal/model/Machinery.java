@@ -11,14 +11,7 @@ import java.util.UUID;
 public class Machinery {
     @Id
     public String id;
-    public String unitNameFa="";
-    public String unitNameEn="";
-    public ArrayList<Machine> machines;
-
-    public Machinery()
-    {
-        this.machines=new ArrayList<>();
-    }
+    public Unit unit;
 
     public static class Machine{
         public String id;
@@ -27,27 +20,35 @@ public class Machinery {
         public String pmCode;
     }
 
-    public void addMachine(Machine machine)
+    public static class Unit
     {
-        machine.id= UUID.randomUUID().toString().replace("-","");
-        this.machines.add(machine);
-    }
+        public String id;
+        public String unitNameFa;
+        public String unitNameEn;
 
-    public void removeMachine(String id)
-    {
-        this.machines.removeIf(machine -> Objects.equals(machine.id, id));
-    }
+        public ArrayList<Machine> machines;
+        public ArrayList<Unit> units;
 
-    public Machine findById(String id)
-    {
-        for (Machine machine:machines)
+        public void addMachine(Machine machine)
         {
-            if (Objects.equals(machine.id, id))
+            if (this.machines==null)
             {
-                return machine;
+                this.machines=new ArrayList<>();
             }
+
+            machine.id=UUID.randomUUID().toString().replace("-","");
+            this.machines.add(machine);
         }
 
-        return null;
+        public void addUnit(Unit unit)
+        {
+            if (this.units==null)
+            {
+                this.units=new ArrayList<>();
+            }
+
+            unit.id=UUID.randomUUID().toString().replace("-","");
+            this.units.add(unit);
+        }
     }
 }

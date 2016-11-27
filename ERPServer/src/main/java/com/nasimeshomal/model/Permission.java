@@ -10,8 +10,8 @@ public class Permission {
     @Id
     public String id;
     public int permissionNumber;
-    public String permissionName="";
-    public String permissionFaName="";
+    public String permissionName;
+    public String permissionFaName;
     public int order;
 
 

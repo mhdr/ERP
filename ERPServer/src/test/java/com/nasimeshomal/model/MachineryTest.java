@@ -15,27 +15,26 @@ public class MachineryTest {
                 new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
+        Machinery.Unit unit1=new Machinery.Unit();
+        unit1.unitNameFa="تولید";
+
+        Machinery.Unit unit2=new Machinery.Unit();
+        unit2.unitNameFa="مایعات";
+
+        Machinery.Unit unit3=new Machinery.Unit();
+        unit3.unitNameFa="جامدات";
+
+        Machinery.Machine machine1=new Machinery.Machine();
+        machine1.machineNameEn="Filling Isolator";
+        machine1.pmCode="ISO-7789";
+        unit2.addMachine(machine1);
+
+        unit1.addUnit(unit2);
+        unit1.addUnit(unit3);
+
         Machinery machinery=new Machinery();
-        machinery.unitNameFa="مایعات";
-        mongoOperation.insert(machinery);
-    }
+        machinery.unit=unit1;
 
-    @Test
-    public void insert02() throws Exception
-    {
-        ApplicationContext ctx =
-                new AnnotationConfigApplicationContext(MongoConfig.class);
-        MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-
-        Machinery machinery=new Machinery();
-        machinery.unitNameFa="جامدات";
-        machinery.unitNameEn="Solid";
-
-        Machinery.Machine machine=new Machinery.Machine();
-        machine.machineNameEn="Capsule Filling";
-        machine.machineNameFa="کپسول پرکنی";
-        machine.pmCode="CAP-6956";
-        machinery.addMachine(machine);
         mongoOperation.insert(machinery);
     }
 }

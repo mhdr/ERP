@@ -8,10 +8,10 @@ public class LoginHistory {
     @Id
     public String id;
 
-    public String userId="";
-    public String ip="";
-    public String sessionId="";
-    public String loginDate="";
+    public String userId;
+    public String ip;
+    public String sessionId;
+    public String loginDate;
 
     public LoginHistory()
     {
