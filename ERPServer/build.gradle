@@ -1,5 +1,3 @@
-import java.util.function.Consumer
-
 task wrapper(type: Wrapper) {
     gradleVersion = '3.2.1'
 }
@@ -166,7 +164,17 @@ task sass {
                     newFilePath = filePath.substring(0, pos) + ".css"
                 }
 
-                String cmd = String.format("node-sass $filePath $newFilePath")
+                String cmd=""
+                String osName= System.getProperty("os.name")
+
+                if (osName.startsWith("Windows"))
+                {
+                    cmd = String.format("cmd.exe /c node-sass $filePath $newFilePath")
+                }
+                else{
+                    cmd = String.format("node-sass $filePath $newFilePath")
+                }
+
                 java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
@@ -194,7 +202,17 @@ task csso {
                     newFilePath = filePath.substring(0, pos) + ".min.css";
                 }
 
-                String cmd = String.format("csso -i $filePath -o $newFilePath");
+                String cmd=""
+                String osName= System.getProperty("os.name")
+
+                if (osName.startsWith("Windows"))
+                {
+                    cmd = String.format("cmd.exe /c csso -i $filePath -o $newFilePath")
+                }
+                else{
+                    cmd = String.format("csso -i $filePath -o $newFilePath")
+                }
+
                 java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
@@ -224,7 +242,18 @@ task uglify {
                     newFilePath = filePath.substring(0, pos) + ".min.js";
                 }
 
-                String cmd = String.format("uglifyjs $filePath -o $newFilePath");
+
+                String cmd=""
+                String osName= System.getProperty("os.name");
+
+                if (osName.startsWith("Windows"))
+                {
+                    cmd = String.format("cmd.exe /c uglifyjs $filePath -o $newFilePath")
+                }
+                else{
+                    cmd = String.format("uglifyjs $filePath -o $newFilePath")
+                }
+
                 java.lang.Runtime.getRuntime().exec(cmd)
             }
         }
@@ -248,5 +277,31 @@ task minify{
         sleep(5000)
         tasks.csso.execute()
         tasks.uglify.execute()
+    }
+}
+
+task minifyJS{
+    group = 'minify'
+    doFirst{
+
+    }
+    doLast{
+        tasks.cleanJS.execute()
+        sleep(3000)
+        tasks.uglify.execute()
+    }
+}
+
+task minifyCSS{
+    group = 'minify'
+    doFirst{
+
+    }
+    doLast{
+        tasks.cleanCSS.execute()
+        sleep(3000)
+        tasks.sass.execute()
+        sleep(5000)
+        tasks.csso.execute()
     }
 }

@@ -12,11 +12,11 @@ public class User {
 
     @Id
     public String id;
-    public String userName;
-    public String firstName;
-    public String lastName;
-    public String password;
-    public String dateCreated;
+    public String userName="";
+    public String firstName="";
+    public String lastName="";
+    public String password="";
+    public String dateCreated="";
     public ArrayList<com.nasimeshomal.model.User.Permission> permissions;
 
     public User()
@@ -24,7 +24,7 @@ public class User {
         this.permissions=new ArrayList<>();
     }
 
-    private static class Permission{
+    public static class Permission{
 
         public int permissionNumber;
     }
