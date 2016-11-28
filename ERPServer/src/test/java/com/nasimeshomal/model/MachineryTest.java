@@ -15,9 +15,6 @@ public class MachineryTest {
                 new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
-        Machinery.Unit unit1=new Machinery.Unit();
-        unit1.unitNameFa="تولید";
-
         Machinery.Unit unit2=new Machinery.Unit();
         unit2.unitNameFa="مایعات";
 
@@ -29,11 +26,10 @@ public class MachineryTest {
         machine1.pmCode="ISO-7789";
         unit2.addMachine(machine1);
 
-        unit1.addUnit(unit2);
-        unit1.addUnit(unit3);
-
         Machinery machinery=new Machinery();
-        machinery.unit=unit1;
+        machinery.unitNameFa="تولید";
+        machinery.addUnit(unit2);
+        machinery.addUnit(unit3);
 
         mongoOperation.insert(machinery);
     }
