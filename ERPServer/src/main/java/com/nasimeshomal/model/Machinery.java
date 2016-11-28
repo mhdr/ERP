@@ -1,6 +1,7 @@
 package com.nasimeshomal.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -12,70 +13,62 @@ public class Machinery {
 
     @Id
     public String id;
-    public String unitNameFa;
-    public String unitNameEn;
+    public int machineryType;
+    @Indexed
+    public String parentId;
+    public Unit unit;
+    public Machine machine;
+    public Folder folder;
 
-    public ArrayList<Machine> machines;
-    public ArrayList<Unit> units;
-
-    public void addMachine(Machine machine)
+    public Machinery(int type)
     {
-        if (this.machines==null)
-        {
-            this.machines=new ArrayList<>();
-        }
+        this.machineryType=type;
 
-        machine.id=UUID.randomUUID().toString().replace("-","");
-        this.machines.add(machine);
+        if (this.machineryType==MachineryType.Unit)
+        {
+            this.unit=new Unit();
+        }
+        else if (this.machineryType==MachineryType.Machine)
+        {
+            this.machine=new Machine();
+        }
+        else if (this.machineryType==MachineryType.Folder)
+        {
+            this.folder=new Folder();
+        }
     }
 
-    public void addUnit(Unit unit)
+    public Machinery(int type,String parentId)
     {
-        if (this.units==null)
-        {
-            this.units=new ArrayList<>();
-        }
-
-        unit.id=UUID.randomUUID().toString().replace("-","");
-        this.units.add(unit);
+        this(type);
+        this.parentId=parentId;
     }
 
-    public static class Machine{
-        public String id;
+    public static class Unit {
+        // machinery type 1
+        public String unitNameFa;
+        public String unitNameEn;
+        //
+    }
+
+    public static class Machine {
+        // machinery type 2
         public String machineNameFa;
         public String machineNameEn;
         public String pmCode;
+        //
     }
 
-    public static class Unit
-    {
-        public String id;
-        public String unitNameFa;
-        public String unitNameEn;
+    public static class Folder {
+        // machinery type 3
+        public String folderNameFa;
+        public String folderNameEn;
+        //
+    }
 
-        public ArrayList<Machine> machines;
-        public ArrayList<Unit> units;
-
-        public void addMachine(Machine machine)
-        {
-            if (this.machines==null)
-            {
-                this.machines=new ArrayList<>();
-            }
-
-            machine.id=UUID.randomUUID().toString().replace("-","");
-            this.machines.add(machine);
-        }
-
-        public void addUnit(Unit unit)
-        {
-            if (this.units==null)
-            {
-                this.units=new ArrayList<>();
-            }
-
-            unit.id=UUID.randomUUID().toString().replace("-","");
-            this.units.add(unit);
-        }
+    public static class MachineryType {
+        public static final int Unit = 1;
+        public static final int Machine = 2;
+        public static final int Folder = 3;
     }
 }

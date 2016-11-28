@@ -15,22 +15,21 @@ public class MachineryTest {
                 new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
-        Machinery.Unit unit2=new Machinery.Unit();
-        unit2.unitNameFa="مایعات";
+        Machinery machinery1=new Machinery(Machinery.MachineryType.Unit);
+        machinery1.unit.unitNameFa="تولید";
+        mongoOperation.insert(machinery1);
 
-        Machinery.Unit unit3=new Machinery.Unit();
-        unit3.unitNameFa="جامدات";
+        Machinery machinery2=new Machinery(Machinery.MachineryType.Unit,machinery1.id);
+        machinery2.unit.unitNameFa="مایعات";
+        mongoOperation.insert(machinery2);
 
-        Machinery.Machine machine1=new Machinery.Machine();
-        machine1.machineNameEn="Filling Isolator";
-        machine1.pmCode="ISO-7789";
-        unit2.addMachine(machine1);
+        Machinery machinery3=new Machinery(Machinery.MachineryType.Unit,machinery1.id);
+        machinery3.unit.unitNameFa="جامدات";
+        mongoOperation.insert(machinery3);
 
-        Machinery machinery=new Machinery();
-        machinery.unitNameFa="تولید";
-        machinery.addUnit(unit2);
-        machinery.addUnit(unit3);
-
-        mongoOperation.insert(machinery);
+        Machinery machinery4=new Machinery(Machinery.MachineryType.Machine,machinery2.id);
+        machinery4.machine.machineNameEn="Filling Isolator";
+        machinery4.machine.pmCode="ISO-7651";
+        mongoOperation.insert(machinery4);
     }
 }
