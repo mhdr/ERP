@@ -6,10 +6,10 @@
 declare var format: any;
 declare namespace Site {
     var Statics: {
-        version: any;
+        version: string;
     };
     class UI {
-        static getVersion(): any;
+        static getVersion(): void;
         static showLoaderForContent(element: any, top?: number, right?: number): void;
         static hideLoaderForContent(): void;
         static showLoaderForMainBody(top?: number, right?: number): void;

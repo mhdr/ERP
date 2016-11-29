@@ -263,64 +263,62 @@ var staticDataIterator = [];
 class StaticData {
 
     static loadIterator() {
-        staticDataIterator.push(StaticData.mainBodyShowUsers);
+        staticDataIterator.push(StaticData.mainBodyAdminUsers);
         staticDataIterator.push(StaticData.mainBodyProfile);
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
         staticDataIterator.push(StaticData.mainBodyForms);
-        staticDataIterator.push(StaticData.mainBodyFormManagement);
     }
 
     static getStaticData(): MainBodyData {
         var hash = window.location.hash;
 
         switch (hash) {
-            case "#Users/Show":
-                return StaticData.mainBodyShowUsers;
+            case "#Admin/Users":
+                return StaticData.mainBodyAdminUsers;
+            case "#Admin/Forms":
+                return StaticData.mainBodyForms;
             case "#Profile":
                 return StaticData.mainBodyProfile;
             case "#Profile/ChangeData":
                 return StaticData.mainBodyProfileCD;
             case "#Profile/ChangePassword":
                 return StaticData.mainBodyProfileCP;
-            case "#Forms/Show":
-                return StaticData.mainBodyForms;
-            case "#Forms/Management":
-                return StaticData.mainBodyFormManagement;
             default:
                 return null;
         }
     }
 
-    // Show Users
-    static sideBarShowUsersHTML: SideBarData = {
-        divSideBar: "divSidebarUsers",
-        url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aShowUsers",
-        liNavBar: "liUsers"
+    // #Admin/Users
+
+    static sideBarAdminUsersHTML: SideBarData = {
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aUserAdmin",
+        liNavBar: "liAdmin"
     };
 
-    static mainBodyShowUsersCSS: MainBodyCSSData = {
+    static mainBodyAdminUsersCSS: MainBodyCSSData = {
         styleId: "styleMainBodyShowUsers",
-        url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version
     };
 
-    static mainBodyShowUsersHTML: MainBodyHTMLData = {
+    static mainBodyAdminUsersHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowUsers",
-        url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version
     };
 
-    static mainBodyShowUsersJS: MainBodyJSData = {
+    static mainBodyAdminUsersJS: MainBodyJSData = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version
     };
 
-    static mainBodyShowUsers: MainBodyData = {
-        SideBar: StaticData.sideBarShowUsersHTML,
-        HTML: StaticData.mainBodyShowUsersHTML,
-        CSS: StaticData.mainBodyShowUsersCSS,
-        JS: StaticData.mainBodyShowUsersJS
+    static mainBodyAdminUsers: MainBodyData = {
+        SideBar: StaticData.sideBarAdminUsersHTML,
+        HTML: StaticData.mainBodyAdminUsersHTML,
+        CSS: StaticData.mainBodyAdminUsersCSS,
+        JS: StaticData.mainBodyAdminUsersJS
     };
 
     //
@@ -428,26 +426,26 @@ class StaticData {
     // Forms
 
     static sideBarFormsHTML: SideBarData = {
-        divSideBar: "divSidebarForms",
-        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aShowForms",
-        liNavBar: "liForms"
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aFormAdmin",
+        liNavBar: "liAdmin"
     };
 
     static mainBodyFormsCSS: MainBodyCSSData = {
         styleId: "styleMainBodyForms",
-        url: "./stylesheets/site/forms/forms.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version
     };
 
     static mainBodyFormsHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowForms",
-        url: "./hbs/mainBody/forms/forms.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version
     };
 
     static mainBodyFormsJS: MainBodyJSData = {
         namespace: "MainBodyForms",
         scriptId: "scriptMainBodyForms",
-        url: "./javascripts/site/forms/forms.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version
     };
 
     static mainBodyForms: MainBodyData = {
@@ -455,40 +453,6 @@ class StaticData {
         HTML: StaticData.mainBodyFormsHTML,
         CSS: StaticData.mainBodyFormsCSS,
         JS: StaticData.mainBodyFormsJS
-    };
-
-    //
-
-    // Form Management
-
-    static sideBarFormManagementHTML: SideBarData = {
-        divSideBar: "divSidebarForms",
-        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aFormManagement",
-        liNavBar: "liForms"
-    };
-
-    static mainBodyFormManagementCSS: MainBodyCSSData = {
-        styleId: "styleMainBodyFormManagement",
-        url: "./stylesheets/site/forms/formManagement.min.css" + "?" + Site.Statics.version
-    };
-
-    static mainBodyFormManagementHTML: MainBodyHTMLData = {
-        divId: "divMainBodyShowFormManagement",
-        url: "./hbs/mainBody/forms/formManagement.hbs" + "?" + Site.Statics.version
-    };
-
-    static mainBodyFormManagementJS: MainBodyJSData = {
-        namespace: "MainBodyFormManagement",
-        scriptId: "scriptMainBodyFormManagement",
-        url: "./javascripts/site/forms/formManagement.min.js" + "?" + Site.Statics.version
-    };
-
-    static mainBodyFormManagement: MainBodyData = {
-        SideBar: StaticData.sideBarFormManagementHTML,
-        HTML: StaticData.mainBodyFormManagementHTML,
-        CSS: StaticData.mainBodyFormManagementCSS,
-        JS: StaticData.mainBodyFormManagementJS
     };
 
     //

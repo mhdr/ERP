@@ -38,12 +38,8 @@
 
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     <ul class="nav navbar-nav" id="ulNavbarItems">
-
-                        <li id="liForms"><a href="#Forms/Show" id="aForms" class="index-a-navbar hvr-shutter-out-horizontal">فرم ها</a></li>
-                        <li id="liUsers" th:if="${permissions.contains(1)}">
-                            <a href="#Users/Show" id="aUsers" class="index-a-navbar hvr-shutter-out-horizontal"><span>کاربران</span></a></li>
-                        <li id="liManagement">
-                            <a href="#Admin" id="aAdmin" class="index-a-navbar hvr-shutter-out-horizontal"><span>مدیریت</span></a>
+                        <li id="liAdmin" th:if="${permissions.contains(1)}">
+                            <a href="#Admin/Users" id="aAdmin" class="index-a-navbar hvr-shutter-out-horizontal"><span>مدیریت</span></a>
                         </li>
                     </ul>
 

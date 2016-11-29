@@ -196,56 +196,53 @@ var StaticData = (function () {
     function StaticData() {
     }
     StaticData.loadIterator = function () {
-        staticDataIterator.push(StaticData.mainBodyShowUsers);
+        staticDataIterator.push(StaticData.mainBodyAdminUsers);
         staticDataIterator.push(StaticData.mainBodyProfile);
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
         staticDataIterator.push(StaticData.mainBodyForms);
-        staticDataIterator.push(StaticData.mainBodyFormManagement);
     };
     StaticData.getStaticData = function () {
         var hash = window.location.hash;
         switch (hash) {
-            case "#Users/Show":
-                return StaticData.mainBodyShowUsers;
+            case "#Admin/Users":
+                return StaticData.mainBodyAdminUsers;
+            case "#Admin/Forms":
+                return StaticData.mainBodyForms;
             case "#Profile":
                 return StaticData.mainBodyProfile;
             case "#Profile/ChangeData":
                 return StaticData.mainBodyProfileCD;
             case "#Profile/ChangePassword":
                 return StaticData.mainBodyProfileCP;
-            case "#Forms/Show":
-                return StaticData.mainBodyForms;
-            case "#Forms/Management":
-                return StaticData.mainBodyFormManagement;
             default:
                 return null;
         }
     };
-    StaticData.sideBarShowUsersHTML = {
-        divSideBar: "divSidebarUsers",
-        url: "./hbs/sidebar/users.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aShowUsers",
-        liNavBar: "liUsers"
+    StaticData.sideBarAdminUsersHTML = {
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aUserAdmin",
+        liNavBar: "liAdmin"
     };
-    StaticData.mainBodyShowUsersCSS = {
+    StaticData.mainBodyAdminUsersCSS = {
         styleId: "styleMainBodyShowUsers",
-        url: "./stylesheets/site/users/showUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version
     };
-    StaticData.mainBodyShowUsersHTML = {
+    StaticData.mainBodyAdminUsersHTML = {
         divId: "divMainBodyShowUsers",
-        url: "./hbs/mainBody/users/showUsers.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version
     };
-    StaticData.mainBodyShowUsersJS = {
+    StaticData.mainBodyAdminUsersJS = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        url: "./javascripts/site/users/showUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version
     };
-    StaticData.mainBodyShowUsers = {
-        SideBar: StaticData.sideBarShowUsersHTML,
-        HTML: StaticData.mainBodyShowUsersHTML,
-        CSS: StaticData.mainBodyShowUsersCSS,
-        JS: StaticData.mainBodyShowUsersJS
+    StaticData.mainBodyAdminUsers = {
+        SideBar: StaticData.sideBarAdminUsersHTML,
+        HTML: StaticData.mainBodyAdminUsersHTML,
+        CSS: StaticData.mainBodyAdminUsersCSS,
+        JS: StaticData.mainBodyAdminUsersJS
     };
     StaticData.sideBarProfileHTML = {
         divSideBar: "divSidebarProfile",
@@ -323,54 +320,29 @@ var StaticData = (function () {
         JS: StaticData.mainBodyProfileCPJS
     };
     StaticData.sideBarFormsHTML = {
-        divSideBar: "divSidebarForms",
-        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aShowForms",
-        liNavBar: "liForms"
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aFormAdmin",
+        liNavBar: "liAdmin"
     };
     StaticData.mainBodyFormsCSS = {
         styleId: "styleMainBodyForms",
-        url: "./stylesheets/site/forms/forms.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version
     };
     StaticData.mainBodyFormsHTML = {
         divId: "divMainBodyShowForms",
-        url: "./hbs/mainBody/forms/forms.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version
     };
     StaticData.mainBodyFormsJS = {
         namespace: "MainBodyForms",
         scriptId: "scriptMainBodyForms",
-        url: "./javascripts/site/forms/forms.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version
     };
     StaticData.mainBodyForms = {
         SideBar: StaticData.sideBarFormsHTML,
         HTML: StaticData.mainBodyFormsHTML,
         CSS: StaticData.mainBodyFormsCSS,
         JS: StaticData.mainBodyFormsJS
-    };
-    StaticData.sideBarFormManagementHTML = {
-        divSideBar: "divSidebarForms",
-        url: "./hbs/sidebar/forms.hbs" + "?" + Site.Statics.version,
-        aSideBar: "aFormManagement",
-        liNavBar: "liForms"
-    };
-    StaticData.mainBodyFormManagementCSS = {
-        styleId: "styleMainBodyFormManagement",
-        url: "./stylesheets/site/forms/formManagement.min.css" + "?" + Site.Statics.version
-    };
-    StaticData.mainBodyFormManagementHTML = {
-        divId: "divMainBodyShowFormManagement",
-        url: "./hbs/mainBody/forms/formManagement.hbs" + "?" + Site.Statics.version
-    };
-    StaticData.mainBodyFormManagementJS = {
-        namespace: "MainBodyFormManagement",
-        scriptId: "scriptMainBodyFormManagement",
-        url: "./javascripts/site/forms/formManagement.min.js" + "?" + Site.Statics.version
-    };
-    StaticData.mainBodyFormManagement = {
-        SideBar: StaticData.sideBarFormManagementHTML,
-        HTML: StaticData.mainBodyFormManagementHTML,
-        CSS: StaticData.mainBodyFormManagementCSS,
-        JS: StaticData.mainBodyFormManagementJS
     };
     return StaticData;
 }());

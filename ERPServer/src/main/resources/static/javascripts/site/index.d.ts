@@ -26,11 +26,11 @@ declare var staticDataIterator: any[];
 declare class StaticData {
     static loadIterator(): void;
     static getStaticData(): MainBodyData;
-    static sideBarShowUsersHTML: SideBarData;
-    static mainBodyShowUsersCSS: MainBodyCSSData;
-    static mainBodyShowUsersHTML: MainBodyHTMLData;
-    static mainBodyShowUsersJS: MainBodyJSData;
-    static mainBodyShowUsers: MainBodyData;
+    static sideBarAdminUsersHTML: SideBarData;
+    static mainBodyAdminUsersCSS: MainBodyCSSData;
+    static mainBodyAdminUsersHTML: MainBodyHTMLData;
+    static mainBodyAdminUsersJS: MainBodyJSData;
+    static mainBodyAdminUsers: MainBodyData;
     static sideBarProfileHTML: SideBarData;
     static mainBodyProfileCSS: MainBodyCSSData;
     static mainBodyProfileHTML: MainBodyHTMLData;
@@ -51,11 +51,6 @@ declare class StaticData {
     static mainBodyFormsHTML: MainBodyHTMLData;
     static mainBodyFormsJS: MainBodyJSData;
     static mainBodyForms: MainBodyData;
-    static sideBarFormManagementHTML: SideBarData;
-    static mainBodyFormManagementCSS: MainBodyCSSData;
-    static mainBodyFormManagementHTML: MainBodyHTMLData;
-    static mainBodyFormManagementJS: MainBodyJSData;
-    static mainBodyFormManagement: MainBodyData;
 }
 interface SideBarData {
     divSideBar: string;

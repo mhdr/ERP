@@ -15,7 +15,7 @@ namespace MainBodyShowUsers {
             MainBodyShowUsers.UI.emptyTable();
 
             $.ajax({
-                url: "./hbs/mainBody/users/showUsersTable.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version,
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -62,7 +62,7 @@ namespace MainBodyShowUsers {
 
         static loadNewData() {
             $.ajax({
-                url: "./hbs/mainBody/users/showUsersTable.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version,
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -234,7 +234,7 @@ namespace MainBodyShowUsers {
                     $("#aLoadingNavbarMainBodyShowUsers").velocity({opacity: 1}, {duration: 100});
 
                     $.ajax({
-                        url: "./hbs/mainBody/users/modalNewUser.hbs" + "?" + Site.Statics.version,
+                        url: "./hbs/mainBody/admin/users/modalNewUser.hbs" + "?" + Site.Statics.version,
                         method: "GET",
                         success: function (data, textStatus, jqXHR) {
                             $("#divMainBodyShowUsers").append(data);
@@ -276,7 +276,7 @@ namespace MainBodyShowUsers {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({opacity: 1}, {duration: 100});
 
                         $.ajax({
-                            url: "./hbs/mainBody/users/modalEditUser.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalEditUser.hbs" + "?" + Site.Statics.version,
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -310,7 +310,7 @@ namespace MainBodyShowUsers {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({opacity: 1}, {duration: 100});
 
                         $.ajax({
-                            url: "./hbs/mainBody/users/modalPermissions.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalPermissions.hbs" + "?" + Site.Statics.version,
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -349,7 +349,7 @@ namespace MainBodyShowUsers {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({opacity: 1}, {duration: 100});
 
                         $.ajax({
-                            url: "./hbs/mainBody/users/modalChangePassword.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalChangePassword.hbs" + "?" + Site.Statics.version,
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -891,7 +891,7 @@ namespace ModalPermissions {
             var parameters = {query: filter};
 
             $.ajax({
-                url: "./hbs/mainBody/users/modalPermissionsList.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/modalPermissionsList.hbs" + "?" + Site.Statics.version,
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);

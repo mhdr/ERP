@@ -14,14 +14,14 @@ $(document).ready(function () {
 namespace Site {
 
     export var Statics = {
-        version: Site.UI.getVersion()
+        version: localStorage.getItem("version"),
     };
 
     export class UI {
 
         static getVersion() {
             let result= $("#inputVersion").val();
-            return result;
+            localStorage.setItem("version", result);
         }
 
         static showLoaderForContent(element, top: number = 25, right: number = 50) {

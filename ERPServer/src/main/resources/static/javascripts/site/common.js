@@ -6,14 +6,14 @@ $(document).ready(function () {
 var Site;
 (function (Site) {
     Site.Statics = {
-        version: Site.UI.getVersion()
+        version: localStorage.getItem("version")
     };
     var UI = (function () {
         function UI() {
         }
         UI.getVersion = function () {
             var result = $("#inputVersion").val();
-            return result;
+            localStorage.setItem("version", result);
         };
         UI.showLoaderForContent = function (element, top, right) {
             if (top === void 0) { top = 25; }
