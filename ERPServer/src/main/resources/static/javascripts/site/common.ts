@@ -14,21 +14,14 @@ $(document).ready(function () {
 namespace Site {
 
     export var Statics = {
-        version: localStorage.getItem("version"),
+        version: Site.UI.getVersion()
     };
 
     export class UI {
 
         static getVersion() {
-            $.ajax({
-                url: "./api/GetVersion",
-                method: "GET",
-                success: function (data, textStatus, jqXHR) {
-                    if (data.error === 0) {
-                        localStorage.setItem("version", data.result);
-                    }
-                }
-            });
+            let result= $("#inputVersion").val();
+            return result;
         }
 
         static showLoaderForContent(element, top: number = 25, right: number = 50) {

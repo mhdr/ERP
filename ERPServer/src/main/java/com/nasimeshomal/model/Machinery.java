@@ -4,23 +4,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.UUID;
-
 @Document(collection = "machinery")
 public class Machinery {
 
     @Id
     public String id;
-    public int machineryType;
-    @Indexed
+    public MachineryType machineryType;
+    @Indexed()
     public String parentId;
     public Unit unit;
     public Machine machine;
     public Folder folder;
 
-    public Machinery(int type)
+    public Machinery(MachineryType type)
     {
         this.machineryType=type;
 
@@ -38,7 +34,7 @@ public class Machinery {
         }
     }
 
-    public Machinery(int type,String parentId)
+    public Machinery(MachineryType type,String parentId)
     {
         this(type);
         this.parentId=parentId;
@@ -66,9 +62,7 @@ public class Machinery {
         //
     }
 
-    public static class MachineryType {
-        public static final int Unit = 1;
-        public static final int Machine = 2;
-        public static final int Folder = 3;
+    public enum MachineryType{
+        Unit ,Machine,Folder
     }
 }

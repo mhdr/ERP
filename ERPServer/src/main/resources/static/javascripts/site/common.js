@@ -6,21 +6,14 @@ $(document).ready(function () {
 var Site;
 (function (Site) {
     Site.Statics = {
-        version: localStorage.getItem("version")
+        version: Site.UI.getVersion()
     };
     var UI = (function () {
         function UI() {
         }
         UI.getVersion = function () {
-            $.ajax({
-                url: "./api/GetVersion",
-                method: "GET",
-                success: function (data, textStatus, jqXHR) {
-                    if (data.error === 0) {
-                        localStorage.setItem("version", data.result);
-                    }
-                }
-            });
+            var result = $("#inputVersion").val();
+            return result;
         };
         UI.showLoaderForContent = function (element, top, right) {
             if (top === void 0) { top = 25; }
