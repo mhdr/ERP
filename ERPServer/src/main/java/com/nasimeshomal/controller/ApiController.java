@@ -1,10 +1,11 @@
 package com.nasimeshomal.controller;
 
-import com.nasimeshomal.bl.Permissions;
-import com.nasimeshomal.bl.Statics;
+import com.nasimeshomal.bl.MachineryBL;
+import com.nasimeshomal.bl.PermissionBL;
+import com.nasimeshomal.bl.StaticsBL;
+import com.nasimeshomal.bl.UsersBL;
 import com.nasimeshomal.lib.IP;
 import com.nasimeshomal.lib.SessionManager;
-import com.nasimeshomal.bl.Users;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class ApiController {
             result = authenticationError(request, response);
             return result;
         }
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.getUsers();
         return result;
     }
@@ -45,7 +45,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
 
         result = users.getCurrentUser();
         return result;
@@ -61,7 +61,7 @@ public class ApiController {
             result = authenticationError(request, response);
             return result;
         }
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
 
         result = users.editUser();
         return result;
@@ -78,7 +78,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.getLastLogin();
         return result;
     }
@@ -111,7 +111,7 @@ public class ApiController {
             return result;
         }
 
-        Permissions permissions = new Permissions(request, response);
+        PermissionBL permissions = new PermissionBL(request, response);
         result = permissions.getPermissionList();
         return result;
     }
@@ -127,7 +127,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.getPermissions();
         return result;
     }
@@ -146,7 +146,7 @@ public class ApiController {
     public Map login(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         Map result = users.login();
 
         int errorNumber = (int) result.get("error");
@@ -173,7 +173,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.setPermissions();
         return result;
     }
@@ -189,7 +189,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.deleteUser();
         return result;
     }
@@ -205,7 +205,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.changePassowrd();
         return result;
     }
@@ -221,7 +221,7 @@ public class ApiController {
             return result;
         }
 
-        Users users = new Users(request, response);
+        UsersBL users = new UsersBL(request, response);
         result = users.insertNewUser();
         return result;
     }
@@ -237,8 +237,25 @@ public class ApiController {
             return result;
         }
 
-        Statics statics = new Statics();
+        StaticsBL statics = new StaticsBL();
         result = statics.getVersion();
+        return result;
+    }
+
+    @RequestMapping(value = "api/Machinery/GetMachinery", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map getMachinery(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request, response);
+
+        Map result;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
+        MachineryBL machineryBL=new MachineryBL(request,response);
+        result=machineryBL.getMachinery();
+
         return result;
     }
 }

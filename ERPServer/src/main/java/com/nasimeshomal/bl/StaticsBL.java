@@ -3,7 +3,7 @@ package com.nasimeshomal.bl;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Statics {
+public class StaticsBL {
 
     public Map<String, Object> getVersion()
     {

@@ -16,6 +16,11 @@ public class Machinery {
     public Machine machine;
     public Folder folder;
 
+    public Machinery()
+    {
+
+    }
+
     public Machinery(MachineryType type)
     {
         this.machineryType=type;
@@ -38,6 +43,14 @@ public class Machinery {
     {
         this(type);
         this.parentId=parentId;
+    }
+
+    public Machinery(MachineryType type,Boolean isRoot)
+    {
+        this(type);
+        if (isRoot){
+            this.parentId="";
+        }
     }
 
     public static class Unit {

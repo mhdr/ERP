@@ -268,6 +268,7 @@ class StaticData {
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
         staticDataIterator.push(StaticData.mainBodyForms);
+        staticDataIterator.push(StaticData.mainBodyAdminMachinery);
     }
 
     static getStaticData(): MainBodyData {
@@ -278,6 +279,8 @@ class StaticData {
                 return StaticData.mainBodyAdminUsers;
             case "#Admin/Forms":
                 return StaticData.mainBodyForms;
+            case "#Admin/Machinery":
+                return StaticData.mainBodyAdminMachinery;
             case "#Profile":
                 return StaticData.mainBodyProfile;
             case "#Profile/ChangeData":
@@ -453,6 +456,40 @@ class StaticData {
         HTML: StaticData.mainBodyFormsHTML,
         CSS: StaticData.mainBodyFormsCSS,
         JS: StaticData.mainBodyFormsJS
+    };
+
+    //
+
+    // #Admin/Machinery
+
+    static sideBarAdminMachineryHTML: SideBarData = {
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aMachineryAdmin",
+        liNavBar: "liAdmin"
+    };
+
+    static mainBodyAdminMachineryCSS: MainBodyCSSData = {
+        styleId: "styleMainBodyAdminMachinery",
+        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version
+    };
+
+    static mainBodyAdminMachineryHTML: MainBodyHTMLData = {
+        divId: "divMainBodyAdminMachinery",
+        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version
+    };
+
+    static mainBodyAdminMachineryJS: MainBodyJSData = {
+        namespace: "MainBodyAdminMachinery",
+        scriptId: "scriptMainBodyAdminMachinery",
+        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version
+    };
+
+    static mainBodyAdminMachinery: MainBodyData = {
+        SideBar: StaticData.sideBarAdminMachineryHTML,
+        HTML: StaticData.mainBodyAdminMachineryHTML,
+        CSS: StaticData.mainBodyAdminMachineryCSS,
+        JS: StaticData.mainBodyAdminMachineryJS
     };
 
     //

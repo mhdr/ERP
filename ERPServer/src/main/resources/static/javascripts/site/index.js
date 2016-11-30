@@ -201,6 +201,7 @@ var StaticData = (function () {
         staticDataIterator.push(StaticData.mainBodyProfileCD);
         staticDataIterator.push(StaticData.mainBodyProfileCP);
         staticDataIterator.push(StaticData.mainBodyForms);
+        staticDataIterator.push(StaticData.mainBodyAdminMachinery);
     };
     StaticData.getStaticData = function () {
         var hash = window.location.hash;
@@ -209,6 +210,8 @@ var StaticData = (function () {
                 return StaticData.mainBodyAdminUsers;
             case "#Admin/Forms":
                 return StaticData.mainBodyForms;
+            case "#Admin/Machinery":
+                return StaticData.mainBodyAdminMachinery;
             case "#Profile":
                 return StaticData.mainBodyProfile;
             case "#Profile/ChangeData":
@@ -343,6 +346,31 @@ var StaticData = (function () {
         HTML: StaticData.mainBodyFormsHTML,
         CSS: StaticData.mainBodyFormsCSS,
         JS: StaticData.mainBodyFormsJS
+    };
+    StaticData.sideBarAdminMachineryHTML = {
+        divSideBar: "divSidebarAdmin",
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        aSideBar: "aMachineryAdmin",
+        liNavBar: "liAdmin"
+    };
+    StaticData.mainBodyAdminMachineryCSS = {
+        styleId: "styleMainBodyAdminMachinery",
+        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyAdminMachineryHTML = {
+        divId: "divMainBodyAdminMachinery",
+        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyAdminMachineryJS = {
+        namespace: "MainBodyAdminMachinery",
+        scriptId: "scriptMainBodyAdminMachinery",
+        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version
+    };
+    StaticData.mainBodyAdminMachinery = {
+        SideBar: StaticData.sideBarAdminMachineryHTML,
+        HTML: StaticData.mainBodyAdminMachineryHTML,
+        CSS: StaticData.mainBodyAdminMachineryCSS,
+        JS: StaticData.mainBodyAdminMachineryJS
     };
     return StaticData;
 }());

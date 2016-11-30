@@ -24,13 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.concurrent.Executors;
 
-public class Users {
+public class UsersBL {
 
     MongoOperations mongoOperations;
     HttpServletRequest request;
     HttpServletResponse response;
 
-    public Users(HttpServletRequest request, HttpServletResponse response) {
+    public UsersBL(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
 

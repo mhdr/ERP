@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-public class Permissions {
+public class PermissionBL {
     MongoOperations mongoOperations;
     HttpServletRequest request;
     HttpServletResponse response;
 
-    public Permissions(HttpServletRequest request, HttpServletResponse response) {
+    public PermissionBL(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
 

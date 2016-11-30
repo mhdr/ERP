@@ -51,6 +51,11 @@ declare class StaticData {
     static mainBodyFormsHTML: MainBodyHTMLData;
     static mainBodyFormsJS: MainBodyJSData;
     static mainBodyForms: MainBodyData;
+    static sideBarAdminMachineryHTML: SideBarData;
+    static mainBodyAdminMachineryCSS: MainBodyCSSData;
+    static mainBodyAdminMachineryHTML: MainBodyHTMLData;
+    static mainBodyAdminMachineryJS: MainBodyJSData;
+    static mainBodyAdminMachinery: MainBodyData;
 }
 interface SideBarData {
     divSideBar: string;

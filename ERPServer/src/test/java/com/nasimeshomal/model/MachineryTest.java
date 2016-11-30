@@ -15,7 +15,7 @@ public class MachineryTest {
                 new AnnotationConfigApplicationContext(MongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
-        Machinery machinery1=new Machinery(Machinery.MachineryType.Unit);
+        Machinery machinery1=new Machinery(Machinery.MachineryType.Unit,true);
         machinery1.unit.unitNameFa="تولید";
         mongoOperation.insert(machinery1);
 
