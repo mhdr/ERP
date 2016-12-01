@@ -157,7 +157,7 @@ var MainBodyAdminMachinery;
                     if (UI.initialLoadIsDone) {
                         Site.UI.hideLoaderForContent();
                     }
-                    $("#machineryBrowser").velocity("fadeIn", 450);
+                    $("#machineryBrowser").velocity("fadeIn", 250);
                     if (onComplete !== null) {
                         onComplete();
                     }
