@@ -15,7 +15,7 @@ buildscript {
 }
 
 configurations {
-    compile.exclude module: "spring-boot-starter-tomcat"
+//    compile.exclude module: "spring-boot-starter-tomcat"
 }
 
 apply plugin: 'java'
@@ -95,7 +95,10 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jetty
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.5'

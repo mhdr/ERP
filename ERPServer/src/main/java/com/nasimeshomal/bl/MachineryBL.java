@@ -49,32 +49,51 @@ public class MachineryBL {
             query.addCriteria(Criteria.where("parentId").is(parentId));
             List<Machinery> machinery = mongoOperations.find(query, Machinery.class);
 
-            List<Machinery> parents = new ArrayList<>();
+            Map<String,Long> countChildren=new HashMap<>();
 
-            if (StringUtils.isNotBlank(parentId)) {
-                String matchedParentId = "";
-
-                Query query1 = new Query();
-                query1.addCriteria(Criteria.where("id").is(parentId));
-                Machinery parentMachinery = mongoOperations.findOne(query1, Machinery.class);
-
-                parents.add(parentMachinery);
-                matchedParentId = parentMachinery.parentId;
-
-                while (matchedParentId.length() > 0) {
-                    query1=new Query();
-                    query1.addCriteria(Criteria.where("id").is(matchedParentId));
-                    parentMachinery=null;
-                    parentMachinery = mongoOperations.findOne(query1, Machinery.class);
-
-                    parents.add(parentMachinery);
-
-                    matchedParentId = "";
-                    matchedParentId=parentMachinery.parentId;
-                }
+            for (Machinery m:machinery)
+            {
+                Query query2=new Query();
+                query2.addCriteria(Criteria.where("parentId").is(m.id));
+                long count=mongoOperations.count(query2,Machinery.class);
+                countChildren.put(m.id,count);
             }
 
+            List<Map<String, String>> parents = new ArrayList<>();
+
+            if (StringUtils.isNotBlank(parentId)) {
+                String matchedParentId = parentId;
+
+                do {
+                    Query query1 = new Query();
+                    query1.addCriteria(Criteria.where("id").is(matchedParentId));
+                    Machinery parentMachinery = mongoOperations.findOne(query1, Machinery.class);
+
+                    if (parentMachinery.machineryType == Machinery.MachineryType.Unit) {
+                        Map<String, String> p = new HashMap<>();
+                        p.put("id", parentMachinery.id);
+                        p.put("value", parentMachinery.unit.unitNameFa);
+                        parents.add(p);
+                    } else if (parentMachinery.machineryType == Machinery.MachineryType.Machine) {
+                        Map<String, String> p = new HashMap<>();
+                        p.put("id", parentMachinery.id);
+                        p.put("value", parentMachinery.machine.machineNameFa);
+                        parents.add(p);
+                    } else if (parentMachinery.machineryType == Machinery.MachineryType.Folder) {
+                        Map<String, String> p = new HashMap<>();
+                        p.put("id", parentMachinery.id);
+                        p.put("value", parentMachinery.folder.folderNameFa);
+                        parents.add(p);
+                    }
+
+                    matchedParentId = parentMachinery.parentId;
+                } while (matchedParentId.length() > 0);
+            }
+
+            Collections.reverse(parents);
+
             result.put("machinery", machinery);
+            result.put("countChildren",countChildren);
             result.put("parents", parents);
             result.put("error", 0);
 

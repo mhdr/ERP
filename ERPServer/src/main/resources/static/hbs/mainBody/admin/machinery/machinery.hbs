@@ -1,45 +1,71 @@
 <div id="divMainBodyAdminMachinery" style="display: none;">
-    <div class="btn-group btn-group-justified" style="margin-top: 5px;margin-bottom: 0px;">
-        <a href="javascript:void(0)" class="btn btn-default" style="height: 50px;">ریشه</a>
-        <a href="javascript:void(0)" class="btn btn-default" style="height: 50px;">تولید</a>
-        <a href="javascript:void(0)" class="btn btn-default" style="height: 50px;">جامدات</a>
+
+    <div id="machineryBrowser">
+        <div class="btn-group btn-group-justified" id="divParentLocation" style="margin-top: 5px;margin-bottom: 0px;">
+
+        </div>
+
+        <ul class="list-group" id="ulListMachinery">
+
+        </ul>
     </div>
-    <ul class="list-group">
-        <a href="javascript:void(0)" class="list-group-item">
+
+
+    <script id="templateParentLocation" type="text/x-handlebars-template">
+        <a href="javascript:void(0)" class="btn btn-default" style="height: 50px;" data-nm-id="{{id}}">{{value}}</a>
+    </script>
+
+    <script id="templateLocationUP" type="text/x-handlebars-template">
+        <a href="javascript:void(0)" class="list-group-item" data-nm-id="{{id}}" data-nm-up="1">
             <h4 class="list-group-item-heading center-block">
-                <i class="fa fa-arrow-up" aria-hidden="true" style="color: yellow"></i>
+                <i class="fa fa-arrow-up" aria-hidden="true" style="color: 	#ffab00"></i>
                 <span>بالا</span>
             </h4>
         </a>
-
-        <a href="javascript:void(0)" class="list-group-item">
-            <h4 class="list-group-item-heading center-block">
-                <i class="fa fa-cog" aria-hidden="true" style="color: black"></i>
-                <span>Second List Group Item Heading</span>
-            </h4>
-            <p class="list-group-item-text">List Group Item Text</p>
-        </a>
-
-        <a href="javascript:void(0)" class="list-group-item">
-            <h4 class="list-group-item-heading center-block">
-                <i class="fa fa-folder" aria-hidden="true" style="color: darkgray"></i>
-                <span>Second List Group Item Heading</span>
-                <span class="badge" style="float: left"></span>
-            </h4>
-            <p class="list-group-item-text">List Group Item Text</p>
-        </a>
-
-        <a href="javascript:void(0)" class="list-group-item">
-            <h4 class="list-group-item-heading center-block">
-                <i class="fa fa-folder" aria-hidden="true" style="color: lightblue"></i>
-                <span>Second List Group Item Heading</span>
-                <span class="badge" style="float: left">12</span>
-            </h4>
-            <p class="list-group-item-text">List Group Item Text </p>
-        </a>
-    </ul>
+    </script>
 
     <script id="templateUnit" type="text/x-handlebars-template">
-        <li class="list-group-item">New <span class="badge">12</span></li>
+        <a href="javascript:void(0)" class="list-group-item" data-nm-id="{{id}}">
+            <h4 class="list-group-item-heading center-block">
+                <i class="fa fa-folder" aria-hidden="true" style="color: darkgray"></i>
+                <span style="margin-right:5px;">{{unitNameFa}}</span>
+                <span class="badge" style="float: left">{{countChildren}}</span>
+            </h4>
+            <p class="list-group-item-text">
+                <span style="font-weight: bold">نام انگلیسی :</span>
+                <span>{{unitNameEn}}</span>
+            </p>
+        </a>
+    </script>
+
+    <script id="templateMachine" type="text/x-handlebars-template">
+        <a href="javascript:void(0)" class="list-group-item" data-nm-id="{{id}}">
+            <h4 class="list-group-item-heading center-block">
+                <i class="fa fa-cog" aria-hidden="true" style="color: black"></i>
+                <span style="margin-right:5px;">{{machineNameFa}}</span>
+                <span class="badge" style="float: left">{{countChildren}}</span>
+            </h4>
+            <p class="list-group-item-text">
+                <span style="font-weight: bold">نام انگلیسی :</span>
+                <span>{{machineNameEn}}</span>
+
+                <span style="font-weight: bold;margin-right:20px;">کد تعمیرات پیشگیرانه :</span>
+                <span>{{pmCode}}</span>
+            </p>
+        </a>
+    </script>
+
+    <script id="templateFolder" type="text/x-handlebars-template">
+        <a href="javascript:void(0)" class="list-group-item" data-nm-id="{{id}}">
+            <h4 class="list-group-item-heading center-block">
+                <i class="fa fa-folder" aria-hidden="true" style="color: lightblue"></i>
+                <span style="margin-right:5px;">{{folderNameFa}}</span>
+                <span class="badge" style="float: left">{{countChildren}}</span>
+            </h4>
+            <p class="list-group-item-text">
+                <span style="font-weight: bold">نام انگلیسی :</span>
+                <span>{{folderNameEn}}</span>
+            </p>
+        </a>
     </script>
 </div>
