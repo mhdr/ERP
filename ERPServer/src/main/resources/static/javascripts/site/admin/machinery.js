@@ -4,10 +4,53 @@ var MainBodyAdminMachinery;
         function UI() {
         }
         UI.load = function (complete) {
-            MainBodyAdminMachinery.UI.getMachinery(function () {
-                $("#divMainBodyAdminMachinery").velocity("fadeIn", { duration: 250 });
-                UI.initialLoadIsDone = true;
-                complete();
+            var p = new NM.Parallel(5);
+            p.setOnComplete(function () {
+                MainBodyAdminMachinery.UI.getMachinery(function () {
+                    $("#divMainBodyAdminMachinery").velocity("fadeIn", { duration: 250 });
+                    UI.initialLoadIsDone = true;
+                    complete();
+                });
+            });
+            $.ajax({
+                url: "./hbs/mainBody/admin/machinery/parentLocation.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    $("#templateParentLocation").html(data);
+                    p.done("fn1");
+                }
+            });
+            $.ajax({
+                url: "./hbs/mainBody/admin/machinery/locationUP.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    $("#templateLocationUP").html(data);
+                    p.done("fn2");
+                }
+            });
+            $.ajax({
+                url: "./hbs/mainBody/admin/machinery/unit.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    $("#templateUnit").html(data);
+                    p.done("fn3");
+                }
+            });
+            $.ajax({
+                url: "./hbs/mainBody/admin/machinery/machine.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    $("#templateMachine").html(data);
+                    p.done("fn4");
+                }
+            });
+            $.ajax({
+                url: "./hbs/mainBody/admin/machinery/folder.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    $("#templateFolder").html(data);
+                    p.done("fn5");
+                }
             });
         };
         UI.bindAll = function () {
