@@ -26,7 +26,10 @@ public class User {
 
     public void clearPermission()
     {
-        this.permissions.clear();
+        if (this.permissions!=null)
+        {
+            this.permissions.clear();
+        }
     }
 
     public void addPermission(int permissionNumber)

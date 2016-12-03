@@ -47,5 +47,33 @@ public class MachineryTest {
         machinery6.machine.pmCode="VIL-9867";
         machinery6.machine.machineNameFa="شستشو ویال";
         mongoOperation.insert(machinery6);
+
+
+        Machinery machinery7=new Machinery(Machinery.MachineryType.Unit,true);
+        machinery7.unit.unitNameFa="انبار";
+        machinery7.unit.unitNameEn="Warehouse";
+        mongoOperation.insert(machinery7);
+
+        Machinery machinery8=new Machinery(Machinery.MachineryType.Unit,machinery7.id);
+        machinery8.unit.unitNameFa="انبار محصول";
+        machinery8.unit.unitNameEn="Production Warehouse";
+        mongoOperation.insert(machinery8);
+
+        Machinery machinery9=new Machinery(Machinery.MachineryType.Unit,machinery7.id);
+        machinery9.unit.unitNameFa="انبار مواد اولیه";
+        machinery9.unit.unitNameEn="Material Warehouse";
+        mongoOperation.insert(machinery9);
+
+        Machinery machinery10=new Machinery(Machinery.MachineryType.Machine,machinery8.id);
+        machinery10.machine.machineNameEn="Production Cold Room";
+        machinery10.machine.pmCode="Cold-4532";
+        machinery10.machine.machineNameFa="سردخانه محصول";
+        mongoOperation.insert(machinery10);
+
+        Machinery machinery11=new Machinery(Machinery.MachineryType.Machine,machinery9.id);
+        machinery11.machine.machineNameEn="Material Cold Room";
+        machinery11.machine.pmCode="Cold-4533";
+        machinery11.machine.machineNameFa="سردخانه مواد اولیه";
+        mongoOperation.insert(machinery11);
     }
 }
