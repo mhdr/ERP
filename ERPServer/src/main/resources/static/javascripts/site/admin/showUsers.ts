@@ -46,6 +46,10 @@ namespace MainBodyShowUsers {
                                 MainBodyShowUsers.UI.applyTableStrip();
                                 complete();
                             }
+                            else if (data2.error===-1)
+                            {
+                                window.location.href = data2.redirect;
+                            }
                         }
                     });
                 }
@@ -110,6 +114,10 @@ namespace MainBodyShowUsers {
                                         });
                                     }
                                 }
+                            }
+                            else if (data2.error===-1)
+                            {
+                                window.location.href = data2.redirect;
                             }
                         }
                     });
@@ -415,6 +423,10 @@ namespace MainBodyShowUsers {
                                     }
                                 });
                         }
+                        else if (data.error===-1)
+                        {
+                            window.location.href = data.redirect;
+                        }
                     }
                 });
             }
@@ -596,6 +608,10 @@ namespace ModalNewUser {
                             var count = $("#inputModalCountNewUser").val();
                             $("#inputModalCountNewUser").val(count + 1);
                         }
+                        else if (data.error===-1)
+                        {
+                            window.location.href = data.redirect;
+                        }
 
                         $("#buttonSubmit").prop("disabled", false);
                         $("#iButtonSubmitSpinner").css("opacity", 0);
@@ -717,6 +733,10 @@ namespace ModalEditUser {
                             var msg = format("ویرایش بدون تغییر انجام شد");
                             $("#alertEditSuccess").html(msg);
                             $("#alertEditSuccess").velocity("fadeIn");
+                        }
+                        else if (data.error===-1)
+                        {
+                            window.location.href = data.redirect;
                         }
 
                         $("#buttonEditSubmit").prop("disabled", false);
@@ -855,6 +875,10 @@ namespace ModalChangePassword {
                             $("#alertCPSuccess").html(msg);
                             $("#alertCPSuccess").velocity("fadeIn");
                         }
+                        else if (data.error===-1)
+                        {
+                            window.location.href = data.redirect;
+                        }
 
                         $("#buttonCPSubmit").prop("disabled", false);
                         $("#iButtonCPSubmitSpinner").css("opacity", 0);
@@ -905,6 +929,12 @@ namespace ModalPermissions {
                         data: param2,
                         method: "POST",
                         success: function (data2, textStatus2, jqXHR2) {
+
+                            if (data2.error===-1)
+                            {
+                                window.location.href = data2.redirect;
+                            }
+
                             $("#ulListPermissions").empty();
 
                             $.ajax({
@@ -912,6 +942,11 @@ namespace ModalPermissions {
                                 url: "./api/Permissions/GetPermissionsList",
                                 data: parameters,
                                 success: function (data3, textStatus3, jqXHR3) {
+
+                                    if (data3.error===-1)
+                                    {
+                                        window.location.href = data3.redirect;
+                                    }
 
                                     var data3Result = data3.result;
 
@@ -1063,6 +1098,12 @@ namespace ModalPermissions {
                 method: "POST",
                 data: parameters,
                 success: function (data, textStatus, jqXHR) {
+
+                    if (data.error===-1)
+                    {
+                        window.location.href = data.redirect;
+                    }
+
                     MainBodyShowUsers.UI.hideLoading();
                 }
             })

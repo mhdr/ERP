@@ -18,6 +18,9 @@ var MainBodyProfileChangeData;
                         $("#inputProfileFirstName").val(d.firstName);
                         $("#inputProfileLastName").val(d.lastName);
                     }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
                     parallel.done("fn1");
                 }
             });
@@ -68,6 +71,9 @@ var MainBodyProfileChangeData;
                             var msg = format("ویرایش بدون تغییر انجام شد");
                             $("#alertProfileSuccess").html(msg);
                             $("#alertProfileSuccess").velocity("fadeIn");
+                        }
+                        else if (data.error === -1) {
+                            window.location.href = data.redirect;
                         }
                         else {
                             var msg = format("خطا در انجام ویرایش");

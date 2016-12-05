@@ -91,6 +91,10 @@ namespace MainBodyProfileChangePassword {
                             $("#alertProfileCPSuccess").html(msg);
                             $("#alertProfileCPSuccess").velocity("fadeIn");
                         }
+                        else if (data.error===-1)
+                        {
+                            window.location.href = data.redirect;
+                        }
 
                         Site.SubmitButton.afterCompelte("buttonProfileCPSubmit");
                     },

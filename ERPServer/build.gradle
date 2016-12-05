@@ -19,13 +19,23 @@ configurations {
 }
 
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'distribution'
+apply plugin: 'jdepend'
+apply plugin: 'signing'
 
 jar {
     baseName = 'erpserver'
-    version = '0.0.1-SNAPSHOT'
+    version = '1.0.0'
 }
+
+war {
+    baseName = 'erpserver'
+    version = '1.0.0'
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

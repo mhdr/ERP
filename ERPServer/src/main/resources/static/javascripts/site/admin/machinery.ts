@@ -261,6 +261,10 @@ namespace MainBodyAdminMachinery {
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
                     }
+                    else if (data.error===-1)
+                    {
+                        window.location.href = data.redirect;
+                    }
 
                     if (UI.initialLoadIsDone)
                     {

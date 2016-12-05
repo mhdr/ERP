@@ -30,6 +30,10 @@ namespace MainBodyProfile {
                         $("#spanFirstName").html(d.firstName);
                         $("#spanLastName").html(d.lastName);
                     }
+                    else if (data.error===-1)
+                    {
+                        window.location.href = data.redirect;
+                    }
 
                     parallel.done("fn1");
                 }
@@ -41,6 +45,10 @@ namespace MainBodyProfile {
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
                         $("#spanUserIP").html(data.ip);
+                    }
+                    else if (data.error===-1)
+                    {
+                        window.location.href = data.redirect;
                     }
 
                     parallel.done("fn2");
@@ -54,6 +62,10 @@ namespace MainBodyProfile {
                     if (data.error === 0) {
                         $("#spanLastLoginIP").html(data.ip);
                         $("#spanLastLoginDate").html(data.loginDate);
+                    }
+                    else if (data.error===-1)
+                    {
+                        window.location.href = data.redirect;
                     }
 
                     parallel.done("fn3");

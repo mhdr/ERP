@@ -67,7 +67,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/User/GetLastLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/GetLastLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getLastLogin(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -100,7 +100,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/Permissions/GetPermissionsList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/Permissions/GetPermissionsList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getPermissionsList(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -162,7 +162,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/User/SetPermissions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/SetPermissions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map setPermissions(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -178,7 +178,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/User/DeleteUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/DeleteUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map deleteUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -194,7 +194,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/User/ChangePassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/ChangePassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map changePassword(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -210,7 +210,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/User/InsertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/User/InsertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map insertUser(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -226,7 +226,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/GetVersion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/GetVersion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getVersion(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 
@@ -242,7 +242,7 @@ public class ApiController {
         return result;
     }
 
-    @RequestMapping(value = "api/Machinery/GetMachinery", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/api/Machinery/GetMachinery", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map getMachinery(HttpServletRequest request, HttpServletResponse response) {
         SessionManager sessionManager = new SessionManager(request, response);
 

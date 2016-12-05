@@ -48,6 +48,9 @@ var Login = (function () {
                     if (data.error === 0) {
                         window.location.href = data.redirect;
                     }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
                     else {
                         if (data.error === 4 || data.error === 5) {
                             var msg = format("نام کاربری/کلمه عبور صحیح نمی باشد");
