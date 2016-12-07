@@ -148,7 +148,7 @@ public class SessionManager {
                 }
             }
 
-            // invalidate session after 2 weeks on inactivity
+            // invalidate session after 2 weeks of inactivity
             request.getSession().setMaxInactiveInterval(3600*24*14);
         }
     }
