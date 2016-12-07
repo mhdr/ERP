@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class UserTest {
 
-    @Test
+    /*@Test
     public void insert1() throws Exception {
 
         User user=new User();
@@ -70,5 +70,5 @@ public class UserTest {
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         mongoOperation.save(user);
-    }
+    }*/
 }

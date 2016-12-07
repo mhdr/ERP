@@ -1,5 +1,7 @@
 package com.nasimeshomal.lib;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -31,7 +33,15 @@ public class IP {
         Map<String,Object> result=new HashMap<String,Object>();
 
         try {
-            String ip=request.getRemoteAddr();
+            String ip="";
+
+            ip=request.getHeader("X-FORWARDED-FOR");
+
+            if (StringUtils.isBlank(ip))
+            {
+                ip=request.getRemoteAddr();
+            }
+
             result.put("error",0);
             result.put("ip",ip);
         }

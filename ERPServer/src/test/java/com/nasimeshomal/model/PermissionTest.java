@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class PermissionTest {
 
-    @Test
+    /*@Test
     public void insert1() throws Exception {
 
         Permission permission1=new Permission();
@@ -45,5 +45,5 @@ public class PermissionTest {
         mongoOperation.insert(permission1);
 
         assertTrue(true);
-    }
+    }*/
 }

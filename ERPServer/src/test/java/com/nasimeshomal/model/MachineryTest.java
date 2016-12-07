@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 
 public class MachineryTest {
 
-    @Test
+    /*@Test
     public void insert01() throws Exception
     {
         ApplicationContext ctx =
@@ -75,5 +75,5 @@ public class MachineryTest {
         machinery11.machine.pmCode="Cold-4533";
         machinery11.machine.machineNameFa="سردخانه مواد اولیه";
         mongoOperation.insert(machinery11);
-    }
+    }*/
 }
