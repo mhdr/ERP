@@ -24,7 +24,15 @@ public class IP {
 
     public String getIP()
     {
-        String ip=request.getRemoteAddr();
+        String ip="";
+
+        ip=request.getHeader("X-FORWARDED-FOR");
+
+        if (StringUtils.isBlank(ip))
+        {
+            ip=request.getRemoteAddr();
+        }
+
         return ip;
     }
 

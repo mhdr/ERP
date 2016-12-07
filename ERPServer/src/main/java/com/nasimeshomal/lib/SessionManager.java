@@ -142,12 +142,14 @@ public class SessionManager {
             {
                 if (Objects.equals(cookie.getName(), "ERPSession"))
                 {
-                    // remove on browser restart
                     cookie.setMaxAge(Integer.MAX_VALUE);
                     cookie.setPath("/");
                     response.addCookie(cookie);
                 }
             }
+
+            // invalidate session after 2 weeks on inactivity
+            request.getSession().setMaxInactiveInterval(3600*24*14);
         }
     }
 }
