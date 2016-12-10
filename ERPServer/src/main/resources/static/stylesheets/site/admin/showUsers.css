@@ -80,8 +80,7 @@
   background-color: lightgoldenrodyellow !important; }
 
 .nm-disable-a {
-  pointer-events: none;
-  cursor: default; }
+  cursor: not-allowed; }
 
 .nm-search-box-col1 {
   height: 30px; }
