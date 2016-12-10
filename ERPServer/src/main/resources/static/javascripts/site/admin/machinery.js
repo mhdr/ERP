@@ -54,9 +54,33 @@ var MainBodyAdminMachinery;
             });
         };
         UI.bindAll = function () {
+            MainBodyAdminMachinery.UI.bindaCreateUnit();
+        };
+        UI.bindaCreateUnit = function () {
+            $("#aCreateUnit").click(function (eventObject) {
+                if ($("#divModalNewUnit").length === 0) {
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewUnit.hbs" + "?" + Site.Statics.version,
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                            MainBodyAdminMachinery.UI.aCreateUnit_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateUnit_clicked();
+                }
+            });
+        };
+        UI.aCreateUnit_clicked = function () {
+            $("#divModalNewUnit").modal("show");
         };
         UI.unBindAll = function () {
             UI.initialLoadIsDone = false;
+            $("#aCreateUnit").unbind("click");
         };
         UI.bindListMachineryItems = function () {
             var a = $("#ulListMachinery").find("a");

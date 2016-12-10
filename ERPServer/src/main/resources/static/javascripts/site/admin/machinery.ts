@@ -1,71 +1,70 @@
 //<reference path="../../../../DefinitelyTyped/jquery/jquery.d.ts"/>
 ///<reference path="../../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../../DefinitelyTyped/bootstrap/bootstrap.d.ts"/>
-///<reference path="../../../../DefinitelyTyped/knockout/knockout.d.ts"/>
 ///<reference path="../nm.d.ts"/>
 ///<reference path="../common.d.ts"/>
 
 namespace MainBodyAdminMachinery {
     export class UI {
 
-        static initialLoadIsDone=false;
+        static initialLoadIsDone = false;
         static parentId: string = "";
         static listParents = [];
         static countChildren = [];
 
         static load(complete: Function) {
 
-            let p=new NM.Parallel(5);
+            let p = new NM.Parallel(5);
             p.setOnComplete(function () {
 
                 MainBodyAdminMachinery.UI.getMachinery(() => {
                     $("#divMainBodyAdminMachinery").velocity("fadeIn", {duration: 250});
-                    UI.initialLoadIsDone=true;
+                    UI.initialLoadIsDone = true;
                     complete();
                 });
 
             });
 
             $.ajax({
-                url:"./hbs/mainBody/admin/machinery/parentLocation.hbs" + "?" + Site.Statics.version,
-                method:"GET",
-                success:function (data, textStatus, jqXHR) {
+                url: "./hbs/mainBody/admin/machinery/parentLocation.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
                     $("#templateParentLocation").html(data);
                     p.done("fn1");
                 }
             });
 
             $.ajax({
-                url:"./hbs/mainBody/admin/machinery/locationUP.hbs" + "?" + Site.Statics.version,
-                method:"GET",
-                success:function (data, textStatus, jqXHR) {
+                url: "./hbs/mainBody/admin/machinery/locationUP.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
                     $("#templateLocationUP").html(data);
                     p.done("fn2");
                 }
             });
 
             $.ajax({
-                url:"./hbs/mainBody/admin/machinery/unit.hbs" + "?" + Site.Statics.version,
-                method:"GET",
-                success:function (data, textStatus, jqXHR) {
+                url: "./hbs/mainBody/admin/machinery/unit.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
                     $("#templateUnit").html(data);
                     p.done("fn3");
                 }
             });
 
             $.ajax({
-                url:"./hbs/mainBody/admin/machinery/machine.hbs" + "?" + Site.Statics.version,
-                method:"GET",
-                success:function (data, textStatus, jqXHR) {
+                url: "./hbs/mainBody/admin/machinery/machine.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
                     $("#templateMachine").html(data);
                     p.done("fn4");
                 }
             });
 
             $.ajax({
-                url:"./hbs/mainBody/admin/machinery/folder.hbs" + "?" + Site.Statics.version,
-                method:"GET",
-                success:function (data, textStatus, jqXHR) {
+                url: "./hbs/mainBody/admin/machinery/folder.hbs" + "?" + Site.Statics.version,
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
                     $("#templateFolder").html(data);
                     p.done("fn5");
                 }
@@ -73,19 +72,47 @@ namespace MainBodyAdminMachinery {
         }
 
         static bindAll() {
+            MainBodyAdminMachinery.UI.bindaCreateUnit();
+        }
 
+        static bindaCreateUnit() {
+
+            $("#aCreateUnit").click(function (eventObject) {
+                if ($("#divModalNewUnit").length === 0) {
+
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1},{duration:50});
+
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewUnit.hbs" + "?" + Site.Statics.version,
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0},{duration:50});
+                            MainBodyAdminMachinery.UI.aCreateUnit_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateUnit_clicked();
+                }
+            });
+        }
+
+        static aCreateUnit_clicked()
+        {
+            $("#divModalNewUnit").modal("show");
         }
 
         static unBindAll() {
-            UI.initialLoadIsDone=false;
+            UI.initialLoadIsDone = false;
+            $("#aCreateUnit").unbind("click");
         }
 
         static bindListMachineryItems() {
-            let a=$("#ulListMachinery").find("a");
+            let a = $("#ulListMachinery").find("a");
 
             $(a).each(function (index, elem) {
-                if ($(elem).attr("data-nm-up"))
-                {
+                if ($(elem).attr("data-nm-up")) {
                     $(elem).click(function (eventObject) {
                         let id = this.getAttribute("data-nm-id");
 
@@ -117,9 +144,8 @@ namespace MainBodyAdminMachinery {
 
         static getMachinery(onComplete: Function = null) {
 
-            if (UI.initialLoadIsDone)
-            {
-                Site.UI.showLoaderForContent("machineryBrowser",15,40);
+            if (UI.initialLoadIsDone) {
+                Site.UI.showLoaderForContent("machineryBrowser", 15, 40);
             }
 
 
@@ -156,7 +182,7 @@ namespace MainBodyAdminMachinery {
                         let parents = data.parents;
                         UI.listParents = parents;
                         UI.countChildren = data.countChildren;
-                        $("#machineryBrowser").velocity("fadeOut",10);
+                        $("#machineryBrowser").velocity("fadeOut", 10);
 
                         let context = {
                             id: "",
@@ -261,17 +287,15 @@ namespace MainBodyAdminMachinery {
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
                     }
-                    else if (data.error===-1)
-                    {
+                    else if (data.error === -1) {
                         window.location.href = data.redirect;
                     }
 
-                    if (UI.initialLoadIsDone)
-                    {
+                    if (UI.initialLoadIsDone) {
                         Site.UI.hideLoaderForContent();
                     }
 
-                    $("#machineryBrowser").velocity("fadeIn",250);
+                    $("#machineryBrowser").velocity("fadeIn", 250);
 
                     if (onComplete !== null) {
                         onComplete();

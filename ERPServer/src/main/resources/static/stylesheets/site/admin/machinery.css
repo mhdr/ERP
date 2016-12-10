@@ -5,3 +5,18 @@
   pointer-events: none;
   cursor: default;
   opacity: 0; }
+
+.machinery-row {
+  margin-bottom: 10px; }
+
+.machinery-col1 {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 0px;
+  vertical-align: middle;
+  margin-top: 6px; }
+
+.machinery-col2 {
+  padding-left: 0px;
+  padding-right: 0px;
+  vertical-align: middle; }
