@@ -11,6 +11,7 @@ namespace MainBodyAdminMachinery {
         static parentId: string = "";
         static listParents = [];
         static countChildren = [];
+        static countNewMachinery = 0;
 
         static load(complete: Function) {
 
@@ -80,14 +81,14 @@ namespace MainBodyAdminMachinery {
             $("#aCreateUnit").click(function (eventObject) {
                 if ($("#divModalNewUnit").length === 0) {
 
-                    $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1},{duration:50});
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
 
                     $.ajax({
                         url: "./hbs/mainBody/admin/machinery/modalNewUnit.hbs" + "?" + Site.Statics.version,
                         method: "GET",
                         success: function (data, textStatus, jqXHR) {
                             $("#mainBody").append(data);
-                            $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0},{duration:50});
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
                             MainBodyAdminMachinery.UI.aCreateUnit_clicked();
                         }
                     });
@@ -98,8 +99,8 @@ namespace MainBodyAdminMachinery {
             });
         }
 
-        static aCreateUnit_clicked()
-        {
+        static aCreateUnit_clicked() {
+            ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
         }
 
@@ -147,7 +148,6 @@ namespace MainBodyAdminMachinery {
             if (UI.initialLoadIsDone) {
                 Site.UI.showLoaderForContent("machineryBrowser", 15, 40);
             }
-
 
             let sourceLocationUP = $("#templateLocationUP").html();
             let templateLocationUP = Handlebars.compile(sourceLocationUP);
@@ -284,6 +284,9 @@ namespace MainBodyAdminMachinery {
                             }
                         }
 
+                        // clear
+                        UI.countNewMachinery = 0;
+
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
                     }
@@ -302,6 +305,78 @@ namespace MainBodyAdminMachinery {
                     }
                 }
             });
+        }
+    }
+
+    export class ModalNewUnit {
+
+        static load() {
+            // initialize again
+            UI.countNewMachinery=0;
+
+            ModalNewUnit.bindAll();
+        }
+
+        static bindAll() {
+            $("#buttonSubmitNewUnit").bind("click", ModalNewUnit.buttonSubmit_clicked);
+            $("#divModalNewUnit").on("hidden.bs.modal", ModalNewUnit.modal_closed);
+        }
+
+        static unBindAll() {
+            $("#buttonSubmitNewUnit").unbind("click");
+            $("#divModalNewUnit").unbind("hidden.bs.modal");
+        }
+
+        static clearAll() {
+            Site.Popover.remove("aMachineryAlertUnitNameFa");
+            $("#inputUnitNameFa").parent().removeClass("has-error");
+        }
+
+        static buttonSubmit_clicked() {
+            let unitNameFa = $("#inputUnitNameFa").val();
+            let unitNameEn = $("#inputUnitNameEn").val();
+
+            let clientSideError = 0;
+
+            if (unitNameFa.length === 0) {
+                Site.Popover.create("divAlertUnitNameFa1", "aMachineryAlertUnitNameFa", "spanAlertUnitNameFa");
+                $("#inputUnitNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+
+            if (clientSideError > 0) {
+                return;
+            }
+
+            let parameters = {
+                parentId: UI.parentId,
+                unitNameFa: unitNameFa,
+                unitNameEn: unitNameEn
+            };
+
+            $.ajax({
+                url: "./api/Machinery/InsertUnit",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countNewMachinery+=1;
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+                }
+            })
+        }
+
+        static modal_closed(e) {
+            ModalNewUnit.clearAll();
+            ModalNewUnit.unBindAll();
+
+            if (UI.countNewMachinery>0)
+            {
+                UI.getMachinery();
+            }
         }
     }
 

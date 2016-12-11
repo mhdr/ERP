@@ -2,7 +2,6 @@
 ///<reference path="../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
 ///<reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts"/>
-///<reference path="../../../DefinitelyTyped/knockout/knockout.d.ts"/>
 
 window['format'];
 var format: any;
@@ -84,7 +83,7 @@ namespace Site {
         /**
          *
          * @param msgId message to show
-         * @param popoverId popover a tag
+         * @param popoverId popover a tag that will be created
          * @param targetId where to show msg
          */
         static create(msgId: string, popoverId: string, targetId: string) {

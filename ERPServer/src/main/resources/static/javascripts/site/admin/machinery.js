@@ -76,6 +76,7 @@ var MainBodyAdminMachinery;
             });
         };
         UI.aCreateUnit_clicked = function () {
+            ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
         };
         UI.unBindAll = function () {
@@ -218,6 +219,7 @@ var MainBodyAdminMachinery;
                                 $(ulListMachinery).append(html_5);
                             }
                         }
+                        UI.countNewMachinery = 0;
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
                     }
@@ -238,8 +240,69 @@ var MainBodyAdminMachinery;
         UI.parentId = "";
         UI.listParents = [];
         UI.countChildren = [];
+        UI.countNewMachinery = 0;
         return UI;
     }());
     MainBodyAdminMachinery.UI = UI;
+    var ModalNewUnit = (function () {
+        function ModalNewUnit() {
+        }
+        ModalNewUnit.load = function () {
+            UI.countNewMachinery = 0;
+            ModalNewUnit.bindAll();
+        };
+        ModalNewUnit.bindAll = function () {
+            $("#buttonSubmitNewUnit").bind("click", ModalNewUnit.buttonSubmit_clicked);
+            $("#divModalNewUnit").on("hidden.bs.modal", ModalNewUnit.modal_closed);
+        };
+        ModalNewUnit.unBindAll = function () {
+            $("#buttonSubmitNewUnit").unbind("click");
+            $("#divModalNewUnit").unbind("hidden.bs.modal");
+        };
+        ModalNewUnit.clearAll = function () {
+            Site.Popover.remove("aMachineryAlertUnitNameFa");
+            $("#inputUnitNameFa").parent().removeClass("has-error");
+        };
+        ModalNewUnit.buttonSubmit_clicked = function () {
+            var unitNameFa = $("#inputUnitNameFa").val();
+            var unitNameEn = $("#inputUnitNameEn").val();
+            var clientSideError = 0;
+            if (unitNameFa.length === 0) {
+                Site.Popover.create("divAlertUnitNameFa1", "aMachineryAlertUnitNameFa", "spanAlertUnitNameFa");
+                $("#inputUnitNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+            if (clientSideError > 0) {
+                return;
+            }
+            var parameters = {
+                parentId: UI.parentId,
+                unitNameFa: unitNameFa,
+                unitNameEn: unitNameEn
+            };
+            $.ajax({
+                url: "./api/Machinery/InsertUnit",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countNewMachinery += 1;
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+                }
+            });
+        };
+        ModalNewUnit.modal_closed = function (e) {
+            ModalNewUnit.clearAll();
+            ModalNewUnit.unBindAll();
+            if (UI.countNewMachinery > 0) {
+                UI.getMachinery();
+            }
+        };
+        return ModalNewUnit;
+    }());
+    MainBodyAdminMachinery.ModalNewUnit = ModalNewUnit;
 })(MainBodyAdminMachinery || (MainBodyAdminMachinery = {}));
 //# sourceMappingURL=machinery.js.map

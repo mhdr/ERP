@@ -49,14 +49,13 @@ public class MachineryBL {
             query.addCriteria(Criteria.where("parentId").is(parentId));
             List<Machinery> machinery = mongoOperations.find(query, Machinery.class);
 
-            Map<String,Long> countChildren=new HashMap<>();
+            Map<String, Long> countChildren = new HashMap<>();
 
-            for (Machinery m:machinery)
-            {
-                Query query2=new Query();
+            for (Machinery m : machinery) {
+                Query query2 = new Query();
                 query2.addCriteria(Criteria.where("parentId").is(m.id));
-                long count=mongoOperations.count(query2,Machinery.class);
-                countChildren.put(m.id,count);
+                long count = mongoOperations.count(query2, Machinery.class);
+                countChildren.put(m.id, count);
             }
 
             List<Map<String, String>> parents = new ArrayList<>();
@@ -93,10 +92,55 @@ public class MachineryBL {
             Collections.reverse(parents);
 
             result.put("machinery", machinery);
-            result.put("countChildren",countChildren);
+            result.put("countChildren", countChildren);
             result.put("parents", parents);
             result.put("error", 0);
 
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> insertUnit() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = request.getParameterMap();
+            String unitNameFa = "";
+            String unitNameEn = "";
+            String parentId = "";
+
+            if (!data.containsKey("parentId")) {
+                result.put("error", 2);
+                return result;
+            } else {
+
+                parentId = data.get("parentId")[0];
+
+                if (StringUtils.isBlank(parentId)) {
+                    parentId="";
+                }
+            }
+
+            if (data.containsKey("unitNameEn")) {
+                unitNameEn = data.get("unitNameEn")[0];
+            }
+
+            unitNameFa = data.get("unitNameFa")[0];
+
+            Machinery machinery = new Machinery(Machinery.MachineryType.Unit);
+            machinery.parentId = parentId;
+            machinery.unit.unitNameEn = unitNameEn;
+            machinery.unit.unitNameFa = unitNameFa;
+
+            mongoOperations.insert(machinery);
+
+            result.put("error", 0);
+            result.put("id", machinery.id);
         } catch (Exception ex) {
             // exception
             result.put("error", 1);

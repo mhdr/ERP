@@ -253,8 +253,25 @@ public class ApiController {
             return result;
         }
 
+        MachineryBL machineryBL = new MachineryBL(request, response);
+        result = machineryBL.getMachinery();
+
+        return result;
+    }
+
+    @RequestMapping(value = "/api/Machinery/InsertUnit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map insertUnit(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request, response);
+
+        Map result = null;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
         MachineryBL machineryBL=new MachineryBL(request,response);
-        result=machineryBL.getMachinery();
+        result= machineryBL.insertUnit();
 
         return result;
     }
