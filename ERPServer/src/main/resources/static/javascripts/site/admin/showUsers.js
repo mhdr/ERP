@@ -739,7 +739,7 @@ var ModalPermissions;
         UI.fetchData = function (filter) {
             if (filter === void 0) { filter = null; }
             var element = $("#ulListPermissions").parent();
-            Site.UI.showLoaderForContent(element, 25, 42);
+            Site.Loader.showLoaderForContent(element, 25, 42);
             var parameters = { query: filter };
             $.ajax({
                 url: "./hbs/mainBody/admin/users/modalPermissionsList.hbs" + "?" + Site.Statics.version,
@@ -795,7 +795,7 @@ var ModalPermissions;
                                         });
                                     }
                                     ModalPermissions.UI.bindCheckboxesForPermission();
-                                    Site.UI.hideLoaderForContent();
+                                    Site.Loader.hideLoaderForContent();
                                 }
                             });
                         }

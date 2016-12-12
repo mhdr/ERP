@@ -16,13 +16,7 @@ namespace Site {
         version: localStorage.getItem("version"),
     };
 
-    export class UI {
-
-        static getVersion() {
-            let result= $("#inputVersion").val();
-            localStorage.setItem("version", result);
-        }
-
+    export class Loader{
         static showLoaderForContent(element, top: number = 25, right: number = 50) {
             var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
             var nmLoader = $("#nm-loader");
@@ -76,7 +70,14 @@ namespace Site {
                 });
             }
         }
+    }
 
+    export class UI {
+
+        static getVersion() {
+            let result= $("#inputVersion").val();
+            localStorage.setItem("version", result);
+        }
     }
 
     export class Popover {

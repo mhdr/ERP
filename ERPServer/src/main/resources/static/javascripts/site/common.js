@@ -8,14 +8,10 @@ var Site;
     Site.Statics = {
         version: localStorage.getItem("version")
     };
-    var UI = (function () {
-        function UI() {
+    var Loader = (function () {
+        function Loader() {
         }
-        UI.getVersion = function () {
-            var result = $("#inputVersion").val();
-            localStorage.setItem("version", result);
-        };
-        UI.showLoaderForContent = function (element, top, right) {
+        Loader.showLoaderForContent = function (element, top, right) {
             if (top === void 0) { top = 25; }
             if (right === void 0) { right = 50; }
             var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
@@ -27,7 +23,7 @@ var Site;
             $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", { duration: 100, delay: 100 });
         };
-        UI.hideLoaderForContent = function () {
+        Loader.hideLoaderForContent = function () {
             var nmLoader = $("#nm-loader");
             if (nmLoader.length > 0) {
                 $("#nm-loader").velocity({ opacity: 0 }, {
@@ -38,7 +34,7 @@ var Site;
                 });
             }
         };
-        UI.showLoaderForMainBody = function (top, right) {
+        Loader.showLoaderForMainBody = function (top, right) {
             if (top === void 0) { top = 15; }
             if (right === void 0) { right = 40; }
             var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
@@ -51,7 +47,7 @@ var Site;
             $("#nm-loader").css("right", right + "%");
             $("#nm-loader").velocity("fadeIn", { duration: 100, delay: 100 });
         };
-        UI.hideLoaderForMainBody = function () {
+        Loader.hideLoaderForMainBody = function () {
             var nmLoader = $("#nm-loader");
             if (nmLoader.length > 0) {
                 $(".loading-blur").removeClass("loading-blur");
@@ -62,6 +58,16 @@ var Site;
                     }
                 });
             }
+        };
+        return Loader;
+    }());
+    Site.Loader = Loader;
+    var UI = (function () {
+        function UI() {
+        }
+        UI.getVersion = function () {
+            var result = $("#inputVersion").val();
+            localStorage.setItem("version", result);
         };
         return UI;
     }());

@@ -13,6 +13,7 @@ declare namespace MainBodyAdminMachinery {
         static bindAll(): void;
         static bindaCreateUnit(): void;
         static aCreateUnit_clicked(): void;
+        static machinerySelected(element: any): void;
         static unBindAll(): void;
         static bindListMachineryItems(): void;
         static bindParentLocationItems(): void;
@@ -23,6 +24,7 @@ declare namespace MainBodyAdminMachinery {
         static bindAll(): void;
         static unBindAll(): void;
         static clearAll(): void;
+        static clearAfterSubmit(): void;
         static buttonSubmit_clicked(): void;
         static modal_closed(e: any): void;
     }

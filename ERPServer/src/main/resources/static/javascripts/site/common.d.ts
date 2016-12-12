@@ -7,12 +7,14 @@ declare namespace Site {
     var Statics: {
         version: string;
     };
-    class UI {
-        static getVersion(): void;
+    class Loader {
         static showLoaderForContent(element: any, top?: number, right?: number): void;
         static hideLoaderForContent(): void;
         static showLoaderForMainBody(top?: number, right?: number): void;
         static hideLoaderForMainBody(): void;
+    }
+    class UI {
+        static getVersion(): void;
     }
     class Popover {
         static create(msgId: string, popoverId: string, targetId: string): void;

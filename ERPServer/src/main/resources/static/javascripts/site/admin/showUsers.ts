@@ -909,7 +909,7 @@ namespace ModalPermissions {
         static fetchData(filter = null) {
             // show loader
             var element = $("#ulListPermissions").parent();
-            Site.UI.showLoaderForContent(element, 25, 42);
+            Site.Loader.showLoaderForContent(element, 25, 42);
             //
 
             var parameters = {query: filter};
@@ -991,7 +991,7 @@ namespace ModalPermissions {
                                     //
 
                                     ModalPermissions.UI.bindCheckboxesForPermission();
-                                    Site.UI.hideLoaderForContent();
+                                    Site.Loader.hideLoaderForContent();
                                 }
                             });
                         }

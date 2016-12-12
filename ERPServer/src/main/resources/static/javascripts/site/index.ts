@@ -53,7 +53,7 @@ class UI {
         {
             Template.renderMainBody(data, function () {
                 // load data
-                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.Loader.hideLoaderForMainBody();});";
                 eval(cmd1);
 
             });
@@ -72,7 +72,7 @@ class Template {
         var parallel1 = new NM.Parallel(2);
 
         parallel1.setOnComplete(function (result) {
-            Site.UI.showLoaderForMainBody();
+            Site.Loader.showLoaderForMainBody();
 
             var parallel2 = new NM.Parallel(2);
 

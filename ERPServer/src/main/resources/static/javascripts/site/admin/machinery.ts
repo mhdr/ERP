@@ -104,6 +104,20 @@ namespace MainBodyAdminMachinery {
             $("#divModalNewUnit").modal("show");
         }
 
+        static machinerySelected(element)
+        {
+            let a = $("#ulListMachinery").find("a");
+
+            $(a).each(function (index, elem) {
+                if ($(elem).hasClass("machinery-selected"))
+                {
+                    $(elem).removeClass("machinery-selected");
+                }
+            });
+
+            $(element).addClass("machinery-selected");
+        }
+
         static unBindAll() {
             UI.initialLoadIsDone = false;
             $("#aCreateUnit").unbind("click");
@@ -113,8 +127,14 @@ namespace MainBodyAdminMachinery {
             let a = $("#ulListMachinery").find("a");
 
             $(a).each(function (index, elem) {
+
+                $(elem).click(function (eventObject) {
+                    UI.machinerySelected(this);
+                });
+
                 if ($(elem).attr("data-nm-up")) {
                     $(elem).click(function (eventObject) {
+
                         let id = this.getAttribute("data-nm-id");
 
                         UI.parentId = id;
@@ -146,7 +166,7 @@ namespace MainBodyAdminMachinery {
         static getMachinery(onComplete: Function = null) {
 
             if (UI.initialLoadIsDone) {
-                Site.UI.showLoaderForContent("machineryBrowser", 15, 40);
+                Site.Loader.showLoaderForContent("machineryBrowser", 15, 40);
             }
 
             let sourceLocationUP = $("#templateLocationUP").html();
@@ -295,7 +315,7 @@ namespace MainBodyAdminMachinery {
                     }
 
                     if (UI.initialLoadIsDone) {
-                        Site.UI.hideLoaderForContent();
+                        Site.Loader.hideLoaderForContent();
                     }
 
                     $("#machineryBrowser").velocity("fadeIn", 250);
@@ -312,7 +332,7 @@ namespace MainBodyAdminMachinery {
 
         static load() {
             // initialize again
-            UI.countNewMachinery=0;
+            UI.countNewMachinery = 0;
 
             ModalNewUnit.bindAll();
         }
@@ -330,9 +350,24 @@ namespace MainBodyAdminMachinery {
         static clearAll() {
             Site.Popover.remove("aMachineryAlertUnitNameFa");
             $("#inputUnitNameFa").parent().removeClass("has-error");
+            $("#inputUnitNameFa").val("");
+            $("#inputUnitNameEn").val("");
+            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+        }
+
+        static clearAfterSubmit() {
+            Site.Popover.remove("aMachineryAlertUnitNameFa");
+            $("#inputUnitNameFa").parent().removeClass("has-error");
+            $("#inputUnitNameFa").val("");
+            $("#inputUnitNameEn").val("");
         }
 
         static buttonSubmit_clicked() {
+
+            // clear
+            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            //
+
             let unitNameFa = $("#inputUnitNameFa").val();
             let unitNameEn = $("#inputUnitNameEn").val();
 
@@ -348,6 +383,8 @@ namespace MainBodyAdminMachinery {
                 return;
             }
 
+            Site.SubmitButton.afterClick("buttonSubmitNewUnit");
+
             let parameters = {
                 parentId: UI.parentId,
                 unitNameFa: unitNameFa,
@@ -360,11 +397,18 @@ namespace MainBodyAdminMachinery {
                 data: parameters,
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
-                        UI.countNewMachinery+=1;
+                        UI.countNewMachinery += 1;
+
+                        let msg: string = format("بخش جدید ثبت شد");
+                        $("#alertSuccess").html(msg);
+                        $("#alertSuccess").velocity("fadeIn");
+                        ModalNewUnit.clearAfterSubmit();
                     }
                     else if (data.error === -1) {
                         window.location.href = data.redirect;
                     }
+
+                    Site.SubmitButton.afterCompelte("buttonSubmitNewUnit");
                 }
             })
         }
@@ -373,8 +417,7 @@ namespace MainBodyAdminMachinery {
             ModalNewUnit.clearAll();
             ModalNewUnit.unBindAll();
 
-            if (UI.countNewMachinery>0)
-            {
+            if (UI.countNewMachinery > 0) {
                 UI.getMachinery();
             }
         }

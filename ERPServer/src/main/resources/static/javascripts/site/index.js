@@ -36,7 +36,7 @@ var UI = (function () {
         var data = StaticData.getStaticData();
         if (data !== null) {
             Template.renderMainBody(data, function () {
-                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.UI.hideLoaderForMainBody();});";
+                var cmd1 = data.JS.namespace + ".UI.load(function () {Site.Loader.hideLoaderForMainBody();});";
                 eval(cmd1);
             });
         }
@@ -49,7 +49,7 @@ var Template = (function () {
     Template.renderMainBody = function (data, onComplete) {
         var parallel1 = new NM.Parallel(2);
         parallel1.setOnComplete(function (result) {
-            Site.UI.showLoaderForMainBody();
+            Site.Loader.showLoaderForMainBody();
             var parallel2 = new NM.Parallel(2);
             parallel2.setOnComplete(function (result) {
                 onComplete();
