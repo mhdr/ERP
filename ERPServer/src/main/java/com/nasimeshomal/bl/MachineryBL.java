@@ -1,9 +1,11 @@
 package com.nasimeshomal.bl;
 
+import com.mongodb.WriteResult;
 import com.nasimeshomal.config.MongoConfig;
 import com.nasimeshomal.model.Machinery;
 import com.nasimeshomal.model.User;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.groovy.classgen.asm.ExpressionAsVariableSlot;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Sort;
@@ -122,7 +124,7 @@ public class MachineryBL {
                 parentId = data.get("parentId")[0];
 
                 if (StringUtils.isBlank(parentId)) {
-                    parentId="";
+                    parentId = "";
                 }
             }
 
@@ -141,6 +143,57 @@ public class MachineryBL {
 
             result.put("error", 0);
             result.put("id", machinery.id);
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> deleteMachinery() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = request.getParameterMap();
+            String machineryId = "";
+
+            if (!data.containsKey("machineryId")) {
+                result.put("error", 2);
+                return result;
+            } else {
+
+                machineryId = data.get("machineryId")[0];
+
+                if (StringUtils.isBlank(machineryId)) {
+                    result.put("error", 3);
+                    return result;
+                }
+            }
+
+
+            Query query2 = new Query();
+            query2.addCriteria(Criteria.where("parentId").is(machineryId));
+            long count = mongoOperations.count(query2, Machinery.class);
+
+            if (count>0)
+            {
+                // item has children
+                result.put("error", 4);
+                return result;
+            }
+
+            Query query = new Query();
+            query.addCriteria(Criteria.where("id").is(machineryId));
+            WriteResult writeResult = mongoOperations.remove(query,Machinery.class);
+
+            if (writeResult.getN() > 0) {
+                result.put("error", 0);
+                result.put("id", machineryId);
+            } else {
+                result.put("error", 4);
+            }
         } catch (Exception ex) {
             // exception
             result.put("error", 1);

@@ -98,6 +98,10 @@
 }
 
 .nm-disable-a {
+  pointer-events: none;
+}
+
+.nm-disable-li{
   cursor: not-allowed;
 }
 

@@ -1,4 +1,8 @@
 .nm-disable-a {
+  pointer-events: none;
+}
+
+.nm-disable-li{
   cursor: not-allowed;
 }
 
@@ -10,6 +14,11 @@
 
 .machinery-row {
   margin-bottom: 10px;
+}
+
+.mc-confirmDelete-row {
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 .machinery-col1 {
@@ -38,4 +47,9 @@
 
 .machinery-selected{
   background-color: lightgoldenrodyellow!important;
+}
+
+.modal-button{
+  float: right;
+  width: 70px;
 }

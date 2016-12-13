@@ -55,6 +55,52 @@ var MainBodyAdminMachinery;
         };
         UI.bindAll = function () {
             MainBodyAdminMachinery.UI.bindaCreateUnit();
+            MainBodyAdminMachinery.UI.bindaDeleteMachinery();
+        };
+        UI.bindaDeleteMachinery = function () {
+            $("#aDelete").click(function (eventObject) {
+                if (UI.countChildren[UI.selectedMachineryId] > 0) {
+                    if ($("#divModalRejectDeleteMachinery").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalRejectDelete.hbs" + "?" + Site.Statics.version,
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                                MainBodyAdminMachinery.UI.aDeleteMachinery2_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aDeleteMachinery2_clicked();
+                    }
+                }
+                else {
+                    if ($("#divModalConfirmDeleteMachinery").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalConfirmDelete.hbs" + "?" + Site.Statics.version,
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                                MainBodyAdminMachinery.UI.aDeleteMachinery_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aDeleteMachinery_clicked();
+                    }
+                }
+            });
+        };
+        UI.aDeleteMachinery_clicked = function () {
+            ModalConfirmDelete.bindAll();
+            $("#divModalConfirmDeleteMachinery").modal("show");
+        };
+        UI.aDeleteMachinery2_clicked = function () {
+            $("#divModalRejectDeleteMachinery").modal("show");
         };
         UI.bindaCreateUnit = function () {
             $("#aCreateUnit").click(function (eventObject) {
@@ -75,6 +121,26 @@ var MainBodyAdminMachinery;
                 }
             });
         };
+        UI.activateNavbarItems = function () {
+            if ($("#aEdit").hasClass("nm-disable-a")) {
+                $("#aEdit").removeClass("nm-disable-a");
+                $("#aEdit").parent().removeClass("nm-disable-li");
+            }
+            if ($("#aDelete").hasClass("nm-disable-a")) {
+                $("#aDelete").removeClass("nm-disable-a");
+                $("#aDelete").parent().removeClass("nm-disable-li");
+            }
+        };
+        UI.deactivateNavbarItems = function () {
+            if (!$("#aEdit").hasClass("nm-disable-a")) {
+                $("#aEdit").addClass("nm-disable-a");
+                $("#aEdit").parent().addClass("nm-disable-li");
+            }
+            if (!$("#aDelete").hasClass("nm-disable-a")) {
+                $("#aDelete").addClass("nm-disable-a");
+                $("#aDelete").parent().addClass("nm-disable-li");
+            }
+        };
         UI.aCreateUnit_clicked = function () {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
@@ -87,16 +153,20 @@ var MainBodyAdminMachinery;
                 }
             });
             $(element).addClass("machinery-selected");
+            UI.activateNavbarItems();
         };
         UI.unBindAll = function () {
             UI.initialLoadIsDone = false;
             $("#aCreateUnit").unbind("click");
+            $("#aDelete").unbind("click");
         };
         UI.bindListMachineryItems = function () {
             var a = $("#ulListMachinery").find("a");
             $(a).each(function (index, elem) {
                 $(elem).click(function (eventObject) {
+                    var id = this.getAttribute("data-nm-id");
                     UI.machinerySelected(this);
+                    UI.selectedMachineryId = id;
                 });
                 if ($(elem).attr("data-nm-up")) {
                     $(elem).click(function (eventObject) {
@@ -108,10 +178,8 @@ var MainBodyAdminMachinery;
                 else {
                     $(elem).dblclick(function (eventObject) {
                         var id = this.getAttribute("data-nm-id");
-                        if (UI.countChildren[id] > 0) {
-                            UI.parentId = id;
-                            UI.getMachinery();
-                        }
+                        UI.parentId = id;
+                        UI.getMachinery();
                     });
                 }
             });
@@ -231,9 +299,11 @@ var MainBodyAdminMachinery;
                                 $(ulListMachinery).append(html_5);
                             }
                         }
-                        UI.countNewMachinery = 0;
+                        UI.countUpdateAvailable = 0;
+                        UI.deactivateNavbarItems();
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
+                        UI.selectedMachineryId = "";
                     }
                     else if (data.error === -1) {
                         window.location.href = data.redirect;
@@ -252,15 +322,59 @@ var MainBodyAdminMachinery;
         UI.parentId = "";
         UI.listParents = [];
         UI.countChildren = [];
-        UI.countNewMachinery = 0;
+        UI.countUpdateAvailable = 0;
+        UI.selectedMachineryId = "";
         return UI;
     }());
     MainBodyAdminMachinery.UI = UI;
+    var ModalConfirmDelete = (function () {
+        function ModalConfirmDelete() {
+        }
+        ModalConfirmDelete.bindAll = function () {
+            $("#divModalConfirmDeleteMachinery").on("hidden.bs.modal", ModalConfirmDelete.modal_closed);
+            ModalConfirmDelete.bindButtonConfirmDeleteMachinery();
+        };
+        ModalConfirmDelete.bindButtonConfirmDeleteMachinery = function () {
+            $("#buttonConfirmDeleteMachinery").click(function (eventObject) {
+                if (UI.selectedMachineryId.length > 0) {
+                    var parameters = {
+                        machineryId: UI.selectedMachineryId
+                    };
+                    $.ajax({
+                        url: "./api/Machinery/DeleteMachinery",
+                        method: "POST",
+                        data: parameters,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.error === 0) {
+                                UI.countUpdateAvailable += 1;
+                                $("#divModalConfirmDeleteMachinery").modal("hide");
+                            }
+                        }
+                    });
+                }
+            });
+        };
+        ModalConfirmDelete.modal_closed = function (e) {
+            ModalConfirmDelete.unBindAll();
+            ModalConfirmDelete.clearAll();
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
+        };
+        ModalConfirmDelete.clearAll = function () {
+        };
+        ModalConfirmDelete.unBindAll = function () {
+            $("#buttonConfirmDeleteMachinery").unbind("click");
+            $("#divModalConfirmDeleteMachinery").unbind("hidden.bs.modal");
+        };
+        return ModalConfirmDelete;
+    }());
+    MainBodyAdminMachinery.ModalConfirmDelete = ModalConfirmDelete;
     var ModalNewUnit = (function () {
         function ModalNewUnit() {
         }
         ModalNewUnit.load = function () {
-            UI.countNewMachinery = 0;
+            UI.countUpdateAvailable = 0;
             ModalNewUnit.bindAll();
         };
         ModalNewUnit.bindAll = function () {
@@ -309,7 +423,7 @@ var MainBodyAdminMachinery;
                 data: parameters,
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
-                        UI.countNewMachinery += 1;
+                        UI.countUpdateAvailable += 1;
                         var msg = format("بخش جدید ثبت شد");
                         $("#alertSuccess").html(msg);
                         $("#alertSuccess").velocity("fadeIn");
@@ -325,7 +439,7 @@ var MainBodyAdminMachinery;
         ModalNewUnit.modal_closed = function (e) {
             ModalNewUnit.clearAll();
             ModalNewUnit.unBindAll();
-            if (UI.countNewMachinery > 0) {
+            if (UI.countUpdateAvailable > 0) {
                 UI.getMachinery();
             }
         };

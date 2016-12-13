@@ -11,7 +11,8 @@ namespace MainBodyAdminMachinery {
         static parentId: string = "";
         static listParents = [];
         static countChildren = [];
-        static countNewMachinery = 0;
+        static countUpdateAvailable = 0;
+        static selectedMachineryId = "";
 
         static load(complete: Function) {
 
@@ -74,6 +75,59 @@ namespace MainBodyAdminMachinery {
 
         static bindAll() {
             MainBodyAdminMachinery.UI.bindaCreateUnit();
+            MainBodyAdminMachinery.UI.bindaDeleteMachinery();
+        }
+
+        static bindaDeleteMachinery() {
+            $("#aDelete").click(function (eventObject) {
+                if (UI.countChildren[UI.selectedMachineryId] > 0) {
+                    if ($("#divModalRejectDeleteMachinery").length === 0) {
+
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalRejectDelete.hbs" + "?" + Site.Statics.version,
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                                MainBodyAdminMachinery.UI.aDeleteMachinery2_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aDeleteMachinery2_clicked();
+                    }
+                }
+                else {
+                    if ($("#divModalConfirmDeleteMachinery").length === 0) {
+
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalConfirmDelete.hbs" + "?" + Site.Statics.version,
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                                MainBodyAdminMachinery.UI.aDeleteMachinery_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aDeleteMachinery_clicked();
+                    }
+                }
+            });
+        }
+
+        static aDeleteMachinery_clicked() {
+            ModalConfirmDelete.bindAll();
+            $("#divModalConfirmDeleteMachinery").modal("show");
+        }
+
+        static aDeleteMachinery2_clicked() {
+            $("#divModalRejectDeleteMachinery").modal("show");
         }
 
         static bindaCreateUnit() {
@@ -99,28 +153,52 @@ namespace MainBodyAdminMachinery {
             });
         }
 
+        static activateNavbarItems() {
+            if ($("#aEdit").hasClass("nm-disable-a")) {
+                $("#aEdit").removeClass("nm-disable-a");
+                $("#aEdit").parent().removeClass("nm-disable-li");
+            }
+
+            if ($("#aDelete").hasClass("nm-disable-a")) {
+                $("#aDelete").removeClass("nm-disable-a");
+                $("#aDelete").parent().removeClass("nm-disable-li");
+            }
+        }
+
+        static deactivateNavbarItems() {
+            if (!$("#aEdit").hasClass("nm-disable-a")) {
+                $("#aEdit").addClass("nm-disable-a");
+                $("#aEdit").parent().addClass("nm-disable-li");
+            }
+
+            if (!$("#aDelete").hasClass("nm-disable-a")) {
+                $("#aDelete").addClass("nm-disable-a");
+                $("#aDelete").parent().addClass("nm-disable-li");
+            }
+        }
+
         static aCreateUnit_clicked() {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
         }
 
-        static machinerySelected(element)
-        {
+        static machinerySelected(element) {
             let a = $("#ulListMachinery").find("a");
 
             $(a).each(function (index, elem) {
-                if ($(elem).hasClass("machinery-selected"))
-                {
+                if ($(elem).hasClass("machinery-selected")) {
                     $(elem).removeClass("machinery-selected");
                 }
             });
 
             $(element).addClass("machinery-selected");
+            UI.activateNavbarItems();
         }
 
         static unBindAll() {
             UI.initialLoadIsDone = false;
             $("#aCreateUnit").unbind("click");
+            $("#aDelete").unbind("click");
         }
 
         static bindListMachineryItems() {
@@ -129,14 +207,14 @@ namespace MainBodyAdminMachinery {
             $(a).each(function (index, elem) {
 
                 $(elem).click(function (eventObject) {
+                    let id = this.getAttribute("data-nm-id");
                     UI.machinerySelected(this);
+                    UI.selectedMachineryId = id;
                 });
 
                 if ($(elem).attr("data-nm-up")) {
                     $(elem).click(function (eventObject) {
-
                         let id = this.getAttribute("data-nm-id");
-
                         UI.parentId = id;
                         UI.getMachinery();
                     });
@@ -144,11 +222,8 @@ namespace MainBodyAdminMachinery {
                 else {
                     $(elem).dblclick(function (eventObject) {
                         let id = this.getAttribute("data-nm-id");
-
-                        if (UI.countChildren[id] > 0) {
-                            UI.parentId = id;
-                            UI.getMachinery();
-                        }
+                        UI.parentId = id;
+                        UI.getMachinery();
                     })
                 }
             });
@@ -305,10 +380,11 @@ namespace MainBodyAdminMachinery {
                         }
 
                         // clear
-                        UI.countNewMachinery = 0;
-
+                        UI.countUpdateAvailable = 0;
+                        UI.deactivateNavbarItems();
                         UI.bindListMachineryItems();
                         UI.bindParentLocationItems();
+                        UI.selectedMachineryId = "";
                     }
                     else if (data.error === -1) {
                         window.location.href = data.redirect;
@@ -328,11 +404,62 @@ namespace MainBodyAdminMachinery {
         }
     }
 
+    export class ModalConfirmDelete {
+
+        static bindAll() {
+            $("#divModalConfirmDeleteMachinery").on("hidden.bs.modal", ModalConfirmDelete.modal_closed);
+            ModalConfirmDelete.bindButtonConfirmDeleteMachinery();
+        }
+
+        static bindButtonConfirmDeleteMachinery()
+        {
+            $("#buttonConfirmDeleteMachinery").click(function (eventObject) {
+            if (UI.selectedMachineryId.length > 0) {
+
+                let parameters={
+                    machineryId:UI.selectedMachineryId
+                };
+
+                $.ajax({
+                    url: "./api/Machinery/DeleteMachinery",
+                    method: "POST",
+                    data:parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.error === 0) {
+                            UI.countUpdateAvailable += 1;
+                            $("#divModalConfirmDeleteMachinery").modal("hide");
+                        }
+                    }
+                });
+            }
+        });
+
+        }
+
+        static modal_closed(e) {
+            ModalConfirmDelete.unBindAll();
+            ModalConfirmDelete.clearAll();
+
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
+        }
+
+        static clearAll() {
+
+        }
+
+        static unBindAll() {
+            $("#buttonConfirmDeleteMachinery").unbind("click");
+            $("#divModalConfirmDeleteMachinery").unbind("hidden.bs.modal");
+        }
+    }
+
     export class ModalNewUnit {
 
         static load() {
             // initialize again
-            UI.countNewMachinery = 0;
+            UI.countUpdateAvailable = 0;
 
             ModalNewUnit.bindAll();
         }
@@ -397,7 +524,7 @@ namespace MainBodyAdminMachinery {
                 data: parameters,
                 success: function (data, textStatus, jqXHR) {
                     if (data.error === 0) {
-                        UI.countNewMachinery += 1;
+                        UI.countUpdateAvailable += 1;
 
                         let msg: string = format("بخش جدید ثبت شد");
                         $("#alertSuccess").html(msg);
@@ -417,7 +544,7 @@ namespace MainBodyAdminMachinery {
             ModalNewUnit.clearAll();
             ModalNewUnit.unBindAll();
 
-            if (UI.countNewMachinery > 0) {
+            if (UI.countUpdateAvailable > 0) {
                 UI.getMachinery();
             }
         }

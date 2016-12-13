@@ -275,4 +275,21 @@ public class ApiController {
 
         return result;
     }
+
+    @RequestMapping(value = "/api/Machinery/DeleteMachinery", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map deleteMachinery(HttpServletRequest request, HttpServletResponse response) {
+        SessionManager sessionManager = new SessionManager(request, response);
+
+        Map result = null;
+
+        if (!sessionManager.isUserLoggedIn()) {
+            result = authenticationError(request, response);
+            return result;
+        }
+
+        MachineryBL machineryBL=new MachineryBL(request,response);
+        result= machineryBL.deleteMachinery();
+
+        return result;
+    }
 }

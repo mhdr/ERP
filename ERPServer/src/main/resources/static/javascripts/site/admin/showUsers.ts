@@ -142,36 +142,44 @@ namespace MainBodyShowUsers {
             if (value) {
                 if ($(aDeleteUser).hasClass("nm-disable-a")) {
                     $(aDeleteUser).removeClass("nm-disable-a");
+                    $(aDeleteUser).parent().removeClass("nm-disable-li");
                 }
 
                 if ($(aEditUser).hasClass("nm-disable-a")) {
                     $(aEditUser).removeClass("nm-disable-a");
+                    $(aEditUser).parent().removeClass("nm-disable-li");
                 }
 
                 if ($(aChangePassword).hasClass("nm-disable-a")) {
                     $(aChangePassword).removeClass("nm-disable-a");
+                    $(aChangePassword).parent().removeClass("nm-disable-li");
                 }
 
                 if ($(aPermissions).hasClass("nm-disable-a")) {
                     $(aPermissions).removeClass("nm-disable-a");
+                    $(aPermissions).parent().removeClass("nm-disable-li");
                 }
             }
             else {
                 // disable edit and delete buttons
                 if (!$(aDeleteUser).hasClass("nm-disable-a")) {
                     $(aDeleteUser).addClass("nm-disable-a");
+                    $(aDeleteUser).parent().addClass("nm-disable-li");
                 }
 
                 if (!$(aEditUser).hasClass("nm-disable-a")) {
                     $(aEditUser).addClass("nm-disable-a");
+                    $(aEditUser).parent().addClass("nm-disable-li");
                 }
 
                 if (!$(aChangePassword).hasClass("nm-disable-a")) {
                     $(aChangePassword).addClass("nm-disable-a");
+                    $(aChangePassword).parent().addClass("nm-disable-li");
                 }
 
                 if (!$(aPermissions).hasClass("nm-disable-a")) {
                     $(aPermissions).addClass("nm-disable-a");
+                    $(aPermissions).parent().addClass("nm-disable-li");
                 }
             }
         }

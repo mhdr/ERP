@@ -80,6 +80,9 @@
   background-color: lightgoldenrodyellow !important; }
 
 .nm-disable-a {
+  pointer-events: none; }
+
+.nm-disable-li {
   cursor: not-allowed; }
 
 .nm-search-box-col1 {
