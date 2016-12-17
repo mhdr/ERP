@@ -1,5 +1,7 @@
 /// <reference path="../../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts" />
 /// <reference path="../../../../DefinitelyTyped/bootstrap/bootstrap.d.ts" />
+/// <reference path="../../../../DefinitelyTyped/knockout/index.d.ts" />
+/// <reference path="../../../../DefinitelyTyped/handlebars/handlebars.d.ts" />
 /// <reference path="../nm.d.ts" />
 /// <reference path="../common.d.ts" />
 declare namespace MainBodyAdminMachinery {
@@ -12,6 +14,7 @@ declare namespace MainBodyAdminMachinery {
         static selectedMachineryId: string;
         static load(complete: Function): void;
         static bindAll(): void;
+        static bindaCreateMachine(): void;
         static bindaDeleteMachinery(): void;
         static aDeleteMachinery_clicked(): void;
         static aDeleteMachinery2_clicked(): void;

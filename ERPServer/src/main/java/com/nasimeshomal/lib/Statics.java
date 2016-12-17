@@ -11,6 +11,6 @@ public class Statics {
 
     public static String getVersion()
     {
-        return "1000";
+        return "1001";
     }
 }

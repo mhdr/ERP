@@ -56,6 +56,11 @@ var MainBodyAdminMachinery;
         UI.bindAll = function () {
             MainBodyAdminMachinery.UI.bindaCreateUnit();
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
+            MainBodyAdminMachinery.UI.bindaCreateMachine();
+        };
+        UI.bindaCreateMachine = function () {
+            $("#aCreateMachine").click(function (eventObject) {
+            });
         };
         UI.bindaDeleteMachinery = function () {
             $("#aDelete").click(function (eventObject) {
@@ -159,6 +164,9 @@ var MainBodyAdminMachinery;
             UI.initialLoadIsDone = false;
             $("#aCreateUnit").unbind("click");
             $("#aDelete").unbind("click");
+            $("#aCreateMachine").unbind("click");
+            $("#aCreateFolder").unbind("click");
+            $("#aEdit").unbind("click");
         };
         UI.bindListMachineryItems = function () {
             var a = $("#ulListMachinery").find("a");

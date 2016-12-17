@@ -1,6 +1,8 @@
 //<reference path="../../../../DefinitelyTyped/jquery/jquery.d.ts"/>
 ///<reference path="../../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts"/>
 ///<reference path="../../../../DefinitelyTyped/bootstrap/bootstrap.d.ts"/>
+///<reference path="../../../../DefinitelyTyped/knockout/index.d.ts"/>
+///<reference path="../../../../DefinitelyTyped/handlebars/handlebars.d.ts"/>
 ///<reference path="../nm.d.ts"/>
 ///<reference path="../common.d.ts"/>
 
@@ -76,6 +78,13 @@ namespace MainBodyAdminMachinery {
         static bindAll() {
             MainBodyAdminMachinery.UI.bindaCreateUnit();
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
+            MainBodyAdminMachinery.UI.bindaCreateMachine();
+        }
+
+        static bindaCreateMachine(){
+            $("#aCreateMachine").click(function (eventObject) {
+
+            });
         }
 
         static bindaDeleteMachinery() {
@@ -199,6 +208,9 @@ namespace MainBodyAdminMachinery {
             UI.initialLoadIsDone = false;
             $("#aCreateUnit").unbind("click");
             $("#aDelete").unbind("click");
+            $("#aCreateMachine").unbind("click");
+            $("#aCreateFolder").unbind("click");
+            $("#aEdit").unbind("click");
         }
 
         static bindListMachineryItems() {
