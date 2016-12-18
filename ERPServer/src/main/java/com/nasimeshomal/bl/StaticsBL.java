@@ -1,5 +1,7 @@
 package com.nasimeshomal.bl;
 
+import com.nasimeshomal.lib.Statics;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public class StaticsBL {
 
         try {
             result.put("error",0);
-            result.put("result", com.nasimeshomal.lib.Statics.getVersion());
+            result.put("result", new Statics().getVersion());
         }
         catch (Exception ex)
         {

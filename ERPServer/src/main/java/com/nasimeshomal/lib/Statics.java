@@ -1,11 +1,9 @@
 package com.nasimeshomal.lib;
 
 import com.mongodb.MongoClient;
+import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.StringReader;
+import java.io.*;
 
 public class Statics {
     public static MongoClient getMongo()
@@ -14,11 +12,14 @@ public class Statics {
         return mongo;
     }
 
-    public static String getVersion()
+    public String getVersion()
     {
         String result="-1";
         try {
-            BufferedReader bufferedReader=new BufferedReader(new FileReader("src/main/resources/build.txt"));
+            String fileName="build.txt";
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream in = classLoader.getResourceAsStream(fileName);
+            BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(in));
             String buildNumberStr= bufferedReader.readLine();
             bufferedReader.close();
             result=buildNumberStr;

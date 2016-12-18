@@ -31,7 +31,7 @@ public class DefaultController {
         ArrayList<Integer> permissions=users.getPermissionsList();
 
         ModelAndView modelAndView=new ModelAndView("index");
-        modelAndView.addObject("version",Statics.getVersion());
+        modelAndView.addObject("version",new Statics().getVersion());
         modelAndView.addObject("permissions",permissions);
         return modelAndView;
     }
@@ -42,7 +42,7 @@ public class DefaultController {
         SessionManager sessionManager = new SessionManager(request,response);
 
         ModelAndView modelAndView=new ModelAndView("login");
-        modelAndView.addObject("version",Statics.getVersion());
+        modelAndView.addObject("version",new Statics().getVersion());
         return modelAndView;
     }
 
