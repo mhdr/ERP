@@ -30,7 +30,7 @@ namespace MainBodyAdminMachinery {
             });
 
             $.ajax({
-                url: "./hbs/mainBody/admin/machinery/parentLocation.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/machinery/parentLocation.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     $("#templateParentLocation").html(data);
@@ -39,7 +39,7 @@ namespace MainBodyAdminMachinery {
             });
 
             $.ajax({
-                url: "./hbs/mainBody/admin/machinery/locationUP.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/machinery/locationUP.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     $("#templateLocationUP").html(data);
@@ -48,7 +48,7 @@ namespace MainBodyAdminMachinery {
             });
 
             $.ajax({
-                url: "./hbs/mainBody/admin/machinery/unit.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/machinery/unit.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     $("#templateUnit").html(data);
@@ -57,7 +57,7 @@ namespace MainBodyAdminMachinery {
             });
 
             $.ajax({
-                url: "./hbs/mainBody/admin/machinery/machine.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/machinery/machine.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     $("#templateMachine").html(data);
@@ -66,7 +66,7 @@ namespace MainBodyAdminMachinery {
             });
 
             $.ajax({
-                url: "./hbs/mainBody/admin/machinery/folder.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/machinery/folder.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     $("#templateFolder").html(data);
@@ -95,7 +95,7 @@ namespace MainBodyAdminMachinery {
                         $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
 
                         $.ajax({
-                            url: "./hbs/mainBody/admin/machinery/modalRejectDelete.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/machinery/modalRejectDelete.hbs" + "?" + Site.Statics.version(),
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#mainBody").append(data);
@@ -114,7 +114,7 @@ namespace MainBodyAdminMachinery {
                         $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
 
                         $.ajax({
-                            url: "./hbs/mainBody/admin/machinery/modalConfirmDelete.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/machinery/modalConfirmDelete.hbs" + "?" + Site.Statics.version(),
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#mainBody").append(data);
@@ -147,7 +147,7 @@ namespace MainBodyAdminMachinery {
                     $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
 
                     $.ajax({
-                        url: "./hbs/mainBody/admin/machinery/modalNewUnit.hbs" + "?" + Site.Statics.version,
+                        url: "./hbs/mainBody/admin/machinery/modalNewUnit.hbs" + "?" + Site.Statics.version(),
                         method: "GET",
                         success: function (data, textStatus, jqXHR) {
                             $("#mainBody").append(data);

@@ -4,17 +4,15 @@
 /// <reference path="../../../DefinitelyTyped/bootstrap/bootstrap.d.ts" />
 declare var format: any;
 declare namespace Site {
-    var Statics: {
-        version: string;
-    };
+    class Statics {
+        static getVersion(): void;
+        static version(): string;
+    }
     class Loader {
         static showLoaderForContent(element: any, top?: number, right?: number): void;
         static hideLoaderForContent(): void;
         static showLoaderForMainBody(top?: number, right?: number): void;
         static hideLoaderForMainBody(): void;
-    }
-    class UI {
-        static getVersion(): void;
     }
     class Popover {
         static create(msgId: string, popoverId: string, targetId: string): void;

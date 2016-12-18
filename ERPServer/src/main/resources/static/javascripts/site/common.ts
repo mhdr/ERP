@@ -6,17 +6,38 @@
 window['format'];
 var format: any;
 
-$(document).ready(function () {
-    Site.UI.getVersion();
-});
-
 namespace Site {
 
-    export var Statics = {
-        version: localStorage.getItem("version"),
-    };
+    export class Statics {
 
-    export class Loader{
+        static getVersion()
+        {
+            $.ajax({
+                url: "./api/GetVersion",
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        let oldValue=localStorage.getItem("version");
+                        let newValue=data.result;
+
+                        if (oldValue!==newValue)
+                        {
+                            localStorage.setItem("version", newValue);
+                            // reload page without cache
+                            location.reload(true);
+                        }
+                    }
+                }
+            });
+        }
+
+        static version() {
+            let result = localStorage.getItem("version");
+            return result;
+        }
+    }
+
+    export class Loader {
         static showLoaderForContent(element, top: number = 25, right: number = 50) {
             var html = "<div id='nm-loader' class='shaft-load2'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div><div class='shaft10'></div></div>";
             var nmLoader = $("#nm-loader");
@@ -69,14 +90,6 @@ namespace Site {
                     }
                 });
             }
-        }
-    }
-
-    export class UI {
-
-        static getVersion() {
-            let result= $("#inputVersion").val();
-            localStorage.setItem("version", result);
         }
     }
 

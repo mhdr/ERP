@@ -51,6 +51,7 @@ class UI {
 
         if (data!==null)
         {
+            Site.Statics.getVersion();
             Template.renderMainBody(data, function () {
                 // load data
                 var cmd1 = data.JS.namespace + ".UI.load(function () {Site.Loader.hideLoaderForMainBody();});";
@@ -296,25 +297,25 @@ class StaticData {
 
     static sideBarAdminUsersHTML: SideBarData = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aUserAdmin",
         liNavBar: "liAdmin"
     };
 
     static mainBodyAdminUsersCSS: MainBodyCSSData = {
         styleId: "styleMainBodyShowUsers",
-        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminUsersHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowUsers",
-        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminUsersJS: MainBodyJSData = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminUsers: MainBodyData = {
@@ -329,25 +330,25 @@ class StaticData {
     // Profile
     static sideBarProfileHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
 
     static mainBodyProfileCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfile",
-        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfile",
-        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileJS: MainBodyJSData = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
-        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfile: MainBodyData = {
@@ -362,25 +363,25 @@ class StaticData {
     // Profile/ChangeData
     static sideBarProfileCDHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
 
     static mainBodyProfileCDCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangeData",
-        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCDHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangeData",
-        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCDJS: MainBodyJSData = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
-        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCD: MainBodyData = {
@@ -396,25 +397,25 @@ class StaticData {
 
     static sideBarProfileCPHTML: SideBarData = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
     };
 
     static mainBodyProfileCPCSS: MainBodyCSSData = {
         styleId: "styleMainBodyProfileChangePassword",
-        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCPHTML: MainBodyHTMLData = {
         divId: "divMainBodyProfileChangePassword",
-        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCPJS: MainBodyJSData = {
         namespace: "MainBodyProfileChangePassword",
         scriptId: "scriptMainBodyProfileChangePassword",
-        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyProfileCP: MainBodyData = {
@@ -430,25 +431,25 @@ class StaticData {
 
     static sideBarFormsHTML: SideBarData = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aFormAdmin",
         liNavBar: "liAdmin"
     };
 
     static mainBodyFormsCSS: MainBodyCSSData = {
         styleId: "styleMainBodyForms",
-        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyFormsHTML: MainBodyHTMLData = {
         divId: "divMainBodyShowForms",
-        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyFormsJS: MainBodyJSData = {
         namespace: "MainBodyForms",
         scriptId: "scriptMainBodyForms",
-        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyForms: MainBodyData = {
@@ -464,25 +465,25 @@ class StaticData {
 
     static sideBarAdminMachineryHTML: SideBarData = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aMachineryAdmin",
         liNavBar: "liAdmin"
     };
 
     static mainBodyAdminMachineryCSS: MainBodyCSSData = {
         styleId: "styleMainBodyAdminMachinery",
-        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminMachineryHTML: MainBodyHTMLData = {
         divId: "divMainBodyAdminMachinery",
-        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminMachineryJS: MainBodyJSData = {
         namespace: "MainBodyAdminMachinery",
         scriptId: "scriptMainBodyAdminMachinery",
-        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version()
     };
 
     static mainBodyAdminMachinery: MainBodyData = {

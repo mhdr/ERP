@@ -290,6 +290,7 @@ task minify{
         sleep(5000)
         tasks.csso.execute()
         tasks.uglify.execute()
+        tasks.increaseBuildNumber.execute()
     }
 }
 
@@ -316,5 +317,24 @@ task minifyCSS{
         tasks.sass.execute()
         sleep(5000)
         tasks.csso.execute()
+    }
+}
+
+task increaseBuildNumber{
+    group='minify'
+    doLast{
+        String path="src/main/resources/build.txt"
+        File file=project.file(path)
+
+        String line1= file.readLines()[0]
+        Integer buildNumber= Integer.parseInt(line1)
+
+        buildNumber+=1
+        String output=buildNumber.toString()
+
+        BufferedWriter writer= file.newWriter(false)
+        writer.writeLine(output)
+        writer.flush()
+        writer.close()
     }
 }

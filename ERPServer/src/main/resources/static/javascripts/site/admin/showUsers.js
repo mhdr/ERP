@@ -8,7 +8,7 @@ var MainBodyShowUsers;
         UI.load = function (complete) {
             MainBodyShowUsers.UI.emptyTable();
             $.ajax({
-                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -50,7 +50,7 @@ var MainBodyShowUsers;
         };
         UI.loadNewData = function () {
             $.ajax({
-                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/showUsersTable.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);
@@ -196,7 +196,7 @@ var MainBodyShowUsers;
                 if ($("#divModalNewUser").length == 0) {
                     $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                     $.ajax({
-                        url: "./hbs/mainBody/admin/users/modalNewUser.hbs" + "?" + Site.Statics.version,
+                        url: "./hbs/mainBody/admin/users/modalNewUser.hbs" + "?" + Site.Statics.version(),
                         method: "GET",
                         success: function (data, textStatus, jqXHR) {
                             $("#divMainBodyShowUsers").append(data);
@@ -227,7 +227,7 @@ var MainBodyShowUsers;
                     if ($("#divModalEditUser").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/mainBody/admin/users/modalEditUser.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalEditUser.hbs" + "?" + Site.Statics.version(),
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -256,7 +256,7 @@ var MainBodyShowUsers;
                     if ($("#divModalPermissions").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/mainBody/admin/users/modalPermissions.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalPermissions.hbs" + "?" + Site.Statics.version(),
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -288,7 +288,7 @@ var MainBodyShowUsers;
                     if ($("#divModalChangePassword").length == 0) {
                         $("#aLoadingNavbarMainBodyShowUsers").velocity({ opacity: 1 }, { duration: 100 });
                         $.ajax({
-                            url: "./hbs/mainBody/admin/users/modalChangePassword.hbs" + "?" + Site.Statics.version,
+                            url: "./hbs/mainBody/admin/users/modalChangePassword.hbs" + "?" + Site.Statics.version(),
                             method: "GET",
                             success: function (data, textStatus, jqXHR) {
                                 $("#divMainBodyShowUsers").append(data);
@@ -750,7 +750,7 @@ var ModalPermissions;
             Site.Loader.showLoaderForContent(element, 25, 42);
             var parameters = { query: filter };
             $.ajax({
-                url: "./hbs/mainBody/admin/users/modalPermissionsList.hbs" + "?" + Site.Statics.version,
+                url: "./hbs/mainBody/admin/users/modalPermissionsList.hbs" + "?" + Site.Statics.version(),
                 method: "GET",
                 success: function (data, textStatus, jqXHR) {
                     var template = Handlebars.compile(data);

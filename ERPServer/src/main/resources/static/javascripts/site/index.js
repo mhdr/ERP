@@ -35,6 +35,7 @@ var UI = (function () {
     UI.renderLocationHash = function () {
         var data = StaticData.getStaticData();
         if (data !== null) {
+            Site.Statics.getVersion();
             Template.renderMainBody(data, function () {
                 var cmd1 = data.JS.namespace + ".UI.load(function () {Site.Loader.hideLoaderForMainBody();});";
                 eval(cmd1);
@@ -224,22 +225,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarAdminUsersHTML = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aUserAdmin",
         liNavBar: "liAdmin"
     };
     StaticData.mainBodyAdminUsersCSS = {
         styleId: "styleMainBodyShowUsers",
-        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/showUsers.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminUsersHTML = {
         divId: "divMainBodyShowUsers",
-        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/users/showUsers.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminUsersJS = {
         namespace: "MainBodyShowUsers",
         scriptId: "scriptMainBodyShowUsers",
-        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/showUsers.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminUsers = {
         SideBar: StaticData.sideBarAdminUsersHTML,
@@ -249,22 +250,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileHTML = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aShowProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCSS = {
         styleId: "styleMainBodyProfile",
-        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/profile.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileHTML = {
         divId: "divMainBodyProfile",
-        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/profile.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileJS = {
         namespace: "MainBodyProfile",
         scriptId: "scriptMainBodyProfile",
-        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/profile.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfile = {
         SideBar: StaticData.sideBarProfileHTML,
@@ -274,22 +275,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileCDHTML = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aChangeProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCDCSS = {
         styleId: "styleMainBodyProfileChangeData",
-        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changeData.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCDHTML = {
         divId: "divMainBodyProfileChangeData",
-        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/changeData.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCDJS = {
         namespace: "MainBodyProfileChangeData",
         scriptId: "scriptMainBodyProfileChangeData",
-        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changeData.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCD = {
         SideBar: StaticData.sideBarProfileCDHTML,
@@ -299,22 +300,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarProfileCPHTML = {
         divSideBar: "divSidebarProfile",
-        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/profile.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aChangePasswordInProfile",
         liNavBar: "liProfile"
     };
     StaticData.mainBodyProfileCPCSS = {
         styleId: "styleMainBodyProfileChangePassword",
-        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/profile/changePassword.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCPHTML = {
         divId: "divMainBodyProfileChangePassword",
-        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/profile/changePassword.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCPJS = {
         namespace: "MainBodyProfileChangePassword",
         scriptId: "scriptMainBodyProfileChangePassword",
-        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/profile/changePassword.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyProfileCP = {
         SideBar: StaticData.sideBarProfileCPHTML,
@@ -324,22 +325,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarFormsHTML = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aFormAdmin",
         liNavBar: "liAdmin"
     };
     StaticData.mainBodyFormsCSS = {
         styleId: "styleMainBodyForms",
-        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/forms.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyFormsHTML = {
         divId: "divMainBodyShowForms",
-        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/forms/forms.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyFormsJS = {
         namespace: "MainBodyForms",
         scriptId: "scriptMainBodyForms",
-        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/forms.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyForms = {
         SideBar: StaticData.sideBarFormsHTML,
@@ -349,22 +350,22 @@ var StaticData = (function () {
     };
     StaticData.sideBarAdminMachineryHTML = {
         divSideBar: "divSidebarAdmin",
-        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version,
+        url: "./hbs/sidebar/admin.hbs" + "?" + Site.Statics.version(),
         aSideBar: "aMachineryAdmin",
         liNavBar: "liAdmin"
     };
     StaticData.mainBodyAdminMachineryCSS = {
         styleId: "styleMainBodyAdminMachinery",
-        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version
+        url: "./stylesheets/site/admin/machinery.min.css" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminMachineryHTML = {
         divId: "divMainBodyAdminMachinery",
-        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version
+        url: "./hbs/mainBody/admin/machinery/machinery.hbs" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminMachineryJS = {
         namespace: "MainBodyAdminMachinery",
         scriptId: "scriptMainBodyAdminMachinery",
-        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version
+        url: "./javascripts/site/admin/machinery.min.js" + "?" + Site.Statics.version()
     };
     StaticData.mainBodyAdminMachinery = {
         SideBar: StaticData.sideBarAdminMachineryHTML,

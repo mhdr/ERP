@@ -1,13 +1,33 @@
 window['format'];
 var format;
-$(document).ready(function () {
-    Site.UI.getVersion();
-});
 var Site;
 (function (Site) {
-    Site.Statics = {
-        version: localStorage.getItem("version")
-    };
+    var Statics = (function () {
+        function Statics() {
+        }
+        Statics.getVersion = function () {
+            $.ajax({
+                url: "./api/GetVersion",
+                method: "GET",
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        var oldValue = localStorage.getItem("version");
+                        var newValue = data.result;
+                        if (oldValue !== newValue) {
+                            localStorage.setItem("version", newValue);
+                            location.reload(true);
+                        }
+                    }
+                }
+            });
+        };
+        Statics.version = function () {
+            var result = localStorage.getItem("version");
+            return result;
+        };
+        return Statics;
+    }());
+    Site.Statics = Statics;
     var Loader = (function () {
         function Loader() {
         }
@@ -62,16 +82,6 @@ var Site;
         return Loader;
     }());
     Site.Loader = Loader;
-    var UI = (function () {
-        function UI() {
-        }
-        UI.getVersion = function () {
-            var result = $("#inputVersion").val();
-            localStorage.setItem("version", result);
-        };
-        return UI;
-    }());
-    Site.UI = UI;
     var Popover = (function () {
         function Popover() {
         }
