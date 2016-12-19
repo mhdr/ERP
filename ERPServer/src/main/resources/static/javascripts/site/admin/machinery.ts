@@ -83,7 +83,23 @@ namespace MainBodyAdminMachinery {
 
         static bindaCreateMachine(){
             $("#aCreateMachine").click(function (eventObject) {
+                if ($("#divModalNewMachine").length === 0) {
 
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewMachine.hbs" + "?" + Site.Statics.version(),
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                            MainBodyAdminMachinery.UI.aCreateMachine_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateMachine_clicked();
+                }
             });
         }
 
@@ -189,6 +205,11 @@ namespace MainBodyAdminMachinery {
         static aCreateUnit_clicked() {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
+        }
+
+        static aCreateMachine_clicked() {
+            ModalNewUnit.load();
+            $("#divModalNewMachine").modal("show");
         }
 
         static machinerySelected(element) {
@@ -559,6 +580,41 @@ namespace MainBodyAdminMachinery {
             if (UI.countUpdateAvailable > 0) {
                 UI.getMachinery();
             }
+        }
+    }
+
+    export class ModalNewMachine{
+
+        static viewModel={
+            machineNameFa:"",
+            machineNameEn:"",
+            pmCode:""
+        };
+
+        static load(){
+
+        }
+
+        static bindAll()
+        {
+            ko.applyBindings(ModalNewMachine.viewModel,document.getElementById("divModalNewMachine"));
+            $("#buttonSubmitNewMachine").bind("click", ModalNewMachine.buttonSubmit_clicked);
+            $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
+        }
+
+        static modal_closed()
+        {
+
+        }
+
+        static buttonSubmit_clicked()
+        {
+
+        }
+
+        static unBindAll()
+        {
+            ko.cleanNode(document.getElementById("divModalNewMachine"));
         }
     }
 

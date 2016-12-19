@@ -1,0 +1,60 @@
+<div id="divModalNewMachine" class="modal fade row" role="dialog">
+    <div class="modal-dialog" id="divModalNewMachineInnerDiv">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">دستگاه جدید</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row machinery-row">
+                    <span class="col-lg-3 col-md-3 col-sm-3 col-xs-3 machinery-col1"><span>نام دستگاه - فارسی</span></span>
+                    <span class="col-lg-8 col-md-8 col-sm-8 col-xs-8 machinery-col2">
+                        <input class="form-control ltrInput" type="text" id="inputMachineNameFa" tabindex="1">
+                    </span>
+                    <span class="col-lg-1 col-md-1 col-sm-1 col-xs-1" id="spanAlertMachineNameFa">
+
+                        <div id="divAlertMachineNameFa1" style="display: none">
+                        <li>نام دستگاه نمی تواند خالی باشد</li>
+                        </div>
+                </span>
+                </div>
+
+                <div class="row machinery-row">
+                    <span class="col-lg-3 col-md-3 col-sm-3 col-xs-3 machinery-col1"><span>نام دستگاه - انگلیسی</span></span>
+                    <span class="col-lg-8 col-md-8 col-sm-8 col-xs-8 machinery-col2">
+                        <input class="form-control ltrInput" tabindex="2" type="text" id="inputMachineNameEn">
+                    </span>
+                </div>
+
+                <div class="row machinery-row">
+                    <span class="col-lg-3 col-md-3 col-sm-3 col-xs-3 machinery-col1"><span>کد تعمیرات پیشگیرانه</span></span>
+                    <span class="col-lg-8 col-md-8 col-sm-8 col-xs-8 machinery-col2">
+                        <input class="form-control ltrInput" tabindex="2" type="text" id="inputPMCode">
+                    </span>
+                </div>
+
+                <div class="row">
+                    <span class="col-lg-3 col-md-3 col-sm-3 col-xs-3 machinery-col1"></span>
+                    <span class="col-lg-8 col-md-8 col-sm-8 col-xs-8 machinery-col2 center-block">
+
+                 <button type="button" class="btn btn-primary nm-submit-button" id="buttonSubmitNewMachine"
+                         tabindex="7">
+                  <span>
+                    <span>ثبت</span>
+                    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                  </span>
+                 </button>
+
+            <span id="alertSuccess" class="alert alert-success machinery-alert2" style="display: none"></span>
+        </span>
+                    <span class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="8">بستن</button>
+            </div>
+        </div>
+
+    </div>
+</div>

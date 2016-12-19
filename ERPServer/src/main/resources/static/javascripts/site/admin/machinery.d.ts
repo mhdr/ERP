@@ -22,6 +22,7 @@ declare namespace MainBodyAdminMachinery {
         static activateNavbarItems(): void;
         static deactivateNavbarItems(): void;
         static aCreateUnit_clicked(): void;
+        static aCreateMachine_clicked(): void;
         static machinerySelected(element: any): void;
         static unBindAll(): void;
         static bindListMachineryItems(): void;
@@ -43,6 +44,18 @@ declare namespace MainBodyAdminMachinery {
         static clearAfterSubmit(): void;
         static buttonSubmit_clicked(): void;
         static modal_closed(e: any): void;
+    }
+    class ModalNewMachine {
+        static viewModel: {
+            machineNameFa: string;
+            machineNameEn: string;
+            pmCode: string;
+        };
+        static load(): void;
+        static bindAll(): void;
+        static modal_closed(): void;
+        static buttonSubmit_clicked(): void;
+        static unBindAll(): void;
     }
     interface Unit {
         unitNameFa: string;

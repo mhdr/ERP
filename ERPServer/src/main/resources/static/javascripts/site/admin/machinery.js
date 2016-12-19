@@ -60,6 +60,21 @@ var MainBodyAdminMachinery;
         };
         UI.bindaCreateMachine = function () {
             $("#aCreateMachine").click(function (eventObject) {
+                if ($("#divModalNewMachine").length === 0) {
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewMachine.hbs" + "?" + Site.Statics.version(),
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                            MainBodyAdminMachinery.UI.aCreateMachine_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateMachine_clicked();
+                }
             });
         };
         UI.bindaDeleteMachinery = function () {
@@ -149,6 +164,10 @@ var MainBodyAdminMachinery;
         UI.aCreateUnit_clicked = function () {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
+        };
+        UI.aCreateMachine_clicked = function () {
+            ModalNewUnit.load();
+            $("#divModalNewMachine").modal("show");
         };
         UI.machinerySelected = function (element) {
             var a = $("#ulListMachinery").find("a");
@@ -454,5 +473,30 @@ var MainBodyAdminMachinery;
         return ModalNewUnit;
     }());
     MainBodyAdminMachinery.ModalNewUnit = ModalNewUnit;
+    var ModalNewMachine = (function () {
+        function ModalNewMachine() {
+        }
+        ModalNewMachine.load = function () {
+        };
+        ModalNewMachine.bindAll = function () {
+            ko.applyBindings(ModalNewMachine.viewModel, document.getElementById("divModalNewMachine"));
+            $("#buttonSubmitNewMachine").bind("click", ModalNewMachine.buttonSubmit_clicked);
+            $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
+        };
+        ModalNewMachine.modal_closed = function () {
+        };
+        ModalNewMachine.buttonSubmit_clicked = function () {
+        };
+        ModalNewMachine.unBindAll = function () {
+            ko.cleanNode(document.getElementById("divModalNewMachine"));
+        };
+        ModalNewMachine.viewModel = {
+            machineNameFa: "",
+            machineNameEn: "",
+            pmCode: ""
+        };
+        return ModalNewMachine;
+    }());
+    MainBodyAdminMachinery.ModalNewMachine = ModalNewMachine;
 })(MainBodyAdminMachinery || (MainBodyAdminMachinery = {}));
 //# sourceMappingURL=machinery.js.map
