@@ -602,9 +602,15 @@ namespace MainBodyAdminMachinery {
             $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
         }
 
-        static modal_closed()
+        static clearAll()
         {
 
+        }
+
+        static modal_closed()
+        {
+            ModalNewMachine.clearAll();
+            ModalNewMachine.unBindAll();
         }
 
         static buttonSubmit_clicked()

@@ -483,7 +483,11 @@ var MainBodyAdminMachinery;
             $("#buttonSubmitNewMachine").bind("click", ModalNewMachine.buttonSubmit_clicked);
             $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
         };
+        ModalNewMachine.clearAll = function () {
+        };
         ModalNewMachine.modal_closed = function () {
+            ModalNewMachine.clearAll();
+            ModalNewMachine.unBindAll();
         };
         ModalNewMachine.buttonSubmit_clicked = function () {
         };
