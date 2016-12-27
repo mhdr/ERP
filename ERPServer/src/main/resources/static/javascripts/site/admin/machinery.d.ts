@@ -47,13 +47,14 @@ declare namespace MainBodyAdminMachinery {
     }
     class ModalNewMachine {
         static viewModel: {
-            machineNameFa: string;
-            machineNameEn: string;
-            pmCode: string;
+            machineNameFa: KnockoutObservable<string>;
+            machineNameEn: KnockoutObservable<string>;
+            pmCode: KnockoutObservable<string>;
         };
         static load(): void;
         static bindAll(): void;
         static clearAll(): void;
+        static clearAfterSubmit(): void;
         static modal_closed(): void;
         static buttonSubmit_clicked(): void;
         static unBindAll(): void;

@@ -208,7 +208,7 @@ namespace MainBodyAdminMachinery {
         }
 
         static aCreateMachine_clicked() {
-            ModalNewUnit.load();
+            ModalNewMachine.load();
             $("#divModalNewMachine").modal("show");
         }
 
@@ -526,6 +526,7 @@ namespace MainBodyAdminMachinery {
 
             // clear
             $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            Site.Popover.remove("aMachineryAlertUnitNameFa");
             //
 
             let unitNameFa = $("#inputUnitNameFa").val();
@@ -586,13 +587,16 @@ namespace MainBodyAdminMachinery {
     export class ModalNewMachine{
 
         static viewModel={
-            machineNameFa:"",
-            machineNameEn:"",
-            pmCode:""
+            machineNameFa:ko.observable(""),
+            machineNameEn:ko.observable(""),
+            pmCode:ko.observable("")
         };
 
         static load(){
+            // initialize again
+            UI.countUpdateAvailable = 0;
 
+            ModalNewMachine.bindAll();
         }
 
         static bindAll()
@@ -604,23 +608,89 @@ namespace MainBodyAdminMachinery {
 
         static clearAll()
         {
+            ModalNewMachine.clearAfterSubmit();
+            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
+        }
 
+        static clearAfterSubmit() {
+            Site.Popover.remove("aMachineryAlertMachineNameFa");
+            $("#inputMachineNameFa").parent().removeClass("has-error");
+            ModalNewMachine.viewModel.machineNameFa("");
+            ModalNewMachine.viewModel.machineNameEn("");
+            ModalNewMachine.viewModel.pmCode("");
         }
 
         static modal_closed()
         {
             ModalNewMachine.clearAll();
             ModalNewMachine.unBindAll();
+
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         }
 
         static buttonSubmit_clicked()
         {
+            // clear
+            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            Site.Popover.remove("aMachineryAlertMachineNameFa");
+            //
 
+
+            let machineNameFa=ModalNewMachine.viewModel.machineNameFa();
+            let machineNameEn=ModalNewMachine.viewModel.machineNameEn();
+            let pmCode=ModalNewMachine.viewModel.pmCode();
+
+            let clientSideError = 0;
+
+            if (machineNameFa.length === 0) {
+                Site.Popover.create("divAlertMachineNameFa1", "aMachineryAlertMachineNameFa", "spanAlertMachineNameFa");
+                $("#inputMachineNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+
+            if (clientSideError > 0) {
+                return;
+            }
+
+            Site.SubmitButton.afterClick("buttonSubmitNewMachine");
+
+            let parameters = {
+                parentId: UI.parentId,
+                machineNameFa: machineNameFa,
+                machineNameEn: machineNameEn,
+                pmCode:pmCode
+            };
+
+            $.ajax({
+                url: "./api/Machinery/InsertMachine",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countUpdateAvailable += 1;
+
+                        let msg: string = format("ماشین جدید ثبت شد");
+                        $("#alertSuccess").html(msg);
+                        $("#alertSuccess").velocity("fadeIn");
+                        ModalNewMachine.clearAfterSubmit();
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+
+                    Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
+                }
+            })
         }
 
         static unBindAll()
         {
             ko.cleanNode(document.getElementById("divModalNewMachine"));
+            $("#buttonSubmitNewMachine").unbind("click");
+            $("#divModalNewMachine").unbind("hidden.bs.modal");
         }
     }
 

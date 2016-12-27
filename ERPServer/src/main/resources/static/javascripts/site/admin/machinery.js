@@ -166,7 +166,7 @@ var MainBodyAdminMachinery;
             $("#divModalNewUnit").modal("show");
         };
         UI.aCreateMachine_clicked = function () {
-            ModalNewUnit.load();
+            ModalNewMachine.load();
             $("#divModalNewMachine").modal("show");
         };
         UI.machinerySelected = function (element) {
@@ -427,6 +427,7 @@ var MainBodyAdminMachinery;
         };
         ModalNewUnit.buttonSubmit_clicked = function () {
             $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            Site.Popover.remove("aMachineryAlertUnitNameFa");
             var unitNameFa = $("#inputUnitNameFa").val();
             var unitNameEn = $("#inputUnitNameEn").val();
             var clientSideError = 0;
@@ -477,6 +478,8 @@ var MainBodyAdminMachinery;
         function ModalNewMachine() {
         }
         ModalNewMachine.load = function () {
+            UI.countUpdateAvailable = 0;
+            ModalNewMachine.bindAll();
         };
         ModalNewMachine.bindAll = function () {
             ko.applyBindings(ModalNewMachine.viewModel, document.getElementById("divModalNewMachine"));
@@ -484,20 +487,74 @@ var MainBodyAdminMachinery;
             $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
         };
         ModalNewMachine.clearAll = function () {
+            ModalNewMachine.clearAfterSubmit();
+            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
+        };
+        ModalNewMachine.clearAfterSubmit = function () {
+            Site.Popover.remove("aMachineryAlertMachineNameFa");
+            $("#inputMachineNameFa").parent().removeClass("has-error");
+            ModalNewMachine.viewModel.machineNameFa("");
+            ModalNewMachine.viewModel.machineNameEn("");
+            ModalNewMachine.viewModel.pmCode("");
         };
         ModalNewMachine.modal_closed = function () {
             ModalNewMachine.clearAll();
             ModalNewMachine.unBindAll();
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         };
         ModalNewMachine.buttonSubmit_clicked = function () {
+            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            Site.Popover.remove("aMachineryAlertMachineNameFa");
+            var machineNameFa = ModalNewMachine.viewModel.machineNameFa();
+            var machineNameEn = ModalNewMachine.viewModel.machineNameEn();
+            var pmCode = ModalNewMachine.viewModel.pmCode();
+            var clientSideError = 0;
+            if (machineNameFa.length === 0) {
+                Site.Popover.create("divAlertMachineNameFa1", "aMachineryAlertMachineNameFa", "spanAlertMachineNameFa");
+                $("#inputMachineNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+            if (clientSideError > 0) {
+                return;
+            }
+            Site.SubmitButton.afterClick("buttonSubmitNewMachine");
+            var parameters = {
+                parentId: UI.parentId,
+                machineNameFa: machineNameFa,
+                machineNameEn: machineNameEn,
+                pmCode: pmCode
+            };
+            $.ajax({
+                url: "./api/Machinery/InsertMachine",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countUpdateAvailable += 1;
+                        var msg = format("ماشین جدید ثبت شد");
+                        $("#alertSuccess").html(msg);
+                        $("#alertSuccess").velocity("fadeIn");
+                        ModalNewMachine.clearAfterSubmit();
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+                    Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
+                }
+            });
         };
         ModalNewMachine.unBindAll = function () {
             ko.cleanNode(document.getElementById("divModalNewMachine"));
+            $("#buttonSubmitNewMachine").unbind("click");
+            $("#divModalNewMachine").unbind("hidden.bs.modal");
         };
         ModalNewMachine.viewModel = {
-            machineNameFa: "",
-            machineNameEn: "",
-            pmCode: ""
+            machineNameFa: ko.observable(""),
+            machineNameEn: ko.observable(""),
+            pmCode: ko.observable("")
         };
         return ModalNewMachine;
     }());

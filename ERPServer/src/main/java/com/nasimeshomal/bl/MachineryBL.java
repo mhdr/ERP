@@ -202,4 +202,55 @@ public class MachineryBL {
 
         return result;
     }
+
+    public Map<String, Object> insertMachine() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = request.getParameterMap();
+            String machineNameFa = "";
+            String machineNameEn = "";
+            String pmCode="";
+            String parentId = "";
+
+            if (!data.containsKey("parentId")) {
+                result.put("error", 2);
+                return result;
+            } else {
+
+                parentId = data.get("parentId")[0];
+
+                if (StringUtils.isBlank(parentId)) {
+                    parentId = "";
+                }
+            }
+
+            if (data.containsKey("machineNameEn")) {
+                machineNameEn = data.get("machineNameEn")[0];
+            }
+
+            if (data.containsKey("pmCode")) {
+                pmCode = data.get("pmCode")[0];
+            }
+
+            machineNameFa = data.get("machineNameFa")[0];
+
+            Machinery machinery = new Machinery(Machinery.MachineryType.Machine);
+            machinery.parentId = parentId;
+            machinery.machine.machineNameFa=machineNameFa;
+            machinery.machine.machineNameEn=machineNameEn;
+            machinery.machine.pmCode=pmCode;
+
+            mongoOperations.insert(machinery);
+
+            result.put("error", 0);
+            result.put("id", machinery.id);
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 }
