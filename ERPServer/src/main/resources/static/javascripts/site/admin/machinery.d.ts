@@ -18,10 +18,12 @@ declare namespace MainBodyAdminMachinery {
         static bindaDeleteMachinery(): void;
         static aDeleteMachinery_clicked(): void;
         static aDeleteMachinery2_clicked(): void;
+        static bindaCreateFolder(): void;
         static bindaCreateUnit(): void;
         static activateNavbarItems(): void;
         static deactivateNavbarItems(): void;
         static aCreateUnit_clicked(): void;
+        static aCreateFolder_clicked(): void;
         static aCreateMachine_clicked(): void;
         static machinerySelected(element: any): void;
         static unBindAll(): void;
@@ -34,6 +36,11 @@ declare namespace MainBodyAdminMachinery {
         static bindButtonConfirmDeleteMachinery(): void;
         static modal_closed(e: any): void;
         static clearAll(): void;
+        static unBindAll(): void;
+    }
+    class ModalNewFolder {
+        static load(): void;
+        static bindAll(): void;
         static unBindAll(): void;
     }
     class ModalNewUnit {

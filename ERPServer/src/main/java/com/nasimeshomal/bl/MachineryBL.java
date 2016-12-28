@@ -235,6 +235,19 @@ public class MachineryBL {
 
             machineNameFa = data.get("machineNameFa")[0];
 
+            if (StringUtils.isNotBlank(pmCode))
+            {
+                Query query=new Query();
+                query.addCriteria(Criteria.where("Machine.pmCode").is(pmCode));
+                List<Machinery> matchedPMCode= mongoOperations.find(query,Machinery.class);
+
+                if (matchedPMCode.size()>0)
+                {
+                    result.put("error", 3);
+                    return result;
+                }
+            }
+
             Machinery machinery = new Machinery(Machinery.MachineryType.Machine);
             machinery.parentId = parentId;
             machinery.machine.machineNameFa=machineNameFa;

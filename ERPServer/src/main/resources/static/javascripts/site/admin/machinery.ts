@@ -79,6 +79,7 @@ namespace MainBodyAdminMachinery {
             MainBodyAdminMachinery.UI.bindaCreateUnit();
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
             MainBodyAdminMachinery.UI.bindaCreateMachine();
+            MainBodyAdminMachinery.UI.bindaCreateFolder();
         }
 
         static bindaCreateMachine(){
@@ -155,6 +156,29 @@ namespace MainBodyAdminMachinery {
             $("#divModalRejectDeleteMachinery").modal("show");
         }
 
+        static bindaCreateFolder() {
+
+            $("#aCreateFolder").click(function (eventObject) {
+                if ($("#divModalNewFolder").length === 0) {
+
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewFolder.hbs" + "?" + Site.Statics.version(),
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                            MainBodyAdminMachinery.UI.aCreateFolder_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateFolder_clicked();
+                }
+            });
+        }
+
         static bindaCreateUnit() {
 
             $("#aCreateUnit").click(function (eventObject) {
@@ -205,6 +229,11 @@ namespace MainBodyAdminMachinery {
         static aCreateUnit_clicked() {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
+        }
+
+        static aCreateFolder_clicked() {
+            ModalNewFolder.load();
+            $("#divModalNewFolder").modal("show");
         }
 
         static aCreateMachine_clicked() {
@@ -488,6 +517,24 @@ namespace MainBodyAdminMachinery {
         }
     }
 
+    export class ModalNewFolder{
+
+        static load()
+        {
+
+        }
+
+        static bindAll()
+        {
+
+        }
+
+        static unBindAll()
+        {
+
+        }
+    }
+
     export class ModalNewUnit {
 
         static load() {
@@ -616,6 +663,8 @@ namespace MainBodyAdminMachinery {
         static clearAfterSubmit() {
             Site.Popover.remove("aMachineryAlertMachineNameFa");
             $("#inputMachineNameFa").parent().removeClass("has-error");
+            Site.Popover.remove("aMachineryAlertPMCode");
+            $("#inputPMCode").parent().removeClass("has-error");
             ModalNewMachine.viewModel.machineNameFa("");
             ModalNewMachine.viewModel.machineNameEn("");
             ModalNewMachine.viewModel.pmCode("");
@@ -636,6 +685,9 @@ namespace MainBodyAdminMachinery {
             // clear
             $("#alertSuccess").velocity("fadeOut", {duration: 0});
             Site.Popover.remove("aMachineryAlertMachineNameFa");
+            $("#inputMachineNameFa").parent().removeClass("has-error");
+            Site.Popover.remove("aMachineryAlertPMCode");
+            $("#inputPMCode").parent().removeClass("has-error");
             //
 
 
@@ -676,6 +728,10 @@ namespace MainBodyAdminMachinery {
                         $("#alertSuccess").html(msg);
                         $("#alertSuccess").velocity("fadeIn");
                         ModalNewMachine.clearAfterSubmit();
+                    }
+                    else if (data.error===3){
+                        Site.Popover.create("divAlertPMCode1", "aMachineryAlertPMCode", "spanAlertPMCode");
+                        $("#inputPMCode").parent().addClass("has-error");
                     }
                     else if (data.error === -1) {
                         window.location.href = data.redirect;

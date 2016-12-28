@@ -57,6 +57,7 @@ var MainBodyAdminMachinery;
             MainBodyAdminMachinery.UI.bindaCreateUnit();
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
             MainBodyAdminMachinery.UI.bindaCreateMachine();
+            MainBodyAdminMachinery.UI.bindaCreateFolder();
         };
         UI.bindaCreateMachine = function () {
             $("#aCreateMachine").click(function (eventObject) {
@@ -122,6 +123,25 @@ var MainBodyAdminMachinery;
         UI.aDeleteMachinery2_clicked = function () {
             $("#divModalRejectDeleteMachinery").modal("show");
         };
+        UI.bindaCreateFolder = function () {
+            $("#aCreateFolder").click(function (eventObject) {
+                if ($("#divModalNewFolder").length === 0) {
+                    $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                    $.ajax({
+                        url: "./hbs/mainBody/admin/machinery/modalNewFolder.hbs" + "?" + Site.Statics.version(),
+                        method: "GET",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").append(data);
+                            $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                            MainBodyAdminMachinery.UI.aCreateFolder_clicked();
+                        }
+                    });
+                }
+                else {
+                    MainBodyAdminMachinery.UI.aCreateFolder_clicked();
+                }
+            });
+        };
         UI.bindaCreateUnit = function () {
             $("#aCreateUnit").click(function (eventObject) {
                 if ($("#divModalNewUnit").length === 0) {
@@ -164,6 +184,10 @@ var MainBodyAdminMachinery;
         UI.aCreateUnit_clicked = function () {
             ModalNewUnit.load();
             $("#divModalNewUnit").modal("show");
+        };
+        UI.aCreateFolder_clicked = function () {
+            ModalNewFolder.load();
+            $("#divModalNewFolder").modal("show");
         };
         UI.aCreateMachine_clicked = function () {
             ModalNewMachine.load();
@@ -397,6 +421,18 @@ var MainBodyAdminMachinery;
         return ModalConfirmDelete;
     }());
     MainBodyAdminMachinery.ModalConfirmDelete = ModalConfirmDelete;
+    var ModalNewFolder = (function () {
+        function ModalNewFolder() {
+        }
+        ModalNewFolder.load = function () {
+        };
+        ModalNewFolder.bindAll = function () {
+        };
+        ModalNewFolder.unBindAll = function () {
+        };
+        return ModalNewFolder;
+    }());
+    MainBodyAdminMachinery.ModalNewFolder = ModalNewFolder;
     var ModalNewUnit = (function () {
         function ModalNewUnit() {
         }
@@ -494,6 +530,8 @@ var MainBodyAdminMachinery;
         ModalNewMachine.clearAfterSubmit = function () {
             Site.Popover.remove("aMachineryAlertMachineNameFa");
             $("#inputMachineNameFa").parent().removeClass("has-error");
+            Site.Popover.remove("aMachineryAlertPMCode");
+            $("#inputPMCode").parent().removeClass("has-error");
             ModalNewMachine.viewModel.machineNameFa("");
             ModalNewMachine.viewModel.machineNameEn("");
             ModalNewMachine.viewModel.pmCode("");
@@ -508,6 +546,9 @@ var MainBodyAdminMachinery;
         ModalNewMachine.buttonSubmit_clicked = function () {
             $("#alertSuccess").velocity("fadeOut", { duration: 0 });
             Site.Popover.remove("aMachineryAlertMachineNameFa");
+            $("#inputMachineNameFa").parent().removeClass("has-error");
+            Site.Popover.remove("aMachineryAlertPMCode");
+            $("#inputPMCode").parent().removeClass("has-error");
             var machineNameFa = ModalNewMachine.viewModel.machineNameFa();
             var machineNameEn = ModalNewMachine.viewModel.machineNameEn();
             var pmCode = ModalNewMachine.viewModel.pmCode();
@@ -538,6 +579,10 @@ var MainBodyAdminMachinery;
                         $("#alertSuccess").html(msg);
                         $("#alertSuccess").velocity("fadeIn");
                         ModalNewMachine.clearAfterSubmit();
+                    }
+                    else if (data.error === 3) {
+                        Site.Popover.create("divAlertPMCode1", "aMachineryAlertPMCode", "spanAlertPMCode");
+                        $("#inputPMCode").parent().addClass("has-error");
                     }
                     else if (data.error === -1) {
                         window.location.href = data.redirect;
