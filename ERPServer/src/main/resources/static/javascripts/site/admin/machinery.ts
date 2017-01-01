@@ -527,6 +527,55 @@ namespace MainBodyAdminMachinery {
         static buttonSubmit_clicked()
         {
 
+            // clear
+            $("#alertSuccess2").velocity("fadeOut", {duration: 0});
+            Site.Popover.remove("aMachineryAlertFolderNameFa");
+            $("#inputFolderNameFa").parent().removeClass("has-error");
+            //
+
+            let folderNameFa=ModalNewFolder.viewModel.folderNameFa();
+            let folderNameEn=ModalNewFolder.viewModel.folderNameEn();
+
+            let clientSideError = 0;
+
+            if (folderNameFa.length === 0) {
+                Site.Popover.create("divAlertFolderNameFa1", "aMachineryAlertFolderNameFa", "spanAlertFolderNameFa");
+                $("#inputFolderNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+
+            if (clientSideError > 0) {
+                return;
+            }
+
+            Site.SubmitButton.afterClick("buttonSubmitNewFolder");
+
+            let parameters = {
+                parentId: UI.parentId,
+                folderNameFa: folderNameFa,
+                folderNameEn: folderNameEn
+            };
+
+            $.ajax({
+                url: "./api/Machinery/InsertFolder",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countUpdateAvailable += 1;
+
+                        let msg: string = format("پوشه جدید ثبت شد");
+                        $("#alertSuccess2").html(msg);
+                        $("#alertSuccess2").velocity("fadeIn");
+                        ModalNewFolder.clearAfterSubmit();
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+
+                    Site.SubmitButton.afterCompelte("buttonSubmitNewFolder");
+                }
+            })
         }
 
         static load()
@@ -539,7 +588,16 @@ namespace MainBodyAdminMachinery {
 
         static clearAll()
         {
+            ModalNewFolder.clearAfterSubmit();
+            $("#alertSuccess2").velocity("fadeOut", {duration: 0});
+            Site.SubmitButton.afterCompelte("buttonSubmitNewFolder");
+        }
 
+        static clearAfterSubmit() {
+            Site.Popover.remove("aMachineryAlertFolderNameFa");
+            $("#inputFolderNameFa").parent().removeClass("has-error");
+            ModalNewFolder.viewModel.folderNameFa("");
+            ModalNewFolder.viewModel.folderNameEn("");
         }
 
         static modal_closed()
@@ -591,7 +649,7 @@ namespace MainBodyAdminMachinery {
             $("#inputUnitNameFa").parent().removeClass("has-error");
             $("#inputUnitNameFa").val("");
             $("#inputUnitNameEn").val("");
-            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            $("#alertSuccess1").velocity("fadeOut", {duration: 0});
         }
 
         static clearAfterSubmit() {
@@ -604,7 +662,7 @@ namespace MainBodyAdminMachinery {
         static buttonSubmit_clicked() {
 
             // clear
-            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            $("#alertSuccess1").velocity("fadeOut", {duration: 0});
             Site.Popover.remove("aMachineryAlertUnitNameFa");
             //
 
@@ -640,8 +698,8 @@ namespace MainBodyAdminMachinery {
                         UI.countUpdateAvailable += 1;
 
                         let msg: string = format("بخش جدید ثبت شد");
-                        $("#alertSuccess").html(msg);
-                        $("#alertSuccess").velocity("fadeIn");
+                        $("#alertSuccess1").html(msg);
+                        $("#alertSuccess1").velocity("fadeIn");
                         ModalNewUnit.clearAfterSubmit();
                     }
                     else if (data.error === -1) {
@@ -688,7 +746,7 @@ namespace MainBodyAdminMachinery {
         static clearAll()
         {
             ModalNewMachine.clearAfterSubmit();
-            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            $("#alertSuccess3").velocity("fadeOut", {duration: 0});
             Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
         }
 
@@ -715,7 +773,7 @@ namespace MainBodyAdminMachinery {
         static buttonSubmit_clicked()
         {
             // clear
-            $("#alertSuccess").velocity("fadeOut", {duration: 0});
+            $("#alertSuccess3").velocity("fadeOut", {duration: 0});
             Site.Popover.remove("aMachineryAlertMachineNameFa");
             $("#inputMachineNameFa").parent().removeClass("has-error");
             Site.Popover.remove("aMachineryAlertPMCode");
@@ -757,8 +815,8 @@ namespace MainBodyAdminMachinery {
                         UI.countUpdateAvailable += 1;
 
                         let msg: string = format("ماشین جدید ثبت شد");
-                        $("#alertSuccess").html(msg);
-                        $("#alertSuccess").velocity("fadeIn");
+                        $("#alertSuccess3").html(msg);
+                        $("#alertSuccess3").velocity("fadeIn");
                         ModalNewMachine.clearAfterSubmit();
                     }
                     else if (data.error===3){

@@ -46,6 +46,7 @@ declare namespace MainBodyAdminMachinery {
         static buttonSubmit_clicked(): void;
         static load(): void;
         static clearAll(): void;
+        static clearAfterSubmit(): void;
         static modal_closed(): void;
         static bindAll(): void;
         static unBindAll(): void;

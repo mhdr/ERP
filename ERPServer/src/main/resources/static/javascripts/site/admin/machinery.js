@@ -425,12 +425,59 @@ var MainBodyAdminMachinery;
         function ModalNewFolder() {
         }
         ModalNewFolder.buttonSubmit_clicked = function () {
+            $("#alertSuccess2").velocity("fadeOut", { duration: 0 });
+            Site.Popover.remove("aMachineryAlertFolderNameFa");
+            $("#inputFolderNameFa").parent().removeClass("has-error");
+            var folderNameFa = ModalNewFolder.viewModel.folderNameFa();
+            var folderNameEn = ModalNewFolder.viewModel.folderNameEn();
+            var clientSideError = 0;
+            if (folderNameFa.length === 0) {
+                Site.Popover.create("divAlertFolderNameFa1", "aMachineryAlertFolderNameFa", "spanAlertFolderNameFa");
+                $("#inputFolderNameFa").parent().addClass("has-error");
+                clientSideError += 1;
+            }
+            if (clientSideError > 0) {
+                return;
+            }
+            Site.SubmitButton.afterClick("buttonSubmitNewFolder");
+            var parameters = {
+                parentId: UI.parentId,
+                folderNameFa: folderNameFa,
+                folderNameEn: folderNameEn
+            };
+            $.ajax({
+                url: "./api/Machinery/InsertFolder",
+                method: "POST",
+                data: parameters,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.error === 0) {
+                        UI.countUpdateAvailable += 1;
+                        var msg = format("پوشه جدید ثبت شد");
+                        $("#alertSuccess2").html(msg);
+                        $("#alertSuccess2").velocity("fadeIn");
+                        ModalNewFolder.clearAfterSubmit();
+                    }
+                    else if (data.error === -1) {
+                        window.location.href = data.redirect;
+                    }
+                    Site.SubmitButton.afterCompelte("buttonSubmitNewFolder");
+                }
+            });
         };
         ModalNewFolder.load = function () {
             UI.countUpdateAvailable = 0;
             ModalNewFolder.bindAll();
         };
         ModalNewFolder.clearAll = function () {
+            ModalNewFolder.clearAfterSubmit();
+            $("#alertSuccess2").velocity("fadeOut", { duration: 0 });
+            Site.SubmitButton.afterCompelte("buttonSubmitNewFolder");
+        };
+        ModalNewFolder.clearAfterSubmit = function () {
+            Site.Popover.remove("aMachineryAlertFolderNameFa");
+            $("#inputFolderNameFa").parent().removeClass("has-error");
+            ModalNewFolder.viewModel.folderNameFa("");
+            ModalNewFolder.viewModel.folderNameEn("");
         };
         ModalNewFolder.modal_closed = function () {
             ModalNewFolder.clearAll();
@@ -476,7 +523,7 @@ var MainBodyAdminMachinery;
             $("#inputUnitNameFa").parent().removeClass("has-error");
             $("#inputUnitNameFa").val("");
             $("#inputUnitNameEn").val("");
-            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            $("#alertSuccess1").velocity("fadeOut", { duration: 0 });
         };
         ModalNewUnit.clearAfterSubmit = function () {
             Site.Popover.remove("aMachineryAlertUnitNameFa");
@@ -485,7 +532,7 @@ var MainBodyAdminMachinery;
             $("#inputUnitNameEn").val("");
         };
         ModalNewUnit.buttonSubmit_clicked = function () {
-            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            $("#alertSuccess1").velocity("fadeOut", { duration: 0 });
             Site.Popover.remove("aMachineryAlertUnitNameFa");
             var unitNameFa = $("#inputUnitNameFa").val();
             var unitNameEn = $("#inputUnitNameEn").val();
@@ -512,8 +559,8 @@ var MainBodyAdminMachinery;
                     if (data.error === 0) {
                         UI.countUpdateAvailable += 1;
                         var msg = format("بخش جدید ثبت شد");
-                        $("#alertSuccess").html(msg);
-                        $("#alertSuccess").velocity("fadeIn");
+                        $("#alertSuccess1").html(msg);
+                        $("#alertSuccess1").velocity("fadeIn");
                         ModalNewUnit.clearAfterSubmit();
                     }
                     else if (data.error === -1) {
@@ -547,7 +594,7 @@ var MainBodyAdminMachinery;
         };
         ModalNewMachine.clearAll = function () {
             ModalNewMachine.clearAfterSubmit();
-            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            $("#alertSuccess3").velocity("fadeOut", { duration: 0 });
             Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
         };
         ModalNewMachine.clearAfterSubmit = function () {
@@ -567,7 +614,7 @@ var MainBodyAdminMachinery;
             }
         };
         ModalNewMachine.buttonSubmit_clicked = function () {
-            $("#alertSuccess").velocity("fadeOut", { duration: 0 });
+            $("#alertSuccess3").velocity("fadeOut", { duration: 0 });
             Site.Popover.remove("aMachineryAlertMachineNameFa");
             $("#inputMachineNameFa").parent().removeClass("has-error");
             Site.Popover.remove("aMachineryAlertPMCode");
@@ -599,8 +646,8 @@ var MainBodyAdminMachinery;
                     if (data.error === 0) {
                         UI.countUpdateAvailable += 1;
                         var msg = format("ماشین جدید ثبت شد");
-                        $("#alertSuccess").html(msg);
-                        $("#alertSuccess").velocity("fadeIn");
+                        $("#alertSuccess3").html(msg);
+                        $("#alertSuccess3").velocity("fadeIn");
                         ModalNewMachine.clearAfterSubmit();
                     }
                     else if (data.error === 3) {

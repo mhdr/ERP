@@ -152,6 +152,51 @@ public class MachineryBL {
         return result;
     }
 
+    public Map<String, Object> insertFolder() {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            Map<String, String[]> data = request.getParameterMap();
+            String folderNameFa = "";
+            String folderNameEn = "";
+            String parentId = "";
+
+            if (!data.containsKey("parentId")) {
+                result.put("error", 2);
+                return result;
+            } else {
+
+                parentId = data.get("parentId")[0];
+
+                if (StringUtils.isBlank(parentId)) {
+                    parentId = "";
+                }
+            }
+
+            if (data.containsKey("folderNameEn")) {
+                folderNameEn = data.get("folderNameEn")[0];
+            }
+
+            folderNameFa = data.get("folderNameFa")[0];
+
+            Machinery machinery = new Machinery(Machinery.MachineryType.Folder);
+            machinery.parentId = parentId;
+            machinery.folder.folderNameFa = folderNameFa;
+            machinery.folder.folderNameEn = folderNameEn;
+
+            mongoOperations.insert(machinery);
+
+            result.put("error", 0);
+            result.put("id", machinery.id);
+        } catch (Exception ex) {
+            // exception
+            result.put("error", 1);
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
     public Map<String, Object> deleteMachinery() {
         Map<String, Object> result = new HashMap<>();
 
