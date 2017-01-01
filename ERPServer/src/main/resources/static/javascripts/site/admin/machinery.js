@@ -424,11 +424,34 @@ var MainBodyAdminMachinery;
     var ModalNewFolder = (function () {
         function ModalNewFolder() {
         }
+        ModalNewFolder.buttonSubmit_clicked = function () {
+        };
         ModalNewFolder.load = function () {
+            UI.countUpdateAvailable = 0;
+            ModalNewFolder.bindAll();
+        };
+        ModalNewFolder.clearAll = function () {
+        };
+        ModalNewFolder.modal_closed = function () {
+            ModalNewFolder.clearAll();
+            ModalNewFolder.unBindAll();
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         };
         ModalNewFolder.bindAll = function () {
+            ko.applyBindings(ModalNewFolder.viewModel, document.getElementById("divModalNewFolder"));
+            $("#buttonSubmitNewFolder").bind("click", ModalNewFolder.buttonSubmit_clicked);
+            $("#divModalNewFolder").on("hidden.bs.modal", ModalNewFolder.modal_closed);
         };
         ModalNewFolder.unBindAll = function () {
+            ko.cleanNode(document.getElementById("divModalNewFolder"));
+            $("#buttonSubmitNewFolder").unbind("click");
+            $("#divModalNewFolder").unbind("hidden.bs.modal");
+        };
+        ModalNewFolder.viewModel = {
+            folderNameFa: ko.observable(""),
+            folderNameEn: ko.observable("")
         };
         return ModalNewFolder;
     }());

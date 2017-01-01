@@ -519,19 +519,51 @@ namespace MainBodyAdminMachinery {
 
     export class ModalNewFolder{
 
-        static load()
+        static viewModel={
+            folderNameFa:ko.observable(""),
+            folderNameEn:ko.observable(""),
+        };
+
+        static buttonSubmit_clicked()
         {
 
+        }
+
+        static load()
+        {
+            // initialize again
+            UI.countUpdateAvailable = 0;
+
+            ModalNewFolder.bindAll();
+        }
+
+        static clearAll()
+        {
+
+        }
+
+        static modal_closed()
+        {
+            ModalNewFolder.clearAll();
+            ModalNewFolder.unBindAll();
+
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         }
 
         static bindAll()
         {
-
+            ko.applyBindings(ModalNewFolder.viewModel,document.getElementById("divModalNewFolder"));
+            $("#buttonSubmitNewFolder").bind("click", ModalNewFolder.buttonSubmit_clicked);
+            $("#divModalNewFolder").on("hidden.bs.modal", ModalNewFolder.modal_closed);
         }
 
         static unBindAll()
         {
-
+            ko.cleanNode(document.getElementById("divModalNewFolder"));
+            $("#buttonSubmitNewFolder").unbind("click");
+            $("#divModalNewFolder").unbind("hidden.bs.modal");
         }
     }
 
