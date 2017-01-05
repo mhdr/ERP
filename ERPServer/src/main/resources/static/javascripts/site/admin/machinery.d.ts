@@ -18,6 +18,10 @@ declare namespace MainBodyAdminMachinery {
         static bindaDeleteMachinery(): void;
         static aDeleteMachinery_clicked(): void;
         static aDeleteMachinery2_clicked(): void;
+        static aEditUnit_clicked(): void;
+        static aEditMachine_clicked(): void;
+        static aEditFolder_clicked(): void;
+        static bindaEditMachinery(): void;
         static bindaCreateFolder(): void;
         static bindaCreateUnit(): void;
         static activateNavbarItems(): void;

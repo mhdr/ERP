@@ -80,9 +80,10 @@ namespace MainBodyAdminMachinery {
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
             MainBodyAdminMachinery.UI.bindaCreateMachine();
             MainBodyAdminMachinery.UI.bindaCreateFolder();
+            MainBodyAdminMachinery.UI.bindaEditMachinery();
         }
 
-        static bindaCreateMachine(){
+        static bindaCreateMachine() {
             $("#aCreateMachine").click(function (eventObject) {
                 if ($("#divModalNewMachine").length === 0) {
 
@@ -154,6 +155,88 @@ namespace MainBodyAdminMachinery {
 
         static aDeleteMachinery2_clicked() {
             $("#divModalRejectDeleteMachinery").modal("show");
+        }
+
+        static aEditUnit_clicked() {
+            //ModalNewFolder.load();
+            $("#divModalEditUnit").modal("show");
+        }
+
+        static aEditMachine_clicked() {
+            //ModalNewFolder.load();
+            $("#divModalEditMachine").modal("show");
+        }
+
+        static aEditFolder_clicked() {
+            //ModalNewFolder.load();
+            $("#divModalEditFolder").modal("show");
+        }
+
+        static bindaEditMachinery() {
+            $("#aEdit").click(function (eventObject) {
+
+                let selected = $(".machinery-selected");
+
+                let machineryType=$(selected).attr("data-nm-type");
+
+                if (machineryType==="Unit")
+                {
+                    if ($("#divModalEditUnit").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditUnit.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                                MainBodyAdminMachinery.UI.aEditUnit_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditUnit_clicked();
+                    }
+                }
+                else if (machineryType==="Machine")
+                {
+                    if ($("#divModalEditMachine").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditMachine.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                                MainBodyAdminMachinery.UI.aEditMachine_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditMachine_clicked();
+                    }
+                }
+                else if (machineryType==="Folder")
+                {
+                    if ($("#divModalEditFolder").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 1}, {duration: 50});
+
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditFolder.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({opacity: 0}, {duration: 50});
+                                MainBodyAdminMachinery.UI.aEditFolder_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditFolder_clicked();
+                    }
+                }
+            });
         }
 
         static bindaCreateFolder() {
@@ -393,6 +476,7 @@ namespace MainBodyAdminMachinery {
 
                                 let context = {
                                     id: id,
+                                    type: "Unit",
                                     unitNameFa: unit.unitNameFa,
                                     unitNameEn: unit.unitNameEn,
                                     countChildren: countChildren
@@ -411,6 +495,7 @@ namespace MainBodyAdminMachinery {
 
                                 let context = {
                                     id: id,
+                                    type: "Machine",
                                     machineNameFa: machine.machineNameFa,
                                     machineNameEn: machine.machineNameEn,
                                     pmCode: machine.pmCode,
@@ -431,6 +516,7 @@ namespace MainBodyAdminMachinery {
 
                                 let context = {
                                     id: id,
+                                    type: "Folder",
                                     folderNameFa: folder.folderNameFa,
                                     folderNameEn: folder.folderNameEn,
                                     countChildren: countChildren
@@ -473,28 +559,27 @@ namespace MainBodyAdminMachinery {
             ModalConfirmDelete.bindButtonConfirmDeleteMachinery();
         }
 
-        static bindButtonConfirmDeleteMachinery()
-        {
+        static bindButtonConfirmDeleteMachinery() {
             $("#buttonConfirmDeleteMachinery").click(function (eventObject) {
-            if (UI.selectedMachineryId.length > 0) {
+                if (UI.selectedMachineryId.length > 0) {
 
-                let parameters={
-                    machineryId:UI.selectedMachineryId
-                };
+                    let parameters = {
+                        machineryId: UI.selectedMachineryId
+                    };
 
-                $.ajax({
-                    url: "./api/Machinery/DeleteMachinery",
-                    method: "POST",
-                    data:parameters,
-                    success: function (data, textStatus, jqXHR) {
-                        if (data.error === 0) {
-                            UI.countUpdateAvailable += 1;
-                            $("#divModalConfirmDeleteMachinery").modal("hide");
+                    $.ajax({
+                        url: "./api/Machinery/DeleteMachinery",
+                        method: "POST",
+                        data: parameters,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.error === 0) {
+                                UI.countUpdateAvailable += 1;
+                                $("#divModalConfirmDeleteMachinery").modal("hide");
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
 
         }
 
@@ -517,15 +602,14 @@ namespace MainBodyAdminMachinery {
         }
     }
 
-    export class ModalNewFolder{
+    export class ModalNewFolder {
 
-        static viewModel={
-            folderNameFa:ko.observable(""),
-            folderNameEn:ko.observable(""),
+        static viewModel = {
+            folderNameFa: ko.observable(""),
+            folderNameEn: ko.observable(""),
         };
 
-        static buttonSubmit_clicked()
-        {
+        static buttonSubmit_clicked() {
 
             // clear
             $("#alertSuccess2").velocity("fadeOut", {duration: 0});
@@ -533,8 +617,8 @@ namespace MainBodyAdminMachinery {
             $("#inputFolderNameFa").parent().removeClass("has-error");
             //
 
-            let folderNameFa=ModalNewFolder.viewModel.folderNameFa();
-            let folderNameEn=ModalNewFolder.viewModel.folderNameEn();
+            let folderNameFa = ModalNewFolder.viewModel.folderNameFa();
+            let folderNameEn = ModalNewFolder.viewModel.folderNameEn();
 
             let clientSideError = 0;
 
@@ -578,16 +662,14 @@ namespace MainBodyAdminMachinery {
             })
         }
 
-        static load()
-        {
+        static load() {
             // initialize again
             UI.countUpdateAvailable = 0;
 
             ModalNewFolder.bindAll();
         }
 
-        static clearAll()
-        {
+        static clearAll() {
             ModalNewFolder.clearAfterSubmit();
             $("#alertSuccess2").velocity("fadeOut", {duration: 0});
             Site.SubmitButton.afterCompelte("buttonSubmitNewFolder");
@@ -600,8 +682,7 @@ namespace MainBodyAdminMachinery {
             ModalNewFolder.viewModel.folderNameEn("");
         }
 
-        static modal_closed()
-        {
+        static modal_closed() {
             ModalNewFolder.clearAll();
             ModalNewFolder.unBindAll();
 
@@ -610,15 +691,13 @@ namespace MainBodyAdminMachinery {
             }
         }
 
-        static bindAll()
-        {
-            ko.applyBindings(ModalNewFolder.viewModel,document.getElementById("divModalNewFolder"));
+        static bindAll() {
+            ko.applyBindings(ModalNewFolder.viewModel, document.getElementById("divModalNewFolder"));
             $("#buttonSubmitNewFolder").bind("click", ModalNewFolder.buttonSubmit_clicked);
             $("#divModalNewFolder").on("hidden.bs.modal", ModalNewFolder.modal_closed);
         }
 
-        static unBindAll()
-        {
+        static unBindAll() {
             ko.cleanNode(document.getElementById("divModalNewFolder"));
             $("#buttonSubmitNewFolder").unbind("click");
             $("#divModalNewFolder").unbind("hidden.bs.modal");
@@ -721,30 +800,28 @@ namespace MainBodyAdminMachinery {
         }
     }
 
-    export class ModalNewMachine{
+    export class ModalNewMachine {
 
-        static viewModel={
-            machineNameFa:ko.observable(""),
-            machineNameEn:ko.observable(""),
-            pmCode:ko.observable("")
+        static viewModel = {
+            machineNameFa: ko.observable(""),
+            machineNameEn: ko.observable(""),
+            pmCode: ko.observable("")
         };
 
-        static load(){
+        static load() {
             // initialize again
             UI.countUpdateAvailable = 0;
 
             ModalNewMachine.bindAll();
         }
 
-        static bindAll()
-        {
-            ko.applyBindings(ModalNewMachine.viewModel,document.getElementById("divModalNewMachine"));
+        static bindAll() {
+            ko.applyBindings(ModalNewMachine.viewModel, document.getElementById("divModalNewMachine"));
             $("#buttonSubmitNewMachine").bind("click", ModalNewMachine.buttonSubmit_clicked);
             $("#divModalNewMachine").on("hidden.bs.modal", ModalNewMachine.modal_closed);
         }
 
-        static clearAll()
-        {
+        static clearAll() {
             ModalNewMachine.clearAfterSubmit();
             $("#alertSuccess3").velocity("fadeOut", {duration: 0});
             Site.SubmitButton.afterCompelte("buttonSubmitNewMachine");
@@ -760,8 +837,7 @@ namespace MainBodyAdminMachinery {
             ModalNewMachine.viewModel.pmCode("");
         }
 
-        static modal_closed()
-        {
+        static modal_closed() {
             ModalNewMachine.clearAll();
             ModalNewMachine.unBindAll();
 
@@ -770,8 +846,7 @@ namespace MainBodyAdminMachinery {
             }
         }
 
-        static buttonSubmit_clicked()
-        {
+        static buttonSubmit_clicked() {
             // clear
             $("#alertSuccess3").velocity("fadeOut", {duration: 0});
             Site.Popover.remove("aMachineryAlertMachineNameFa");
@@ -781,9 +856,9 @@ namespace MainBodyAdminMachinery {
             //
 
 
-            let machineNameFa=ModalNewMachine.viewModel.machineNameFa();
-            let machineNameEn=ModalNewMachine.viewModel.machineNameEn();
-            let pmCode=ModalNewMachine.viewModel.pmCode();
+            let machineNameFa = ModalNewMachine.viewModel.machineNameFa();
+            let machineNameEn = ModalNewMachine.viewModel.machineNameEn();
+            let pmCode = ModalNewMachine.viewModel.pmCode();
 
             let clientSideError = 0;
 
@@ -803,7 +878,7 @@ namespace MainBodyAdminMachinery {
                 parentId: UI.parentId,
                 machineNameFa: machineNameFa,
                 machineNameEn: machineNameEn,
-                pmCode:pmCode
+                pmCode: pmCode
             };
 
             $.ajax({
@@ -819,7 +894,7 @@ namespace MainBodyAdminMachinery {
                         $("#alertSuccess3").velocity("fadeIn");
                         ModalNewMachine.clearAfterSubmit();
                     }
-                    else if (data.error===3){
+                    else if (data.error === 3) {
                         Site.Popover.create("divAlertPMCode1", "aMachineryAlertPMCode", "spanAlertPMCode");
                         $("#inputPMCode").parent().addClass("has-error");
                     }
@@ -832,8 +907,7 @@ namespace MainBodyAdminMachinery {
             })
         }
 
-        static unBindAll()
-        {
+        static unBindAll() {
             ko.cleanNode(document.getElementById("divModalNewMachine"));
             $("#buttonSubmitNewMachine").unbind("click");
             $("#divModalNewMachine").unbind("hidden.bs.modal");

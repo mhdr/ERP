@@ -58,6 +58,7 @@ var MainBodyAdminMachinery;
             MainBodyAdminMachinery.UI.bindaDeleteMachinery();
             MainBodyAdminMachinery.UI.bindaCreateMachine();
             MainBodyAdminMachinery.UI.bindaCreateFolder();
+            MainBodyAdminMachinery.UI.bindaEditMachinery();
         };
         UI.bindaCreateMachine = function () {
             $("#aCreateMachine").click(function (eventObject) {
@@ -122,6 +123,72 @@ var MainBodyAdminMachinery;
         };
         UI.aDeleteMachinery2_clicked = function () {
             $("#divModalRejectDeleteMachinery").modal("show");
+        };
+        UI.aEditUnit_clicked = function () {
+            $("#divModalEditUnit").modal("show");
+        };
+        UI.aEditMachine_clicked = function () {
+            $("#divModalEditMachine").modal("show");
+        };
+        UI.aEditFolder_clicked = function () {
+            $("#divModalEditFolder").modal("show");
+        };
+        UI.bindaEditMachinery = function () {
+            $("#aEdit").click(function (eventObject) {
+                var selected = $(".machinery-selected");
+                var machineryType = $(selected).attr("data-nm-type");
+                if (machineryType === "Unit") {
+                    if ($("#divModalEditUnit").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditUnit.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                                MainBodyAdminMachinery.UI.aEditUnit_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditUnit_clicked();
+                    }
+                }
+                else if (machineryType === "Machine") {
+                    if ($("#divModalEditMachine").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditMachine.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                                MainBodyAdminMachinery.UI.aEditMachine_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditMachine_clicked();
+                    }
+                }
+                else if (machineryType === "Folder") {
+                    if ($("#divModalEditFolder").length === 0) {
+                        $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 1 }, { duration: 50 });
+                        $.ajax({
+                            url: "./hbs/mainBody/admin/machinery/modalEditFolder.hbs" + "?" + Site.Statics.version(),
+                            method: "GET",
+                            success: function (data, textStatus, jqXHR) {
+                                $("#mainBody").append(data);
+                                $("#aLoadingNavbarMainBodyMachinery").velocity({ opacity: 0 }, { duration: 50 });
+                                MainBodyAdminMachinery.UI.aEditFolder_clicked();
+                            }
+                        });
+                    }
+                    else {
+                        MainBodyAdminMachinery.UI.aEditFolder_clicked();
+                    }
+                }
+            });
         };
         UI.bindaCreateFolder = function () {
             $("#aCreateFolder").click(function (eventObject) {
@@ -311,6 +378,7 @@ var MainBodyAdminMachinery;
                                 }
                                 var context_3 = {
                                     id: id,
+                                    type: "Unit",
                                     unitNameFa: unit.unitNameFa,
                                     unitNameEn: unit.unitNameEn,
                                     countChildren: countChildren
@@ -326,6 +394,7 @@ var MainBodyAdminMachinery;
                                 }
                                 var context_4 = {
                                     id: id,
+                                    type: "Machine",
                                     machineNameFa: machine.machineNameFa,
                                     machineNameEn: machine.machineNameEn,
                                     pmCode: machine.pmCode,
@@ -342,6 +411,7 @@ var MainBodyAdminMachinery;
                                 }
                                 var context_5 = {
                                     id: id,
+                                    type: "Folder",
                                     folderNameFa: folder.folderNameFa,
                                     folderNameEn: folder.folderNameEn,
                                     countChildren: countChildren
