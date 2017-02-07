@@ -158,7 +158,7 @@ namespace MainBodyAdminMachinery {
         }
 
         static aEditUnit_clicked() {
-            //ModalNewFolder.load();
+            ModalEditUnit.load();
             $("#divModalEditUnit").modal("show");
         }
 
@@ -911,6 +911,37 @@ namespace MainBodyAdminMachinery {
             ko.cleanNode(document.getElementById("divModalNewMachine"));
             $("#buttonSubmitNewMachine").unbind("click");
             $("#divModalNewMachine").unbind("hidden.bs.modal");
+        }
+    }
+
+    export class ModalEditUnit{
+
+        static viewModel={
+            unitNameFa:ko.observable(""),
+            uniNameEn:ko.observable("")
+        };
+
+        static load()
+        {
+            // initialize again
+            UI.countUpdateAvailable = 0;
+
+            ModalEditUnit.bindAll();
+        }
+
+        static bindAll()
+        {
+
+        }
+
+        static clearAll()
+        {
+
+        }
+
+        static unBindAll()
+        {
+
         }
     }
 

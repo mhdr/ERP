@@ -78,6 +78,16 @@ declare namespace MainBodyAdminMachinery {
         static buttonSubmit_clicked(): void;
         static unBindAll(): void;
     }
+    class ModalEditUnit {
+        static viewModel: {
+            unitNameFa: KnockoutObservable<string>;
+            uniNameEn: KnockoutObservable<string>;
+        };
+        static load(): void;
+        static bindAll(): void;
+        static clearAll(): void;
+        static unBindAll(): void;
+    }
     interface Unit {
         unitNameFa: string;
         unitNameEn: string;

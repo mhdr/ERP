@@ -125,6 +125,7 @@ var MainBodyAdminMachinery;
             $("#divModalRejectDeleteMachinery").modal("show");
         };
         UI.aEditUnit_clicked = function () {
+            ModalEditUnit.load();
             $("#divModalEditUnit").modal("show");
         };
         UI.aEditMachine_clicked = function () {
@@ -744,5 +745,25 @@ var MainBodyAdminMachinery;
         return ModalNewMachine;
     }());
     MainBodyAdminMachinery.ModalNewMachine = ModalNewMachine;
+    var ModalEditUnit = (function () {
+        function ModalEditUnit() {
+        }
+        ModalEditUnit.load = function () {
+            UI.countUpdateAvailable = 0;
+            ModalEditUnit.bindAll();
+        };
+        ModalEditUnit.bindAll = function () {
+        };
+        ModalEditUnit.clearAll = function () {
+        };
+        ModalEditUnit.unBindAll = function () {
+        };
+        ModalEditUnit.viewModel = {
+            unitNameFa: ko.observable(""),
+            uniNameEn: ko.observable("")
+        };
+        return ModalEditUnit;
+    }());
+    MainBodyAdminMachinery.ModalEditUnit = ModalEditUnit;
 })(MainBodyAdminMachinery || (MainBodyAdminMachinery = {}));
 //# sourceMappingURL=machinery.js.map
