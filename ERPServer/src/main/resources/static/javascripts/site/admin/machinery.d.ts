@@ -87,6 +87,8 @@ declare namespace MainBodyAdminMachinery {
         static bindAll(): void;
         static clearAll(): void;
         static unBindAll(): void;
+        static buttonSubmit_clicked(): void;
+        static modal_closed(): void;
     }
     interface Unit {
         unitNameFa: string;

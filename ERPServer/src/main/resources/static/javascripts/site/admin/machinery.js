@@ -753,10 +753,25 @@ var MainBodyAdminMachinery;
             ModalEditUnit.bindAll();
         };
         ModalEditUnit.bindAll = function () {
+            ko.applyBindings(ModalEditUnit.viewModel, document.getElementById("divModalEditUnit"));
+            $("#buttonSubmitEditUnit").bind("click", ModalEditUnit.buttonSubmit_clicked);
+            $("#divModalEditUnit").on("hidden.bs.modal", ModalEditUnit.modal_closed);
         };
         ModalEditUnit.clearAll = function () {
         };
         ModalEditUnit.unBindAll = function () {
+            ko.cleanNode(document.getElementById("divModalEditUnit"));
+            $("#buttonSubmitEditUnit").unbind("click");
+            $("#divModalEditUnit").unbind("hidden.bs.modal");
+        };
+        ModalEditUnit.buttonSubmit_clicked = function () {
+        };
+        ModalEditUnit.modal_closed = function () {
+            ModalEditUnit.clearAll();
+            ModalEditUnit.unBindAll();
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         };
         ModalEditUnit.viewModel = {
             unitNameFa: ko.observable(""),

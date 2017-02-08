@@ -931,7 +931,9 @@ namespace MainBodyAdminMachinery {
 
         static bindAll()
         {
-
+            ko.applyBindings(ModalEditUnit.viewModel, document.getElementById("divModalEditUnit"));
+            $("#buttonSubmitEditUnit").bind("click", ModalEditUnit.buttonSubmit_clicked);
+            $("#divModalEditUnit").on("hidden.bs.modal", ModalEditUnit.modal_closed);
         }
 
         static clearAll()
@@ -941,7 +943,23 @@ namespace MainBodyAdminMachinery {
 
         static unBindAll()
         {
+            ko.cleanNode(document.getElementById("divModalEditUnit"));
+            $("#buttonSubmitEditUnit").unbind("click");
+            $("#divModalEditUnit").unbind("hidden.bs.modal");
+        }
 
+        static buttonSubmit_clicked(){
+
+        }
+
+        static modal_closed()
+        {
+            ModalEditUnit.clearAll();
+            ModalEditUnit.unBindAll();
+
+            if (UI.countUpdateAvailable > 0) {
+                UI.getMachinery();
+            }
         }
     }
 
