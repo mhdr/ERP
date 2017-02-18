@@ -1,13 +1,16 @@
 {
+    "files": [
+        "index.d.ts",
+        "handlebars-tests.ts"
+    ],
     "compilerOptions": {
         "module": "commonjs",
         "lib": [
-            "es6",
-            "dom"
+            "es6"
         ],
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "noImplicitThis": false,
-        "strictNullChecks": true,
+        "strictNullChecks": false,
         "baseUrl": "../",
         "typeRoots": [
             "../"
@@ -15,10 +18,5 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true
-    },
-    "files": [
-        "index.d.ts",
-        "test/templatingBehaviors.ts",
-        "test/index.ts"
-    ]
+    }
 }
