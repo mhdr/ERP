@@ -3,7 +3,7 @@
 // Definitions by: Greg Smith <https://github.com/smrq/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-/// <reference path="../jquery/jquery.d.ts" />
+/// <reference types="jquery" />
 
 interface JQuery {
 	velocity(name: string, options: jquery.velocity.RegisteredEffectOptions): JQuery;
@@ -23,7 +23,7 @@ declare namespace jquery.velocity {
 	type Properties = Object;
 	type Easing = string|number[];
 	type ElementCallback = (elements: NodeListOf<HTMLElement>) => void;
-	type ProgressCallback = (elements: NodeListOf<HTMLElement>, percentComplete: number, timeRemaining: number, timeStart: number) => void;
+	type ProgressCallback = (elements: NodeListOf<HTMLElement>, percentComplete: number, timeRemaining: number, timeStart: number, tweenValue: number) => void;
 	type EffectCall =
 		[Properties] |
 		[Properties, number] |
@@ -79,6 +79,7 @@ declare namespace jquery.velocity {
 
 	interface VelocityStatic {
 		Sequences: any;
+		mock: any;
 		animate(options: {elements: NodeListOf<HTMLElement>; properties: Properties; options: Options}): any;
 		animate(elements: HTMLElement|NodeListOf<HTMLElement>, properties: Properties, options: Options): any;
 		RegisterEffect(name: string, options: RegisterEffectOptions): VelocityStatic;

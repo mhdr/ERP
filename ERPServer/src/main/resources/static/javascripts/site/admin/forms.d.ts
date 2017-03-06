@@ -1,5 +1,5 @@
-/// <reference path="../../../../DefinitelyTyped/velocity-animate/velocity-animate.d.ts" />
-/// <reference path="../../../../DefinitelyTyped/bootstrap/bootstrap.d.ts" />
+/// <reference path="../../../../DefinitelyTyped/velocity-animate/index.d.ts" />
+/// <reference path="../../../../DefinitelyTyped/bootstrap/index.d.ts" />
 /// <reference path="../nm.d.ts" />
 /// <reference path="../common.d.ts" />
 declare namespace MainBodyForms {

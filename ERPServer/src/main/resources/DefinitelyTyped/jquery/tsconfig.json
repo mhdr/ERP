@@ -7,7 +7,7 @@
         ],
         "noImplicitAny": false,
         "noImplicitThis": false,
-        "strictNullChecks": true,
+        "strictNullChecks": false,
         "baseUrl": "../",
         "typeRoots": [
             "../"
@@ -18,7 +18,6 @@
     },
     "files": [
         "index.d.ts",
-        "test/templatingBehaviors.ts",
-        "test/index.ts"
+        "jquery-tests.ts"
     ]
 }
